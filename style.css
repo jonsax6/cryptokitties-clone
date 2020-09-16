@@ -26,6 +26,69 @@
     left: 89px;
 }
 
+.mouth{
+    position: absolute;
+    top: 115px;
+    left: 75px;
+}
+
+.lip{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: solid 2px #000;
+    border-color: transparent transparent #000 #000;
+    border-radius: 50% 50% 50% 50%;
+    transform: rotate(-45deg);
+}
+
+.whisker{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: solid 2px #000;
+    border-color: transparent transparent #000 transparent;
+}
+
+.whisker_top{
+    transform: rotate(15deg);
+    top: 36px;
+    left: 10px;
+}
+
+.whisker_mid{
+    top: 0px;
+    left: 0px;
+}
+
+.whisker_bottom{
+    transform: rotate(-15deg);
+    top: -35px;
+    left: -2px;
+}
+
+.whiskers_left{
+    position: absolute;
+    float: left;
+    top: 25px;
+}
+
+.whiskers_right{
+    transform: rotate(180deg);
+    position: absolute;
+    float: right;
+    top: 77px;
+    left: 147px;
+}
+
+.lip_left{
+    float: left;
+}
+
+.lip_right{
+    float:right;
+}
+
 #body{
     position: absolute;
     background-color: rgb(255, 217, 0);
@@ -124,22 +187,22 @@
 
 .pupils{
     background-color: rgb(64, 124, 255);
-    width: 40px;
-    height: 30px;
+    width: 35px;
+    height: 28px;
     border-radius: 50%;
     position: relative;
-    top: 5px;
-    left: 5px;
+    top: 3px;
+    left: 11px;
 }
 
 .cornea{
     background-color: rgb(27, 24, 61);
-    width: 5px;
-    height: 25px;
+    width: 10px;
+    height: 22px;
     border-radius: 50%;
     position: relative;
     top: 3px;
-    left: 17px;
+    left: 16px;
 }
 
 .ears{
@@ -181,4 +244,15 @@
     position: relative;
     top: 10px;
     left: 10px;
+}
+
+.tail{
+    background-color:  rgb(255, 180, 40);
+    transform: rotate(45deg);
+    position: absolute;
+    width: 16px;
+    height: 95px;
+    border-radius: 50% 50% 20% 20%;
+    left: 167px;
+    top: 136px;
 }
