@@ -1,0 +1,184 @@
+#head{
+    position: absolute;
+    background-color: rgb(255, 217, 0);
+    width: 200px;
+    height: 175px;
+    border-radius: 50%;
+}
+#face{
+    position: absolute;
+    background-color: rgb(255, 167, 2);
+    width: 150px;
+    height: 90px;
+    border-radius: 50% 50% 50% 50%;
+    left: 25px;
+    top: 81px;
+}
+
+#nose{
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #f00;
+    top: 50px;
+    left: 50px;
+}
+
+#body{
+    position: absolute;
+    background-color: rgb(255, 217, 0);
+    width: 130px;
+    height: 121px;
+    border-radius: 50%;
+    left: 44px;
+    top: 139px;
+}
+
+#belly{
+    position: absolute;
+    background-color: rgb(255, 166, 0);
+    width: 88px;
+    height: 50px;
+    border-radius: 50%;
+    left: 65px;
+    top: 207px;
+}
+
+.leg{
+    position: absolute;
+    background-color: rgb(248, 211, 0);
+    width: 25px;
+    height: 53px;
+    border-radius: 10% 10% 25% 25%;
+}
+
+.front_leg_left{
+    top: 198px;
+    left: 69px;
+}
+
+.front_leg_right{
+    top: 198px;
+    left: 109px;
+}
+
+.rear_leg_left{
+    top: 206px;
+    left: 54px;
+}
+
+.rear_leg_right{
+    top: 206px;
+    left: 140px;
+}
+
+.fh_pattern{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 75px;
+    top: 4px;
+}
+
+.fh_pattern_right{
+    background-color: rgb(255, 167, 2);
+    position: absolute;
+    width: 13px;
+    height: 35px;
+    border-radius: 20% 10% 50% 50%;
+}
+
+.fh_pattern_mid{
+    background-color: rgb(255, 167, 2);
+    position: absolute;
+    width: 13px;
+    height: 45px;
+    border-radius: 20% 20% 50% 50%;
+    left: 20px;
+}
+
+.fh_pattern_left{
+    background-color: rgb(255, 167, 2);
+    position: absolute;
+    width: 13px;
+    height: 35px;
+    border-radius: 10% 20% 50% 50%;
+    left: 40px;
+}
+
+.eyes{
+    position: relative;
+    top: 30px;
+    display: flex;
+} 
+
+.eye {
+    background-color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 39px;
+    margin: 26px;
+}
+
+.pupils{
+    background-color: rgb(64, 124, 255);
+    width: 40px;
+    height: 30px;
+    border-radius: 50%;
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+
+.cornea{
+    background-color: rgb(27, 24, 61);
+    width: 5px;
+    height: 25px;
+    border-radius: 50%;
+    position: relative;
+    top: 3px;
+    left: 17px;
+}
+
+.ears{
+    position: absolute;
+}
+
+.ear{
+    border-radius: 0 90% 0 90%;
+    background-color:  rgb(255, 180, 40);
+    height: 100px;
+    width: 100px;
+    position: absolute;
+}
+
+.left-ear{
+    left: 0;
+}
+
+.right-ear{
+    transform: scale(1,-1);
+    left: 100px;
+
+}
+
+.right-inner-ear{
+    border-radius: 0 90% 0 90%;
+    background-color:  rgb(131, 85, 1);
+    height: 50px;
+    width: 50px;
+    position: relative;
+    top: 40px;
+    left: 40px;
+}
+.left-inner-ear{
+    border-radius: 0 90% 0 90%;
+    background-color:  rgb(131, 85, 1);
+    height: 50px;
+    width: 50px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
