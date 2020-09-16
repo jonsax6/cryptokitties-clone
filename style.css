@@ -44,26 +44,25 @@
 
 .whisker{
     position: relative;
-    width: 50px;
-    height: 50px;
-    border: solid 2px #000;
-    border-color: transparent transparent #000 transparent;
+    width: 65px;
+    height: 2px;
+    background-color: #000;
 }
 
 .whisker_top{
     transform: rotate(15deg);
-    top: 36px;
-    left: 10px;
+    top: 81px;
+    left: -4px;
 }
 
 .whisker_mid{
-    top: 0px;
-    left: 0px;
+    top: 99px;
+    left: -5px;
 }
 
 .whisker_bottom{
     transform: rotate(-15deg);
-    top: -35px;
+    top: 117px;
     left: -2px;
 }
 
@@ -77,8 +76,8 @@
     transform: rotate(180deg);
     position: absolute;
     float: right;
-    top: 77px;
-    left: 147px;
+    top: 223px;
+    left: 132px;
 }
 
 .lip_left{
@@ -111,7 +110,7 @@
 
 .leg{
     position: absolute;
-    background-color: rgb(248, 182, 0);
+    background-color: rgb(255, 217, 0);
     width: 25px;
     height: 53px;
     border-radius: 10% 10% 25% 25%;
