@@ -34,9 +34,22 @@ function eyesColor(color,code) {
 }
 
 function earsColor(color,code) {
-    $('.cat__ear--left-inside, .cat__ear--right-inside, .cat__paw-left, .cat__paw-right, .cat__paw-right_inner, .cat__paw-left_inner, .cat__head-dots, .cat__head-dots_first, .cat__head-dots_second').css('background', '#' + color)
+    $('.cat__ear--left-inside, .cat__ear--right-inside, .cat__paw-left, .cat__paw-right, .cat__paw-right_inner, .cat__paw-left_inner').css('background', '#' + color)
     $('#earsCode').html('code: '+code)
     $('#dnaears').html(code)
+}
+
+function markingsMidColor(color, code) {
+    $('.cat__head-dots').css('background', '#' + color)
+    $('#markingsMidCode').html('code: '+code)
+    $('#dnaMarkingsMid').html(code)
+}
+
+function markingsOuterColor(color, code) {
+    $('.cat__head-dots_first').css('background', '#' + color)
+    $('.cat__head-dots_second').css('background', '#' + color)
+    $('#markingsOuterCode').html('code: '+code)
+    $('#dnaMarkingsOuter').html(code)
 }
 
 //###################################################
@@ -83,12 +96,36 @@ function eyeVariation(num) {
     }
 }
 
-function decorationVariation(num) {
-    $('#dnadecoration').html(num)
+function markingsVariation(num) {
+    $('#dnaMarkingsShape').html(num)
     switch (num) {
         case 1:
-            $('#decorationName').html('Basic')
-            normaldecoration()
+            $('#markingsName').html('Basic')
+            normalMarkings()
+            break
+        case 2:
+            $('#markingsName').html('Long')
+            markings2()
+            break
+        case 3:
+            $('#markingsName').html('Long Outwards')
+            markings3()
+            break
+        case 4:
+            $('#markingsName').html('Long Inwards')
+            markings4()
+            break
+        case 5:
+            $('#markingsName').html('Short')
+            markings5()
+            break
+        case 6:
+            $('#markingsName').html('Short Outwards')
+            markings6()
+            break
+        case 7:
+            $('#markingsName').html('Short Inwards')
+            markings7()
             break
     }
 }
@@ -139,10 +176,61 @@ function eyesType7() {
 }
 
 
-async function normaldecoration() {
+async function normalMarkings() {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
     $('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     $('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
+
+async function markings2() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function markings3() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(-10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function markings4() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(-10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function markings5() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function markings6() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(-10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function markings7() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.cat__head-dots_first').css({ "transform": "rotate(-10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.cat__head-dots_second').css({ "transform": "rotate(10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+
+    

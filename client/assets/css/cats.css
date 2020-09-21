@@ -175,7 +175,7 @@ body {
     border-right: 14px solid rgba(255, 255, 255, 0);
     border-left: 14px solid rgba(255, 255, 255, 0);
     border-top: 14px solid #e57373;
-    border-radius: 40%;
+    border-radius: 50%;
     z-index: 100;
 }
 .cat__mouth-contour {
