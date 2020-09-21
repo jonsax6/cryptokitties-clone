@@ -212,6 +212,7 @@ body {
 .cat__whiskers-left, .cat__whiskers-right, .cat__whiskers-left::after, .cat__whiskers-right::after, .cat__whiskers-left::before, .cat__whiskers-right::before {
     width: 32px;
     height: 5px;
+    border-radius: 50%;
     background: #373737;
 }
 .cat__whiskers-left::before, .cat__whiskers-right::before, .cat__whiskers-left::after, .cat__whiskers-right::after {
