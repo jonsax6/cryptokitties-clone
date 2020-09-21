@@ -52,9 +52,123 @@ function markingsOuterColor(color, code) {
     $('#dnaMarkingsOuter').html(code)
 }
 
-//###################################################
-//Functions below will be used later on in the project
-//###################################################
+// funtions for animation
+function animationVariation (num) {
+    $('#dnaAnimation').html(num)
+    switch (num) {
+        case 1:
+            $('#animationName').html('Head')
+            animationType1()
+            break
+        case 2:
+            $('#animationName').html('Ears')
+            animationType2()
+            break
+        case 3:
+            $('#animationName').html('Tail')
+            animationType3()
+            break
+        case 4:
+            $('#animationName').html('Whiskers')
+            animationType4()
+            break
+        case 5:
+            $('#animationName').html('Paw Tapping')
+            animationType5()
+            break
+        case 6:
+            $('#animationName').html('Nose')
+            animationType6()
+            break
+    }
+}
+
+// cases 1-6
+function animationType1() {
+    $('#left_ears').removeClass('moving_Left_Ear')
+    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#tail').removeClass('tail_Rotation')
+    $('#whiskers_left').removeClass('twitch_Whiskers_Left')
+    $('#whiskers_right').removeClass('twitch_Whiskers_Right')
+    $('#right_paw').removeClass('tap_Right_Paw')
+    $('#nose').removeClass('nose_Wiggle')
+    $('#nose').removeClass('nose_Chest_Wiggle')
+    $('#chest').removeClass('nose_Chest_Wiggle')
+    $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#head').addClass('moving_Head');
+}
+
+function animationType2() {
+    $('#head').removeClass('moving_Head')
+    $('#tail').removeClass('tail_Rotation')
+    $('#whiskers_left').removeClass('twitch_Whiskers_Left')
+    $('#whiskers_right').removeClass('twitch_Whiskers_Right')
+    $('#right_paw').removeClass('tap_Right_Paw')
+    $('#nose').removeClass('nose_Wiggle')
+    $('#nose').removeClass('nose_Chest_Wiggle')
+    $('#chest').removeClass('nose_Chest_Wiggle')
+    $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#left_ears').addClass('moving_Left_Ear')
+    $('#right_ears').addClass('moving_Right_Ear')
+}
+
+function animationType3() {
+    $('#head').removeClass('moving_Head')
+    $('#left_ears').removeClass('moving_Left_Ear')
+    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#whiskers_left').removeClass('twitch_Whiskers_Left')
+    $('#whiskers_right').removeClass('twitch_Whiskers_Right')
+    $('#right_paw').removeClass('tap_Right_Paw')
+    $('#nose').removeClass('nose_Wiggle')
+    $('#nose').removeClass('nose_Chest_Wiggle')
+    $('#chest').removeClass('nose_Chest_Wiggle')
+    $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#tail').addClass('tail_Rotation')
+
+}
+
+function animationType4() {
+    $('#head').removeClass('moving_Head')
+    $('#left_ears').removeClass('moving_Left_Ear')
+    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#tail').removeClass('tail_Rotation')
+    $('#right_paw').removeClass('tap_Right_Paw')
+    $('#nose').removeClass('nose_Wiggle')
+    $('#nose').removeClass('nose_Chest_Wiggle')
+    $('#chest').removeClass('nose_Chest_Wiggle')
+    $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#whiskers_left').addClass('twitch_Whiskers_Left')
+    $('#whiskers_right').addClass('twitch_Whiskers_Right')
+}
+
+function animationType5() {
+    $('#head').removeClass('moving_Head')
+    $('#left_ears').removeClass('moving_Left_Ear')
+    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#tail').removeClass('tail_Rotation')
+    $('#whiskers_left').removeClass('twitch_Whiskers_Left')
+    $('#whiskers_right').removeClass('twitch_Whiskers_Right')
+    $('#nose').removeClass('nose_Wiggle')
+    $('#nose').removeClass('nose_Chest_Wiggle')
+    $('#chest').removeClass('nose_Chest_Wiggle')
+    $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#right_paw').addClass('tap_Right_Paw')
+}
+
+function animationType6() {
+    $('#head').removeClass('moving_Head')
+    $('#left_ears').removeClass('moving_Left_Ear')
+    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#tail').removeClass('tail_Rotation')
+    $('#whiskers_left').removeClass('twitch_Whiskers_Left')
+    $('#whiskers_right').removeClass('twitch_Whiskers_Right')
+    $('#right_paw').removeClass('tap_Right_Paw')
+    $('#nose').addClass('nose_Chest_Wiggle')
+    $('#chest').addClass('nose_Chest_Wiggle')
+    $('#belly').addClass('nose_Chest_Wiggle')
+}
+
+// functions for eye shape variations
 function eyeVariation(num) {
 
     $('#dnashape').html(num)
@@ -96,40 +210,7 @@ function eyeVariation(num) {
     }
 }
 
-function markingsVariation(num) {
-    $('#dnaMarkingsShape').html(num)
-    switch (num) {
-        case 1:
-            $('#markingsName').html('Basic')
-            normalMarkings()
-            break
-        case 2:
-            $('#markingsName').html('Long')
-            markings2()
-            break
-        case 3:
-            $('#markingsName').html('Long Outwards')
-            markings3()
-            break
-        case 4:
-            $('#markingsName').html('Long Inwards')
-            markings4()
-            break
-        case 5:
-            $('#markingsName').html('Short')
-            markings5()
-            break
-        case 6:
-            $('#markingsName').html('Short Outwards')
-            markings6()
-            break
-        case 7:
-            $('#markingsName').html('Short Inwards')
-            markings7()
-            break
-    }
-}
-
+// cases 1-7
 function normalEyes() {
     $('.cat__eye').find('span').css('border', 'none')
     $('.cat__eye span').removeClass('left');
@@ -175,7 +256,42 @@ function eyesType7() {
 
 }
 
+// functions for marking shape variateions
+function markingsVariation(num) {
+    $('#dnaMarkingsShape').html(num)
+    switch (num) {
+        case 1:
+            $('#markingsName').html('Basic')
+            normalMarkings()
+            break
+        case 2:
+            $('#markingsName').html('Long')
+            markings2()
+            break
+        case 3:
+            $('#markingsName').html('Long Outwards')
+            markings3()
+            break
+        case 4:
+            $('#markingsName').html('Long Inwards')
+            markings4()
+            break
+        case 5:
+            $('#markingsName').html('Short')
+            markings5()
+            break
+        case 6:
+            $('#markingsName').html('Short Outwards')
+            markings6()
+            break
+        case 7:
+            $('#markingsName').html('Short Inwards')
+            markings7()
+            break
+    }
+}
 
+// cases 1-7
 async function normalMarkings() {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
@@ -232,5 +348,3 @@ async function markings7() {
     $('.cat__head-dots_second').css({ "transform": "rotate(10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-
-    

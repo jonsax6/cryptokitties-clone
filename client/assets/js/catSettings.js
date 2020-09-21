@@ -3,7 +3,7 @@ var colors = Object.values(allColors())
 
 var defaultDNA = {
     "headcolor" : 24,
-    "mouthColor" : 13,
+    "mouthColor" : 22,
     "eyesColor" : 90,
     "earsColor" : 14,
     //Cattributes
@@ -11,7 +11,7 @@ var defaultDNA = {
     "markingsOuterColor" : 14,
     "eyesShape" : 5,
     "markingsShape" : 6,
-    "animation" :  1,
+    "animation" :  3,
     "lastNum" :  1
     }
 
@@ -26,7 +26,7 @@ $( document ).ready(function() {
   $('#dnamarkings').html(defaultDNA.markingsShape)
   $('#dnaMarkingsMid').html(defaultDNA.markingsMidColor)
   $('#dnaMarkingsOuter').html(defaultDNA.markingsOuterColor)
-  $('#dnaanimation').html(defaultDNA.animation)
+  $('#dnaAnimation').html(defaultDNA.animation)
   $('#dnaspecial').html(defaultDNA.lastNum)
 
   renderCat(defaultDNA)
@@ -42,7 +42,7 @@ function getDna(){
     dna += $('#dnaMarkingsShape').html()
     dna += $('#dnaMarkingsMid').html()
     dna += $('#dnaMarkingsSides').html()
-    dna += $('#dnaanimation').html()
+    dna += $('#dnaAnimation').html()
     dna += $('#dnaspecial').html()
 
     return parseInt(dna)
@@ -65,6 +65,8 @@ function renderCat(dna){
     $('#markingsMidColor').val(dna.markingsMidColor)
     markingsOuterColor(colors[dna.markingsOuterColor],dna.markingsOuterColor)
     $('#markingsOuterColor').val(dna.markingsOuterColor)
+    animationVariation(dna.animation)
+    $('#animation').val(dna.animation)
 }
 
 
@@ -91,8 +93,8 @@ $('#earsColor').change(()=>{
 
 // Changing catributes
 $('#eyesShape').change(()=>{
-  var shape = parseInt($('#eyesShape').val())
-  eyeVariation(shape)
+  var shapeVal = parseInt($('#eyesShape').val())
+  eyeVariation(shapeVal)
 })
 
 $('#markingsPattern').change(()=>{
@@ -108,4 +110,9 @@ $('#markingsMidColor').change(()=>{
 $('#markingsOuterColor').change(()=>{
   var colorVal = $('#markingsOuterColor').val()
   markingsOuterColor(colors[colorVal],colorVal)
+})
+
+$('#animation').change(()=>{
+  var animationVal = parseInt($('#animation').val())
+  animationVariation(animationVal)
 })

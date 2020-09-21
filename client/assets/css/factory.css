@@ -19,3 +19,14 @@
     bottom: 5px;
 
 }
+
+.markingsSpanRight {
+    width: 48%;
+    float: right;
+}
+
+.markingsSpanLeft {
+    width: 48%;
+    float: left;
+}
+

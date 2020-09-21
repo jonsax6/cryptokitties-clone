@@ -1,0 +1,131 @@
+.moving_Head {
+    animation: rotatePart 1s infinite;
+}
+
+.wiggle_Nose {
+    animation: wiggleNose 1s infinite;
+}
+
+.moving_Left_Ear {
+    animation: rotatePart 1s infinite;
+}
+
+.moving_Right_Ear {
+    animation: rotatePartOffset 1s infinite;
+}
+
+.tail_Rotation {
+    animation: tailWiggle 1s infinite;
+}
+
+.twitch_Whiskers_Right {
+    animation: whiskerTwitchRight 1s infinite;
+}
+
+.twitch_Whiskers_Left {
+    animation: whiskerTwitchLeft 1s infinite;
+}
+
+.tap_Right_Paw {
+    animation: tapPaw .5s infinite;
+}
+
+.nose_Chest_Wiggle {
+    animation: wiggleNose 1s infinite;
+}
+
+@keyframes rotatePart {
+    0% {
+        transform: rotate(-2deg);
+    }
+    50% {
+        transform: rotate(2deg);
+    }
+    100% {
+        transform: rotate(-2deg);
+    }
+}
+
+@keyframes rotatePartOffset {
+    0% {
+        transform: rotate(2deg);
+    }
+    50% {
+        transform: rotate(-2deg);
+    }
+    100% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes wiggleNose {
+    0% {
+        transform: rotate(10deg);
+    }
+    50% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes tailWiggle {
+    0% {
+        transform: rotate(-50deg);
+    }
+    50% {
+        transform: rotate(-40deg);
+    }
+    100% {
+        transform: rotate(-50deg);
+    }
+}
+
+@keyframes whiskerTwitchRight {
+    0% {
+        transform: rotate(6deg);
+    }
+    50% {
+        transform: rotate(-6deg);
+    }
+    100% {
+        transform: rotate(6deg);
+    }
+}
+
+@keyframes whiskerTwitchLeft {
+    0% {
+        transform: rotate(-6deg);
+    }
+    50% {
+        transform: rotate(6deg);
+    }
+    100% {
+        transform: rotate(-6deg);
+    }
+}
+
+@keyframes tapPaw {
+    0% {
+        top: 20px;
+    }
+    50% {
+        top: 24px;
+    }
+    100% {
+        top: 20px;
+    }
+}
+
+@keyframes wiggleNose {
+    0% {
+        transform: rotate(-8deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+    100% {
+        transform: rotate(-8deg);
+    }
+}
