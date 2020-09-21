@@ -50,6 +50,36 @@ function eyeVariation(num) {
             normalEyes()
             $('#eyeName').html('Basic')
             break
+        case 2:
+            normalEyes()
+            $('#eyeName').html('Chill')
+            return eyesType2()
+            break
+        case 3:
+            normalEyes()
+            $('#eyeName').html('Suspicious')
+            return eyesType3()
+            break
+        case 4:
+            normalEyes()
+            $('#eyeName').html('Guilty')
+            return eyesType4()
+            break
+        case 5:
+            normalEyes()
+            $('#eyeName').html('Dozing')
+            return eyesType5()
+            break
+        case 6:
+            normalEyes()
+            $('#eyeName').html('Left')
+            return eyesType6()
+            break
+        case 7:
+            normalEyes()
+            $('#eyeName').html('Right') 
+            return eyesType7()
+            break
     }
 }
 
@@ -63,9 +93,51 @@ function decorationVariation(num) {
     }
 }
 
-async function normalEyes() {
-    await $('.cat__eye').find('span').css('border', 'none')
+function normalEyes() {
+    $('.cat__eye').find('span').css('border', 'none')
+    $('.cat__eye span').removeClass('left');
+    $('.cat__eye span').removeClass('up');
 }
+
+function eyesType2() {
+    $('.cat__eye').find('span').css('border-top', '15px solid')
+    $('.cat__eye span').removeClass('left');
+    $('.cat__eye span').removeClass('up');
+}
+
+function eyesType3() {
+    $('.cat__eye').find('span').css('border-top', '10px solid')
+    $('.cat__eye').find('span').css('border-bottom', '10px solid')
+    $('.cat__eye span').removeClass('left');
+    $('.cat__eye span').removeClass('up');
+
+}
+
+function eyesType4() {
+    $('.cat__eye').find('span').css('border-bottom', '10px solid')
+    $('.cat__eye span').addClass('up');
+    $('.cat__eye span').addClass('left');
+}
+
+function eyesType5() {
+    $('.cat__eye').find('span').css('border-top', '20px solid')
+    $('.cat__eye span').removeClass('left');
+    $('.cat__eye span').removeClass('up');
+}
+
+function eyesType6() {
+    $('.cat__eye').find('span').css('border-left', '10px solid')
+    $('.cat__eye span').removeClass('left');
+    $('.cat__eye span').removeClass('up');
+}
+
+function eyesType7() {
+    $('.cat__eye').find('span').css('border-right', '10px solid')
+    $('.cat__eye span').addClass('left');
+    $('.cat__eye span').removeClass('up');
+
+}
+
 
 async function normaldecoration() {
     //Remove all style from other decorations

@@ -119,15 +119,38 @@ body {
 }
 .cat__eye span::after {
     content: '';
-    top: 8px;
-    left: 8px;
+    top: 12px;
+    left: 12px;
     position: absolute;
     width: 10px;
     height: 10px;
     border-radius: 50%;
     background: #fff;
 }
-.cat__eye span::before {
+
+.cat__eye span.left::after {
+    content: '';
+    top: 12px;
+    left: 5px;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.cat__eye span.up::after {
+    content: '';
+    top: 5px;
+    left: 5px;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+/* .cat__eye span::before {
     content: '';
     top: 20px;
     left: 8px;
@@ -136,7 +159,7 @@ body {
     height: 6px;
     border-radius: 50%;
     background: #fff;
-}
+}*/
 .cat__eye span.pupil-left {
     left: 42px;
 }
