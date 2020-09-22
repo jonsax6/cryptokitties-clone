@@ -77,7 +77,7 @@ function animationVariation (num) {
             animationType5()
             break
         case 6:
-            $('#animationName').html('Nose')
+            $('#animationName').html('Nose & Torso')
             animationType6()
             break
     }
@@ -85,8 +85,8 @@ function animationVariation (num) {
 
 // cases 1-6
 function animationType1() {
-    $('#left_ears').removeClass('moving_Left_Ear')
-    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#leftEar').removeClass('moving_Left_Ear')
+    $('#rightEar').removeClass('moving_Right_Ear')
     $('#tail').removeClass('tail_Rotation')
     $('#whiskers_left').removeClass('twitch_Whiskers_Left')
     $('#whiskers_right').removeClass('twitch_Whiskers_Right')
@@ -95,11 +95,13 @@ function animationType1() {
     $('#nose').removeClass('nose_Chest_Wiggle')
     $('#chest').removeClass('nose_Chest_Wiggle')
     $('#belly').removeClass('nose_Chest_Wiggle')
-    $('#head').addClass('moving_Head');
+    $('#leftEar').removeClass('perky_Ear_Left')
+    $('#rightEar').removeClass('perky_Ear_Right')
+    $('#head_and_ears').addClass('moving_Head');
 }
 
 function animationType2() {
-    $('#head').removeClass('moving_Head')
+    $('#head_and_ears').removeClass('moving_Head')
     $('#tail').removeClass('tail_Rotation')
     $('#whiskers_left').removeClass('twitch_Whiskers_Left')
     $('#whiskers_right').removeClass('twitch_Whiskers_Right')
@@ -108,14 +110,16 @@ function animationType2() {
     $('#nose').removeClass('nose_Chest_Wiggle')
     $('#chest').removeClass('nose_Chest_Wiggle')
     $('#belly').removeClass('nose_Chest_Wiggle')
-    $('#left_ears').addClass('moving_Left_Ear')
-    $('#right_ears').addClass('moving_Right_Ear')
+    $('#leftEar').removeClass('perky_Ear_Left')
+    $('#rightEar').removeClass('perky_Ear_Right')
+    $('#leftEar').addClass('moving_Left_Ear')
+    $('#rightEar').addClass('moving_Right_Ear')
 }
 
 function animationType3() {
-    $('#head').removeClass('moving_Head')
-    $('#left_ears').removeClass('moving_Left_Ear')
-    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#head_and_ears').removeClass('moving_Head')
+    $('#leftEar').removeClass('moving_Left_Ear')
+    $('#rightEar').removeClass('moving_Right_Ear')
     $('#whiskers_left').removeClass('twitch_Whiskers_Left')
     $('#whiskers_right').removeClass('twitch_Whiskers_Right')
     $('#right_paw').removeClass('tap_Right_Paw')
@@ -123,28 +127,32 @@ function animationType3() {
     $('#nose').removeClass('nose_Chest_Wiggle')
     $('#chest').removeClass('nose_Chest_Wiggle')
     $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#leftEar').addClass('perky_Ear_Left')
+    $('#rightEar').addClass('perky_Ear_Right')
     $('#tail').addClass('tail_Rotation')
 
 }
 
 function animationType4() {
-    $('#head').removeClass('moving_Head')
-    $('#left_ears').removeClass('moving_Left_Ear')
-    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#head_and_ears').removeClass('moving_Head')
+    $('#leftEar').removeClass('moving_Left_Ear')
+    $('#rightEar').removeClass('moving_Right_Ear')
     $('#tail').removeClass('tail_Rotation')
     $('#right_paw').removeClass('tap_Right_Paw')
     $('#nose').removeClass('nose_Wiggle')
     $('#nose').removeClass('nose_Chest_Wiggle')
     $('#chest').removeClass('nose_Chest_Wiggle')
     $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#leftEar').removeClass('perky_Ear_Left')
+    $('#rightEar').removeClass('perky_Ear_Right')
     $('#whiskers_left').addClass('twitch_Whiskers_Left')
     $('#whiskers_right').addClass('twitch_Whiskers_Right')
 }
 
 function animationType5() {
-    $('#head').removeClass('moving_Head')
-    $('#left_ears').removeClass('moving_Left_Ear')
-    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#head_and_ears').removeClass('moving_Head')
+    $('#leftEar').removeClass('moving_Left_Ear')
+    $('#rightEar').removeClass('moving_Right_Ear')
     $('#tail').removeClass('tail_Rotation')
     $('#whiskers_left').removeClass('twitch_Whiskers_Left')
     $('#whiskers_right').removeClass('twitch_Whiskers_Right')
@@ -152,17 +160,21 @@ function animationType5() {
     $('#nose').removeClass('nose_Chest_Wiggle')
     $('#chest').removeClass('nose_Chest_Wiggle')
     $('#belly').removeClass('nose_Chest_Wiggle')
+    $('#leftEar').addClass('perky_Ear_Left')
+    $('#rightEar').addClass('perky_Ear_Right')
     $('#right_paw').addClass('tap_Right_Paw')
 }
 
 function animationType6() {
-    $('#head').removeClass('moving_Head')
-    $('#left_ears').removeClass('moving_Left_Ear')
-    $('#right_ears').removeClass('moving_Right_Ear')
+    $('#head_and_ears').removeClass('moving_Head')
+    $('#leftEar').removeClass('moving_Left_Ear')
+    $('#rightEar').removeClass('moving_Right_Ear')
     $('#tail').removeClass('tail_Rotation')
     $('#whiskers_left').removeClass('twitch_Whiskers_Left')
     $('#whiskers_right').removeClass('twitch_Whiskers_Right')
     $('#right_paw').removeClass('tap_Right_Paw')
+    $('#leftEar').removeClass('perky_Ear_Left')
+    $('#rightEar').removeClass('perky_Ear_Right')
     $('#nose').addClass('nose_Chest_Wiggle')
     $('#chest').addClass('nose_Chest_Wiggle')
     $('#belly').addClass('nose_Chest_Wiggle')

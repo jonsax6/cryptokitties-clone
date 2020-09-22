@@ -7,7 +7,7 @@ var defaultDNA = {
     "eyesColor" : 90,
     "earsColor" : 14,
     //Cattributes
-    "markingsMidColor" : 8,
+    "markingsMidColor" : 22,
     "markingsOuterColor" : 14,
     "eyesShape" : 5,
     "markingsShape" : 6,

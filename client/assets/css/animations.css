@@ -1,5 +1,8 @@
 .moving_Head {
-    animation: rotatePart 1s infinite;
+    animation: rotateHead 4s infinite;
+    position: relative;
+    width: 231px;
+    z-index: 4;
 }
 
 .wiggle_Nose {
@@ -7,11 +10,11 @@
 }
 
 .moving_Left_Ear {
-    animation: rotatePart 1s infinite;
+    animation: rotateLeftEar 1s infinite;
 }
 
 .moving_Right_Ear {
-    animation: rotatePartOffset 1s infinite;
+    animation: rotateRightEar 1s infinite;
 }
 
 .tail_Rotation {
@@ -34,11 +37,19 @@
     animation: wiggleNose 1s infinite;
 }
 
-@keyframes rotatePart {
-    0% {
+.perky_Ear_Left {
+    transform: scale(-1, 1) rotate(165deg);
+}
+
+.perky_Ear_Right {
+    transform: rotate(165deg);
+}
+
+@keyframes rotateHead {
+    0%, 10%, 40% {
         transform: rotate(-2deg);
     }
-    50% {
+    50%, 90% {
         transform: rotate(2deg);
     }
     100% {
@@ -46,15 +57,39 @@
     }
 }
 
-@keyframes rotatePartOffset {
-    0% {
+@keyframes rotateEars {
+    0%, 10%, 40% {
         transform: rotate(2deg);
     }
-    50% {
+    50%, 90% {
         transform: rotate(-2deg);
     }
     100% {
         transform: rotate(2deg);
+    }
+}
+
+@keyframes rotateLeftEar {
+    0% {
+        transform: scale(-1, 1) rotate(170deg);
+    }
+    50% {
+        transform: scale(-1, 1) rotate(175deg);
+    }
+    100% {
+        transform: scale(-1, 1) rotate(170deg);
+    }
+}
+
+@keyframes rotateRightEar {
+    0% {
+        transform: rotate(170deg);
+    }
+    50% {
+        transform: rotate(175deg);
+    }
+    100% {
+        transform: rotate(170deg);
     }
 }
 
