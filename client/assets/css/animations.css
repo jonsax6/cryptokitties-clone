@@ -15,7 +15,7 @@
 }
 
 .tail_Rotation {
-    animation: tailWiggle 1s infinite;
+    animation: tailWiggle 0.5s infinite;
 }
 
 .twitch_Whiskers_Right {
@@ -27,7 +27,7 @@
 }
 
 .tap_Right_Paw {
-    animation: tapPaw .5s infinite;
+    animation: tapPaw 0.5s infinite;
 }
 
 .nose_Chest_Wiggle {
