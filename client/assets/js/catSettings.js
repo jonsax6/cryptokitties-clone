@@ -2,18 +2,35 @@
 var colors = Object.values(allColors())
 
 var defaultDNA = {
-    "headcolor" : 24,
-    "mouthColor" : 22,
-    "eyesColor" : 90,
-    "earsColor" : 14,
+    //Colors
+    "headcolor" : 53,
+    "mouthColor" : 68,
+    "eyesColor" : 29,
+    "earsColor" : 85,
     //Cattributes
-    "markingsMidColor" : 22,
-    "markingsOuterColor" : 14,
-    "eyesShape" : 5,
+    "markingsMidColor" : 54,
+    "markingsOuterColor" : 52,
+    "eyesShape" : 2,
     "markingsShape" : 6,
-    "animation" :  3,
+    "animation" :  1,
     "lastNum" :  1
     }
+
+var randomDNA = {
+    //Colors
+    "headcolor" : Math.floor(Math.random() * 89) + 10,
+    "mouthColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesColor" : Math.floor(Math.random() * 89) + 10,
+    "earsColor" : Math.floor(Math.random() * 89) + 10,
+    //Cattributes
+    "markingsMidColor" : Math.floor(Math.random() * 89) + 10,
+    "markingsOuterColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesShape" : Math.floor(Math.random() * 7) + 1,
+    "markingsShape" : Math.floor(Math.random() * 7) + 1,
+    "animation" :  Math.floor(Math.random() * 6) + 1,
+    "lastNum" :  1  
+}
+
 
 // when page load
 $( document ).ready(function() {
@@ -46,6 +63,24 @@ function getDna(){
     dna += $('#dnaspecial').html()
 
     return parseInt(dna)
+}
+
+function randomCat(){
+  var randomDNA = {
+    //Colors
+    "headcolor" : Math.floor(Math.random() * 89) + 10,
+    "mouthColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesColor" : Math.floor(Math.random() * 89) + 10,
+    "earsColor" : Math.floor(Math.random() * 89) + 10,
+    //Cattributes
+    "markingsMidColor" : Math.floor(Math.random() * 89) + 10,
+    "markingsOuterColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesShape" : Math.floor(Math.random() * 7) + 1,
+    "markingsShape" : Math.floor(Math.random() * 7) + 1,
+    "animation" :  Math.floor(Math.random() * 6) + 1,
+    "lastNum" :  1  
+  }
+  renderCat(randomDNA)
 }
 
 function renderCat(dna){
@@ -115,4 +150,16 @@ $('#markingsOuterColor').change(()=>{
 $('#animation').change(()=>{
   var animationVal = parseInt($('#animation').val())
   animationVariation(animationVal)
+})
+
+$('#defaultCat').click(()=>{
+  renderCat(defaultDNA)
+})
+
+$('#randomCat').click(()=>{
+  randomCat();
+})
+
+$('#birthCat').click(()=>{
+  //birth cat code here
 })

@@ -20,13 +20,24 @@
 
 }
 
-.markingsSpanRight {
+.cattributesSpanRight {
     width: 48%;
     float: right;
 }
 
-.markingsSpanLeft {
+.cattributesSpanLeft {
     width: 48%;
     float: left;
 }
 
+.botton_left {
+    float: left;
+}
+
+.button_right {
+    float: right;
+}
+
+.generator_buttons {
+    display: inline-block;
+}
