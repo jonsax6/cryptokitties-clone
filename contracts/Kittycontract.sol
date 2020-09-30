@@ -28,8 +28,8 @@ contract Kittycontract is IERC721 {
         return ownershipTokenCount[owner];
     }
 
-    function totalSupply() external view returns (uint256 total) {
-        return _totalSupply;
+    function totalSupply() public view returns (uint256 total) {
+        return kitties.length;    
     }
 
     function name() external view returns (string memory tokenName) {
@@ -40,17 +40,31 @@ contract Kittycontract is IERC721 {
         return _symbol;
     }
 
-    function ownerOf(uint256 tokenId) external view returns (address owner) {
-        require(kitties[tokenId].birthTime != 0);
-        return kittyIndexToOwner[tokenId];
+    function ownerOf(uint256 _tokenId) external view returns (address) {
+        return kittyIndexToOwner[_tokenId];
     }
 
-    function transfer(address to, uint256 tokenId) external {
-        require(to != address(0), "sent to the zero address");
-        require(to != address(this), "sent to contract address");
-        require(kittyIndexToOwner[tokenId] == msg.sender);
+    function transfer(address _to, uint256 _tokenId) external {
+        require(_to != address(0));
+        require(_to != address(this));
+        require(_owns(msg.sender, _tokenId));
 
-        kittyIndexToOwner[tokenId] = to;
-        emit Transfer(address(msg.sender), address(to), tokenId);
+        _transfer(msg.sender, _to, _tokenId);
+    }
+
+    function _transfer(address _to, address _from, uint256 _tokenId) internal {
+        ownershipTokenCount[_to]++;
+
+        kittyIndexToOwner[_tokenId] = _to;
+        
+        if(_from != address(0)){
+            ownershipTokenCount[_from]--;
+        }
+        // Emit transfer event
+        emit Transfer(_from, _to, _tokenId);
+    }
+
+    function _owns(address _sender, uint256 _tokenId) internal view returns (bool) {
+        return kittyIndexToOwner[_tokenId] == _sender;
     }
 }
