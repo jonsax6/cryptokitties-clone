@@ -1,6 +1,5 @@
 const Token = artifacts.require("Kittycontract");
 
-module.exports = async (deployer) => {
+module.exports = function(deployer){
     deployer.deploy(Token);
-    const instance = await Token.deployed();
 };
