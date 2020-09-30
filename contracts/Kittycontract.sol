@@ -8,10 +8,6 @@ contract Kittycontract is IERC721 {
     string public constant _symbol = "JCK";
     address contractAddress;
 
-    constructor (address ctract_address) public {
-        contractAddress = ctract_address;
-    }
-
     struct Kitty {
         uint256 genes;
         uint64 birthTime;
@@ -51,7 +47,7 @@ contract Kittycontract is IERC721 {
 
     function transfer(address to, uint256 tokenId) external {
         require(to != address(0), "sent to the zero address");
-        require(to != address(contractAddress), "sent to contract address");
+        require(to != address(this), "sent to contract address");
         require(kittyIndexToOwner[tokenId] == msg.sender);
 
         kittyIndexToOwner[tokenId] = to;
