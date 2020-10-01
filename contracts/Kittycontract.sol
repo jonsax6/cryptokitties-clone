@@ -34,7 +34,7 @@ contract Kittycontract is IERC721, Ownable {
 
     uint256 public gen0Counter;
 
-    function _creatKittyGen0(uint256 _genes) public onlyOwner {
+    function creatKittyGen0(uint256 _genes) public onlyOwner {
         require(gen0Counter < CREATION_LIMIT_GEN0);
 
         gen0Counter++;
@@ -65,6 +65,23 @@ contract Kittycontract is IERC721, Ownable {
         _transfer(address(0), _owner, newKittenId);
 
         return newKittenId;
+    } 
+
+    function getKitty(uint256 _id) external view returns (
+        uint256 genes,
+        uint256 birthTime,
+        uint256 momId,
+        uint256 dadId,
+        uint256 generation
+    ) 
+    {
+        Kitty storage kitty = kitties[_id];
+
+        genes = kitty.genes;
+        birthTime = uint256(kitty.birthTime);
+        momId = uint256(kitty.momId);
+        dadId = uint256(kitty.dadId);
+        generation = uint256(kitty.generation);
     }
 
     function balanceOf(address owner) external view returns (uint256 balance) {
