@@ -24,33 +24,56 @@ contract Kittycontract is IERC721 {
     mapping(address => uint256) ownershipTokenCount;
 
 
-    function balanceOf(address owner) external view returns (uint256 balance) {
+    function balanceOf(address owner) external view returns (uint256 balance) 
+    {
         return ownershipTokenCount[owner];
     }
 
-    function totalSupply() external view returns (uint256 total) {
-        return _totalSupply;
+    function totalSupply() public view returns (uint256) 
+    {
+        return kitties.length;
     }
 
-    function name() external view returns (string memory tokenName) {
+    function name() external view returns (string memory) 
+    {
         return _name;
     }
 
-    function symbol() external view returns (string memory tokenSymbol) {
+    function symbol() external view returns (string memory tokenSymbol) 
+    {
         return _symbol;
     }
 
-    function ownerOf(uint256 tokenId) external view returns (address owner) {
-        require(kitties[tokenId].birthTime != 0);
-        return kittyIndexToOwner[tokenId];
+    function ownerOf(uint256 _tokenId) external view returns (address) 
+    {
+         return kittyIndexToOwner[_tokenId];
     }
 
-    function transfer(address to, uint256 tokenId) external {
-        require(to != address(0), "sent to the zero address");
-        require(to != address(this), "sent to contract address");
-        require(kittyIndexToOwner[tokenId] == msg.sender);
+    function transfer(address _to, uint256 _tokenId) external 
+    {
+        require(_to != address(0), "sent to the zero address");
+        require(_to != address(this), "sent to contract address");
+        require(_owns(msg.sender, _tokenId));
 
-        kittyIndexToOwner[tokenId] = to;
-        emit Transfer(address(msg.sender), address(to), tokenId);
+        _transfer(msg.sender, _to, _tokenId);
+    }
+
+    function _transfer(address _from, address _to, uint256 _tokenId) internal
+    {
+        ownershipTokenCount[_to]++;
+
+        kittyIndexToOwner[_tokenId] = _to;
+
+        if (_from != address(0)) {
+            ownershipTokenCount[_from]--;
+        }
+
+        // Emit the transfer event
+        emit Transfer(_from, _to, _tokenId);
+    }
+
+    function _owns(address _claimant, uint256 _tokenId) internal view returns (bool)
+    {
+        return kittyIndexToOwner[_tokenId] == _claimant;
     }
 }
