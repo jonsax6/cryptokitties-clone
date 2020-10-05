@@ -115,7 +115,7 @@ contract Kittycontract is IERC721, Ownable {
         _transfer(msg.sender, _to, _tokenId);
     }
 
-    function _transfer(address _to, address _from, uint256 _tokenId) internal {
+    function _transfer(address _from, address _to, uint256 _tokenId) internal {
         ownershipTokenCount[_to]++;
 
         kittyIndexToOwner[_tokenId] = _to;
