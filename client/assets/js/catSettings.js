@@ -65,6 +65,31 @@ function getDna(){
     return parseInt(dna)
 }
 
+function renderCat(dna){
+  headColor(colors[dna.headcolor],dna.headcolor)
+  $('#bodycolor').val(dna.headcolor)
+  mouthColor(colors[dna.mouthColor],dna.mouthColor)
+  $('#mouthColor').val(dna.mouthColor)
+  eyesColor(colors[dna.eyesColor],dna.eyesColor)
+  $('#eyesColor').val(dna.eyesColor)
+  earsColor(colors[dna.earsColor],dna.earsColor)
+  $('#earsColor').val(dna.earsColor)
+  eyeVariation(dna.eyesShape)
+  $('#eyesShape').val(dna.eyesShape)
+  markingsVariation(dna.markingsShape)
+  $('#markingsShape').val(dna.markingsShape)
+  markingsMidColor(colors[dna.markingsMidColor],dna.markingsMidColor)
+  $('#markingsMidColor').val(dna.markingsMidColor)
+  markingsOuterColor(colors[dna.markingsOuterColor],dna.markingsOuterColor)
+  $('#markingsOuterColor').val(dna.markingsOuterColor)
+  animationVariation(dna.animation)
+  $('#animation').val(dna.animation)
+}
+
+function defaultCat(){
+  renderCat(defaultDNA);
+}
+
 function randomCat(){
   var randomDNA = {
     //Colors
@@ -82,28 +107,6 @@ function randomCat(){
   }
   renderCat(randomDNA)
 }
-
-function renderCat(dna){
-    headColor(colors[dna.headcolor],dna.headcolor)
-    $('#bodycolor').val(dna.headcolor)
-    mouthColor(colors[dna.mouthColor],dna.mouthColor)
-    $('#mouthColor').val(dna.mouthColor)
-    eyesColor(colors[dna.eyesColor],dna.eyesColor)
-    $('#eyesColor').val(dna.eyesColor)
-    earsColor(colors[dna.earsColor],dna.earsColor)
-    $('#earsColor').val(dna.earsColor)
-    eyeVariation(dna.eyesShape)
-    $('#eyesShape').val(dna.eyesShape)
-    markingsVariation(dna.markingsShape)
-    $('#markingsShape').val(dna.markingsShape)
-    markingsMidColor(colors[dna.markingsMidColor],dna.markingsMidColor)
-    $('#markingsMidColor').val(dna.markingsMidColor)
-    markingsOuterColor(colors[dna.markingsOuterColor],dna.markingsOuterColor)
-    $('#markingsOuterColor').val(dna.markingsOuterColor)
-    animationVariation(dna.animation)
-    $('#animation').val(dna.animation)
-}
-
 
 // Changing cat colors
 $('#bodycolor').change(()=>{
@@ -150,16 +153,4 @@ $('#markingsOuterColor').change(()=>{
 $('#animation').change(()=>{
   var animationVal = parseInt($('#animation').val())
   animationVariation(animationVal)
-})
-
-$('#defaultCat').click(()=>{
-  renderCat(defaultDNA)
-})
-
-$('#randomCat').click(()=>{
-  randomCat();
-})
-
-$('#birthCat').click(()=>{
-  //birth cat code here
 })
