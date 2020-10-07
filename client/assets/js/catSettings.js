@@ -16,22 +16,6 @@ var defaultDNA = {
     "lastNum" :  1
     }
 
-var randomDNA = {
-    //Colors
-    "headcolor" : Math.floor(Math.random() * 89) + 10,
-    "mouthColor" : Math.floor(Math.random() * 89) + 10,
-    "eyesColor" : Math.floor(Math.random() * 89) + 10,
-    "earsColor" : Math.floor(Math.random() * 89) + 10,
-    //Cattributes
-    "markingsMidColor" : Math.floor(Math.random() * 89) + 10,
-    "markingsOuterColor" : Math.floor(Math.random() * 89) + 10,
-    "eyesShape" : Math.floor(Math.random() * 7) + 1,
-    "markingsShape" : Math.floor(Math.random() * 7) + 1,
-    "animation" :  Math.floor(Math.random() * 6) + 1,
-    "lastNum" :  1  
-}
-
-
 // when page load
 $( document ).ready(function() {
   $('#dnabody').html(defaultDNA.headColor);
@@ -58,7 +42,7 @@ function getDna(){
     dna += $('#dnashape').html()
     dna += $('#dnaMarkingsShape').html()
     dna += $('#dnaMarkingsMid').html()
-    dna += $('#dnaMarkingsSides').html()
+    dna += $('#dnaMarkingsOuter').html()
     dna += $('#dnaAnimation').html()
     dna += $('#dnaspecial').html()
 
