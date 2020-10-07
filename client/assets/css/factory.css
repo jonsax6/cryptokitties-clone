@@ -5,12 +5,14 @@
     padding-left: 65px;
     padding-bottom: 100px;
     height: 380px;
+    float: left;  
 }
 
 .cattributes {
     padding: 25px;
     background-color: #ededed;
     border-radius: 10px;
+    float: right;
 }
 
 .dnaDiv {
@@ -44,4 +46,5 @@
 
 .cattributes_tabs {
     background-color: #d8d8d8;
+    float: right;
 }

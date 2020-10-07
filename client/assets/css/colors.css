@@ -41,8 +41,24 @@
   .bg-white {
   
     background-color: #fff;
-
   }
+
+  .start-btn {
+    border-radius: 20px 20px 20px 20px;
+    background-color: #d57329;
+    border-color: transparent;
+  }
+  .navbar {
+    background-color: #82adc2;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .nav-container {
+    background-color: #82adc2;
+    border-color: transparent;
+    border-bottom-color: #5b7888;
+    border-style: solid; 
+    border-width: 2px; 
+  } 
 
   /* GRADIENT */
 
@@ -54,3 +70,6 @@
 
     background-image: linear-gradient(to right,#1b1b1b, #444444);
    }
+
+
+
