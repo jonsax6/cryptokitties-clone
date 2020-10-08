@@ -10,8 +10,75 @@ body {
   letter-spacing: 1px; 
 }
 
+.homepage-image {
+
+}
+
+.homepage-container {
+  display: flex;
+  justify-content: center;
+}
+
+.kitty-image-container {
+  justify-content: center;
+}
+
+.homepage-banner {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: #444444;
+  opacity: 50%;
+  height: 200px;
+  width: 1300px;
+  bottom: 30px;
+  border-radius: 20px;
+  z-index: 0;
+}
+
+.homepage-btn {
+  position: absolute;
+  display: flex;
+  height: 50px;
+  top: 640px;
+  z-index: 2;
+}
+
+.homepage-title {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  color: white;
+  border-radius: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  bottom: 550px;
+  z-index: 0;
+}
+
+.custom-shape-divider-bottom-1602163266 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-bottom-1602163266 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 200px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-bottom-1602163266 .shape-fill {
+  fill: #ffffff;
+}
+
 .navbar-light {
-  background: #ffffff;
+  background: #ff9645;
 }
 
 .fit-content {
