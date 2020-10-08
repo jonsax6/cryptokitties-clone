@@ -10,10 +10,6 @@ body {
   letter-spacing: 1px; 
 }
 
-.homepage-image {
-
-}
-
 .homepage-container {
   display: flex;
   justify-content: center;
