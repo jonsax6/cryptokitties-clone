@@ -33,22 +33,24 @@ body {
 }
 
 .homepage-btn {
-  position: absolute;
+  position: relative;
   display: flex;
   height: 50px;
-  top: 640px;
+  top: -120px;
+  right: 330px;
   z-index: 2;
 }
 
 .homepage-title {
   display: flex;
   justify-content: center;
-  position: absolute;
+  position: relative;
   color: white;
   border-radius: 20px;
   font-size: 2rem;
   font-weight: 700;
-  bottom: 550px;
+  bottom: 170px;
+  left: 85px;
   z-index: 0;
 }
 
