@@ -3,17 +3,17 @@ var colors = Object.values(allColors())
 
 var defaultDNA = {
     //Colors
-    "headcolor" : 53,
-    "mouthColor" : 68,
-    "eyesColor" : 29,
-    "earsColor" : 85,
+    headColor : 53,
+    mouthColor : 68,
+    eyesColor : 29,
+    earsColor : 85,
     //Cattributes
-    "markingsMidColor" : 54,
-    "markingsOuterColor" : 52,
-    "eyesShape" : 2,
-    "markingsShape" : 6,
-    "animation" :  1,
-    "lastNum" :  1
+    markingsMidColor : 54,
+    markingsOuterColor : 52,
+    eyesShape : 2,
+    markingsShape : 6,
+    animation :  1,
+    lastNum :  1
     }
 
 // when page load
@@ -50,8 +50,8 @@ function getDna(){
 }
 
 function renderCat(dna){
-  headColor(colors[dna.headcolor],dna.headcolor)
-  $('#bodycolor').val(dna.headcolor)
+  headColor(colors[dna.headColor],dna.headColor)
+  $('#bodycolor').val(dna.headColor)
   mouthColor(colors[dna.mouthColor],dna.mouthColor)
   $('#mouthColor').val(dna.mouthColor)
   eyesColor(colors[dna.eyesColor],dna.eyesColor)
@@ -77,17 +77,17 @@ function defaultCat(){
 function randomCat(){
   var randomDNA = {
     //Colors
-    "headcolor" : Math.floor(Math.random() * 89) + 10,
-    "mouthColor" : Math.floor(Math.random() * 89) + 10,
-    "eyesColor" : Math.floor(Math.random() * 89) + 10,
-    "earsColor" : Math.floor(Math.random() * 89) + 10,
+    headColor : Math.floor(Math.random() * 89) + 10,
+    mouthColor : Math.floor(Math.random() * 89) + 10,
+    eyesColor : Math.floor(Math.random() * 89) + 10,
+    earsColor : Math.floor(Math.random() * 89) + 10,
     //Cattributes
-    "markingsMidColor" : Math.floor(Math.random() * 89) + 10,
-    "markingsOuterColor" : Math.floor(Math.random() * 89) + 10,
-    "eyesShape" : Math.floor(Math.random() * 7) + 1,
-    "markingsShape" : Math.floor(Math.random() * 7) + 1,
-    "animation" :  Math.floor(Math.random() * 6) + 1,
-    "lastNum" :  1  
+    markingsMidColor : Math.floor(Math.random() * 89) + 10,
+    markingsOuterColor : Math.floor(Math.random() * 89) + 10,
+    eyesShape : Math.floor(Math.random() * 7) + 1,
+    markingsShape : Math.floor(Math.random() * 7) + 1,
+    animation :  Math.floor(Math.random() * 6) + 1,
+    lastNum :  1  
   }
   renderCat(randomDNA)
 }

@@ -84,6 +84,18 @@ contract Kittycontract is IERC721, Ownable {
         generation = uint256(kitty.generation);
     }
 
+    function getKittiesByUser(address user) public view returns (uint[] memory) {
+        uint[] memory userTokenIds = new uint[](ownershipTokenCount[user]);
+        uint counter = 0;
+        for(uint i = 0; i < kitties.length; i++){
+            if(kittyIndexToOwner[i] == user){
+                userTokenIds[counter] = i;
+                counter++;
+            }
+        }
+        return userTokenIds;
+    } 
+
     function balanceOf(address owner) external view returns (uint256 balance) 
     {
         return ownershipTokenCount[owner];
