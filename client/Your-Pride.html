@@ -52,13 +52,13 @@
         </div>
     </div>
     <div class="custom-shape-divider-bottom-1602163266">
-        <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
+        <div class="container mt-3 p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
             <div align="center">
-            <h1 class="c-white">Kittie Breeder</h1>
-            <p class="c-white">Breed your favorite Kitty</p>
+            <h1 class="c-white">See All Your Kitties</h1>
+            <p class="c-white">Your Purrrfect Family</p>
             </div>
-            <div class="row breeder-body">
-                <div class="col-lg-4 m-2 catBox float-right light-b-shadow">
+            <div class="row breeder-body" id="kitty-pride-grid">
+                <div class="col-lg-4 prideBox">
                     <div class="cat">
                         <div id="head_and_ears">
     
@@ -135,67 +135,9 @@
                         </b>
                     </div>
                 </div>
-                <div class="col-lg-7 m-2 cattributes float-left light-b-shadow">
-                    <nav>
-                        <div class="nav nav-pills primary breeder-body" id="nav-tab" role="tablist">
-                          <a class="nav-link active cattributes_tabs light-b-shadow" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><b>Colors</b></a>
-                          <a class="nav-link cattributes_tabs light-b-shadow" style="margin-right: 0px;" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><b>Cattributes</b></a>
-                        </div>
-                    </nav>
-                    <div class="tab-content cat_fonts" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="form-group cattributesSpanLeft mt-4">
-                                <label for="formControlRange"><b>Head & body</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
-                            </div>
-                            <div class="form-group cattributesSpanRight mt-4">
-                                <label for="formControlRange"><b>Mouth, Belly & Tail</b><span class="badge badge-dark ml-2" id="mouthCode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="mouthColor">
-                            </div>
-                            <div class="form-group cattributesSpanLeft">
-                                <label for="formControlRange"><b>Eyes</b><span class="badge badge-dark ml-2" id="eyesCode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="eyesColor">
-                            </div>
-                            <div class="form-group cattributesSpanRight">
-                                <label for="formControlRange"><b>Ears and Paws</b><span class="badge badge-dark ml-2" id="earsCode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="earsColor">
-                            </div>
-                            <div class="form-group cattributesSpanLeft">
-                                <label for="formControlRange"><b>Mid Mark</b><span class="badge badge-dark ml-2" id="markingsMidCode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="markingsMidColor">
-                            </div>
-                            <div class="form-group cattributesSpanRight">
-                                <label for="formControlRange"><b>Outer Mark</b><span class="badge badge-dark ml-2" id="markingsOuterCode"></span></label>
-                                <input type="range" min="10" max="98" class="form-control-range" id="markingsOuterColor">
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <div class="form-group mt-4">
-                                <label for="formControlRange"><b>Eyes Shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
-                                <input type="range" min="1" max="7" class="form-control-range" id="eyesShape">
-                            </div>
-                            <div class="form-group">
-                                <label for="formControlRange"><b>Markings Shape</b><span class="badge badge-dark ml-2" id="markingsName"></span></label>
-                                <input type="range" min="1" max="7" class="form-control-range" id="markingsPattern">
-                            </div>
-                            <div class="form-group">
-                                <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
-                                <input type="range" min="1" max="6" class="form-control-range" id="animation">
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
+
             </div>
-            <div class="row breeder-body">
-                <div class="col-lg-4 m-2">
-                    <button id="defaultCat" type="button" class="btn btn-primary generator_buttons light-b-shadow" onclick="defaultCat()"><b>Default</b></button>
-                    <button id="randomCat" type="button" class="btn btn-primary generator_buttons light-b-shadow float-right" onclick="randomCat()"><b>Random</b></button>
-                </div>
-                <div class="col-lg-7 m-2">
-                    <button id="birthCat" type="button" class="btn btn-success generator_buttons light-b-shadow float-right" onclick="createKitty()"><b>Create Kitty</b></button>
-                </div> 
-            </div>
+
             <div class="row">
                 <div class="col-lg-11 m-2">
                     <div class="alert alert-success" role="alert" id="kittyCreation" style="display:none"></div>

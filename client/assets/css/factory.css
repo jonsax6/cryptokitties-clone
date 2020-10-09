@@ -7,6 +7,18 @@
     height: 380px;  
 }
 
+.prideBox {
+    background-color: #68899b;
+    padding-top: 50px;
+    padding-left: 53px;
+    padding-bottom: 65px;
+    height: 400px;
+    border-style: solid;
+    border-width: 11px;
+    border-radius: 35px;
+    border-color: #607d8b;  
+}
+
 .cattributes {
     padding: 25px;
     background-color: #ededed;
@@ -44,5 +56,5 @@
 
 .cattributes_tabs {
     background-color: #d8d8d8;
-    float: right;
+    justify-content: center;
 }

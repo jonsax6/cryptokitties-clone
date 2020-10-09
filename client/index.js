@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x1F51FB2e9A7A090A2585dfFBD2fd071bF49d4aE7";
+var contractAddress = "0xad8055B4552cd21F119Bf0Ac9ae58a1475c0A8df";
 
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
@@ -20,11 +20,11 @@ $(document).ready(async function(){
         let genes = event.returnValues.genes;
         $("#kittyCreation").css("display", "block");
         $("#kittyCreation").html(`
-            <b>owner: ${owner}</b><br>
-            <b>kittenId: ${kittenId}</b><br>
-            <b>momId: ${momId}</b><br>
-            <b>dadId: ${dadId}</b><br>
-            <b>genes: ${genes}</b><br>`)
+            <b>kitten_Id: ${kittenId}, </b><br>
+            <b>owner: ${owner}, </b><br>
+            <b>mom_Id: ${momId}, </b><br>
+            <b>dad_Id: ${dadId}, </b><br>
+            <b>genes: ${genes}, </b>`)
     })
     .on('error', console.error);
 })

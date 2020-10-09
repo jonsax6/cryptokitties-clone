@@ -49,8 +49,8 @@ body {
   border-radius: 20px;
   font-size: 2rem;
   font-weight: 700;
-  bottom: 170px;
-  left: 85px;
+  bottom: 195px;
+  left: 100px;
   z-index: 0;
 }
 
@@ -60,7 +60,6 @@ body {
   left: 0;
   width: 100%;
   overflow: hidden;
-  line-height: 0;
 }
 
 .custom-shape-divider-bottom-1602163266 svg {
@@ -73,6 +72,10 @@ body {
 
 .custom-shape-divider-bottom-1602163266 .shape-fill {
   fill: #ffffff;
+}
+
+.breeder-body {
+  justify-content: center;
 }
 
 .navbar-light {

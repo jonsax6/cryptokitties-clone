@@ -138,3 +138,11 @@ $('#animation').change(()=>{
   var animationVal = parseInt($('#animation').val())
   animationVariation(animationVal)
 })
+
+$('#breeder-btn').click(()=>{
+  window.location.href='/client/breeder.html';
+})
+
+$('#homepage-btn').click(()=>{
+  window.location.href='/client/breeder.html';
+})
