@@ -5,7 +5,7 @@ import "./Ownable.sol";
 
 contract Kittycontract is IERC721, Ownable {
 
-    uint256 public constant CREATION_LIMIT_GEN0 = 10;
+    uint256 public constant CREATION_LIMIT_GEN0 = 100;
     string public constant _name = "JC_Kitties";
     string public constant _symbol = "JCK";
 
@@ -40,7 +40,7 @@ contract Kittycontract is IERC721, Ownable {
         gen0Counter++;
 
         // Gen0 have no owners they are owned by the contract
-        _createKitty(0, 0, 0, _genes, address(this));
+        _createKitty(0, 0, 0, _genes, msg.sender);
     }
 
     function _createKitty(

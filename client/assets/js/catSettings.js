@@ -32,7 +32,8 @@ $( document ).ready(function() {
   renderCat(defaultDNA)
 });
 
-// creates the DNA string and then parseInt into an integer.  /index.js createKitty() to send DNA integer to createKittyGen0() function call in Kittycontract.sol 
+// creates the DNA string and then parseInt into an integer.  
+// index.js createKitty() to send DNA integer to createKittyGen0() function call in Kittycontract.sol 
 function getDna(){
     var dna = ''
     dna += $('#dnabody').html()

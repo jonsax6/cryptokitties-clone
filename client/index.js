@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x0C3840AAF7E65e104f3171d546253d62d0758610";
+var contractAddress = "0xe004125b1ce5EBB09103E161Fa2780DE4B11E217";
 
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
@@ -27,6 +27,8 @@ $(document).ready(async function(){
             <b>genes: ${genes}, </b>`)
     })
     .on('error', console.error);
+
+    fetchCats(user);
 })
 
 function createKitty(){

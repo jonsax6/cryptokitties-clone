@@ -1,14 +1,14 @@
 var colors = Object.values(allColors())
 
 function renderCat(dna, id){
-  headColor(colors[dna.headColor],dna.headColor, id)
-  mouthColor(colors[dna.mouthColor],dna.mouthColor, id)
-  eyesColor(colors[dna.eyesColor],dna.eyesColor, id)
-  earsColor(colors[dna.earsColor],dna.earsColor, id)
+  headColor(colors[dna.headColor], id)
+  mouthColor(colors[dna.mouthColor], id)
+  eyesColor(colors[dna.eyesColor], id)
+  earsColor(colors[dna.earsColor], id)
   eyeVariation(dna.eyesShape, id)
   markingsVariation(dna.markingsShape, id)
-  markingsMidColor(colors[dna.markingsMidColor],dna.markingsMidColor, id)
-  markingsOuterColor(colors[dna.markingsOuterColor],dna.markingsOuterColor, id)
+  markingsMidColor(colors[dna.markingsMidColor], id)
+  markingsOuterColor(colors[dna.markingsOuterColor], id)
   animationVariation(dna.animation, id)
 }
 
@@ -21,73 +21,32 @@ $(`#homepage-btn`).click(()=>{
 })
 
 //These functions create each kitty's various css stylings according to id
-function headColor(color,code, id) {
+function headColor(color, id) {
     $(`#head${id}, #chest${id}, #left_ear${id}, #right_ear${id}`).css('background', '#' + color)  //This changes the color of the cat
-    $(`#headcode${id}`).html('code: '+code) //This updates text of the badge next to the slider
-    $(`#dnabody${id}`).html(code) //This updates the body color part of the DNA that is displayed below the cat
 }
 
-function mouthColor(color,code, id) {
+function mouthColor(color, id) {
     $(`#mouth_contour${id}, #belly${id}, #tail${id}`).css('background', '#' + color)
-    $(`#mouthCode${id}`).html('code: '+code)
-    $(`#dnamouth${id}`).html(code)
 }
 
-function eyesColor(color,code, id) {
+function eyesColor(color, id) {
     $(`#left_pupil${id}, #right_pupil${id}`).css('background', '#' + color)
-    $(`#eyesCode${id}`).html('code: '+code)
-    $(`#dnaeyes${id}`).html(code)
 }
 
-function earsColor(color,code, id) {
+function earsColor(color, id) {
     $(`#left_ear_inside${id}, #right_ear_inside${id}, #left_paw${id}, #right_paw${id}, #right_paw_inner${id}, #paw_left_inner${id}`).css('background', '#' + color)
-    $(`#earsCode${id}`).html('code: '+code)
-    $(`#dnaears${id}`).html(code)
 }
 
-function markingsMidColor(color, code, id) {
+function markingsMidColor(color, id) {
     $(`#mid-dot${id}`).css('background', '#' + color)
-    $(`#markingsMidCode${id}`).html('code: '+code)
-    $(`#dnaMarkingsMid${id}`).html(code)
 }
 
-function markingsOuterColor(color, code, id) {
+function markingsOuterColor(color, id) {
     $(`#left_dot${id}`).css('background', '#' + color)
     $(`#right_dot${id}`).css('background', '#' + color)
-    $(`#markingsOuterCode${id}`).html('code: '+code)
-    $(`#dnaMarkingsOuter${id}`).html(code)
 }
 
 // funtions for animation
-function animationVariation (num, id) {
-    $(`#dnaAnimation${id}`).html(num)
-    switch (num) {
-        case 1:
-            $(`#animationName${id}`).html('Head')
-            animationType1()
-            break
-        case 2:
-            $(`#animationName${id}`).html('Ears')
-            animationType2()
-            break
-        case 3:
-            $(`#animationName${id}`).html('Tail')
-            animationType3()
-            break
-        case 4:
-            $(`#animationName${id}`).html('Whiskers')
-            animationType4()
-            break
-        case 5:
-            $(`#animationName${id}`).html('Paw Tapping')
-            animationType5()
-            break
-        case 6:
-            $(`#animationName${id}`).html('Nose & Torso')
-            animationType6()
-            break
-    }
-}
 
 // cases 1-6
 function animationType1(id) {
@@ -186,6 +145,29 @@ function animationType6(id) {
     $(`#belly${id}`).addClass(`nose_Chest_Wiggle`)
 }
 
+function animationVariation (num, id) {
+    switch (num) {
+        case 1:
+            animationType1(id)
+            break
+        case 2:
+            animationType2(id)
+            break
+        case 3:
+            animationType3(id)
+            break
+        case 4:
+            animationType4(id)
+            break
+        case 5:
+            animationType5(id)
+            break
+        case 6:
+            animationType6(id)
+            break
+    }
+}
+
 // cases 1-7
 function normalEyes(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border`, `none`)
@@ -247,8 +229,6 @@ function eyesType7(id) {
 
 // functions for eye shape variations
 function eyeVariation(num, id) {
-
-    $(`#dnashape${id}`).html(num, id)
     switch (num) {
         case 1:
             normalEyes(id)
@@ -339,7 +319,6 @@ async function markings7(id) {
 
 // functions for marking shape variateions
 function markingsVariation(num, id) {
-    $(`#dnaMarkingsShape${id}`).html(num)
     switch (num) {
         case 1:
             normalMarkings(id)
@@ -389,10 +368,10 @@ function makeDNA(genes){
         mouthColor : genes.substr(2,2),
         eyesColor : genes.substr(4,2),
         earsColor : genes.substr(6,2),
-        markingsMidColor : genes.substr(8,1),
-        markingsOuterColor : genes.substr(9,1),
-        eyesShape : genes.substr(10,2),
-        markingsShape : genes.substr(12,2),
+        eyesShape : genes.substr(8,1),
+        markingsShape : genes.substr(9,1),
+        markingsMidColor : genes.substr(10,2),
+        markingsOuterColor : genes.substr(12,2),
         animation :  genes.substr(14,1),
         lastNum :  1
     }
@@ -401,6 +380,9 @@ return DNA;
 
 // now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
 async function addToKittyPride(CatObjectArray, ids){
+    // empty grid prior to populating
+    $('#kitty-pride-grid').empty();
+
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
         // the catObjectArray index mirrors the tokenIds array index (containing the cat ids), therefore we can 
@@ -419,7 +401,6 @@ async function addToKittyPride(CatObjectArray, ids){
             <div class="col-lg-4 prideBox">
             <div class="cat">
                 <div id="head_and_ears${id}">
-    
                     <div id="cat_ear${id}" class="cat__ear">
                         <div id="left_ear${id}" class="cat__ear--left">
                             <div id="left_ear_inside${id}" class="cat__ear--left-inside"></div>
@@ -521,18 +502,22 @@ async function addToKittyPride(CatObjectArray, ids){
     }
 }
 
-// listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
-// calls addToKittyPride function to populate page with all owned kitties.
-$('#submit_eth_address').click(async() =>{
-    // bind user addres to user variable
-    user = $("#enter_owner_eth_address").val();
-    
+async function fetchCats(_user){
     // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
-    var tokenIds = await getUserIds(user);
+    var tokenIds = await getUserIds(_user);
 
     // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
     let catObj = await getKittyObject(tokenIds);
     addToKittyPride(catObj, tokenIds); 
+} 
+
+// listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
+// calls addToKittyPride function to populate page with all owned kitties.
+$('#submit_eth_address').click(async() =>{
+    // bind user addres to user variable
+    const ethUser = $("#enter_owner_eth_address").val();
+    
+    fetchCats(ethUser);
 })
 
