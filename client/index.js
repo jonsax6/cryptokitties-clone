@@ -39,19 +39,12 @@ function createKitty(){
     })
 }
 
-$('#submit_eth_address').click(() =>{
-    user = $("#enter_owner_eth_address").val();
-    console.log(user);
-})
-
 function getUserIds(user) {
     let userTokens = instance.methods.getKittiesByUser(user).call();
     return userTokens;
 }
 
-var tokenIds = getUserIds(user);
-
-function addToKittyPride(idsArray){
+function getKittyObject(idsArray){
     let ownerKitties = [];
     for(let i = 0; i < idsArray.length; i++){
         // each loop pushes a kitty object from the getKitty function call into the ownerKitties object array
@@ -144,9 +137,9 @@ function addToKittyPride(CatObjectArray){
                 </div>
             </div>
             <br>
-            <div class="dnaDiv" id="catDNA${id}">
-                <b>ID = ${id}</b><br>
-                <b>Generation: ${generation}</b><br>
+            <div class="dnaDiv">
+                <b id="cat_id${id}"></b><br>
+                <b id="generation${id}"></b><br>
                 <b>
                     DNA:
                     <span id="dnabody${id}"></span>
@@ -166,40 +159,42 @@ function addToKittyPride(CatObjectArray){
         )
         
         // make the DNA object
-        let DNA`${id}` = makeDNA(genes);
+        let DNA = makeDNA(genes);
         
         // populates the appended html with the DNA data
-        $(`#dnabody${id}`).html(DNA`${id}`.headColor);
-        $(`#dnamouth${id}`).html(DNA`${id}`.mouthColor);
-        $(`#dnaeyes${id}`).html(DNA`${id}`.eyesColor);
-        $(`#dnaears${id}`).html(DNA`${id}`.earsColor);
-        $(`#dnashape${id}`).html(DNA`${id}`.eyesShape)
-        $(`#dnamarkings${id}`).html(DNA`${id}`.markingsShape)
-        $(`#dnaMarkingsMid${id}`).html(DNA`${id}`.markingsMidColor)
-        $(`#dnaMarkingsOuter${id}`).html(DNA`${id}`.markingsOuterColor)
-        $(`#dnaAnimation${id}`).html(DNA`${id}`.animation)
-        $(`#dnaspecial${id}`).html(DNA`${id}`.lastNum)
+        $(`#dnabody${id}`).html(DNA.headColor);
+        $(`#dnamouth${id}`).html(DNA.mouthColor);
+        $(`#dnaeyes${id}`).html(DNA.eyesColor);
+        $(`#dnaears${id}`).html(DNA.earsColor);
+        $(`#dnashape${id}`).html(DNA.eyesShape);
+        $(`#dnamarkings${id}`).html(DNA.markingsShape);
+        $(`#dnaMarkingsMid${id}`).html(DNA.markingsMidColor);
+        $(`#dnaMarkingsOuter${id}`).html(DNA.markingsOuterColor);
+        $(`#dnaAnimation${id}`).html(DNA.animation);
+        $(`#dnaspecial${id}`).html(DNA.lastNum);
+
+        // render cat from DNA for kitty id
+        renderCat(DNA, id);
 
         // populate the appended html with the Kitty generation
-        // code
+        $(`#cat_id${id}`).html(`ID: ${id}`);
 
         // populate the appended html with the kitty ID
-        // code    
-
-        // use a function to put genes into a genes object and then render cat
-        renderCat(DNA`${id}`);
+        $(`#generation${id}`).html(`Generation: ${generation}`);
     }
 }
 
+// listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
+// calls addToKittyPride function to populate page with all owned kitties.
+$('#submit_eth_address').click(() =>{
+    // bind user addres to user variable
+    user = $("#enter_owner_eth_address").val();
 
-$
+    // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
+    var tokenIds = getUserIds(user);
 
-
-// function to call the smart contract and fetch kitties owner by "user"
-// get back an array of Kitty ids
-// need to use instance.methods.getKittiesByUser(user).call()
-// once we get the ids, we need to populate the pride
-// maybe we need to loop and get each kitty's info instance.methods.getKitty(id).call()
-// loop the kitty id array inside instance.methods.getKitty(tokenIdsArray[i]).call() to create a kitty object array ownerKitties.
-// we get the genes (uint 2353845345078) and generation of each kitty  
+    // now execute the main function to populate the page with user's kitties using getKittyObject() function call
+    // as the argument to fetch the kittyObject from Kittycontract.sol
+    addToKittyPride(getKittyObject(tokenIds)); 
+})
 

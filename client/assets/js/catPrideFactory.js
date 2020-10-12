@@ -1,121 +1,57 @@
+var colors = Object.values(allColors())
 
-// This function adds a cat from our user's collection
-function addToKittyPride(id){
-    $('#kitty-pride-grid').append(
-        `
-        <div class="col-lg-4 prideBox">
-        <div class="cat">
-            <div id="head_and_ears${id}">
-
-                <div id="cat_ear${id}" class="cat__ear">
-                    <div id="left_ear${id}" class="cat__ear--left">
-                        <div id="left_ear_inside${id}" class="cat__ear--left-inside"></div>
-                    </div>
-                    <div id="right_ear${id}" class="cat__ear--right">
-                        <div id="right_ear_inside${id}" class="cat__ear--right-inside"></div>
-                    </div>
-                </div>
-
-                <div id="head${id}" class="cat__head">
-                    <div id="mid-dot${id}" class="cat__head-dots">
-                        <div id="left_dot${id}" class="cat__head-dots_first"></div>
-                        <div id="right_dot${id}" class="cat__head-dots_second"></div>
-                    </div>
-                    <div id="cat_eye${id}" class="cat__eye">
-                        <div id="cat_eye_left${id}" class="cat__eye--left">
-                            <span id="left_pupil${id}" class="pupil-left"></span>
-                        </div>
-                        <div class="cat__eye--right">
-                            <span id="right_pupil${id}" class="pupil-right"></span>
-                        </div>
-                    </div>
-                    <div id="nose${id}" class="cat__nose"></div>
-
-                    <div id="mouth_contour${id}" class="cat__mouth-contour"></div>
-                    <div class="cat__mouth-left"></div>
-                    <div class="cat__mouth-right"></div>
-
-                    <div id="whiskers_left${id}" class="cat__whiskers-left"></div>
-                    <div id="whiskers_right${id}" class="cat__whiskers-right"></div>
-                </div>
-
-            </div>
-            
-
-            <div class="cat__body">
-
-                <div id="chest${id}" class="cat__chest"></div>
-
-                <div id="belly${id}" class="cat__chest_inner"></div>
-
-
-                <div id="left_paw${id}" class="cat__paw-left"></div>
-                <div id="paw_left_inner${id}" class="cat__paw-left_inner"></div>
-
-
-                <div id="right_paw${id}" class="cat__paw-right"></div>
-                <div id="right_paw_inner${id}"class="cat__paw-right_inner"></div>
-
-
-                <div id="tail${id}" class="cat__tail"></div>
-            </div>
-        </div>
-        <br>
-        <div class="dnaDiv" id="catDNA${id}">
-            <b>
-                DNA:
-                <!-- Colors -->
-                 <span id="dnabody${id}"></span>
-                 <span id="dnamouth${id}"></span>
-                 <span id="dnaeyes${id}"></span>
-                 <span id="dnaears${id}"></span>
-                
-                 <!-- Cattributes -->
-                 <span id="dnashape${id}"></span>
-                 <span id="dnaMarkingsShape${id}"></span>
-                 <span id="dnaMarkingsMid${id}"></span>
-                 <span id="dnaMarkingsOuter${id}"></span>
-                 <span id="dnaAnimation${id}"></span>
-                 <span id="dnaspecial${id}"></span>
-            </b>
-        </div>
-    </div>
-        `
-    )
+function renderCat(dna, id){
+  headColor(colors[dna.headColor],dna.headColor, id)
+  mouthColor(colors[dna.mouthColor],dna.mouthColor, id)
+  eyesColor(colors[dna.eyesColor],dna.eyesColor, id)
+  earsColor(colors[dna.earsColor],dna.earsColor, id)
+  eyeVariation(dna.eyesShape, id)
+  markingsVariation(dna.markingsShape, id)
+  markingsMidColor(colors[dna.markingsMidColor],dna.markingsMidColor, id)
+  markingsOuterColor(colors[dna.markingsOuterColor],dna.markingsOuterColor, id)
+  animationVariation(dna.animation, id)
 }
 
-//This function code needs to modified so that it works with Your cat code.
+$(`#breeder-btn`).click(()=>{
+  window.location.href='/client/breeder.html';
+})
+
+$(`#homepage-btn`).click(()=>{
+  window.location.href='/client/breeder.html';
+})
+
+//These functions create each kitty's various css stylings according to id
 function headColor(color,code, id) {
     $(`#head${id}, #chest${id}, #left_ear${id}, #right_ear${id}`).css('background', '#' + color)  //This changes the color of the cat
     $(`#headcode${id}`).html('code: '+code) //This updates text of the badge next to the slider
     $(`#dnabody${id}`).html(code) //This updates the body color part of the DNA that is displayed below the cat
 }
 
-function mouthColor(color,code) {
+function mouthColor(color,code, id) {
     $(`#mouth_contour${id}, #belly${id}, #tail${id}`).css('background', '#' + color)
     $(`#mouthCode${id}`).html('code: '+code)
     $(`#dnamouth${id}`).html(code)
 }
 
-function eyesColor(color,code) {
+function eyesColor(color,code, id) {
     $(`#left_pupil${id}, #right_pupil${id}`).css('background', '#' + color)
     $(`#eyesCode${id}`).html('code: '+code)
     $(`#dnaeyes${id}`).html(code)
 }
 
-function earsColor(color,code) {
+function earsColor(color,code, id) {
     $(`#left_ear_inside${id}, #right_ear_inside${id}, #left_paw${id}, #right_paw${id}, #right_paw_inner${id}, #paw_left_inner${id}`).css('background', '#' + color)
     $(`#earsCode${id}`).html('code: '+code)
     $(`#dnaears${id}`).html(code)
 }
 
-function markingsMidColor(color, code) {
+function markingsMidColor(color, code, id) {
     $(`#mid-dot${id}`).css('background', '#' + color)
     $(`#markingsMidCode${id}`).html('code: '+code)
     $(`#dnaMarkingsMid${id}`).html(code)
 }
 
-function markingsOuterColor(color, code) {
+function markingsOuterColor(color, code, id) {
     $(`#left_dot${id}`).css('background', '#' + color)
     $(`#right_dot${id}`).css('background', '#' + color)
     $(`#markingsOuterCode${id}`).html('code: '+code)
@@ -250,41 +186,6 @@ function animationType6(id) {
     $(`#belly${id}`).addClass(`nose_Chest_Wiggle`)
 }
 
-// functions for eye shape variations
-function eyeVariation(num, id) {
-
-    $(`#dnashape${id}`).html(num, id)
-    switch (num) {
-        case 1:
-            normalEyes(id)
-            break
-        case 2:
-            normalEyes(id)
-            return eyesType2(id)
-            break
-        case 3:
-            normalEyes(id)
-            return eyesType3(id)
-            break
-        case 4:
-            normalEyes(id)
-            return eyesType4(id)
-            break
-        case 5:
-            normalEyes(id)
-            return eyesType5(id)
-            break
-        case 6:
-            normalEyes(id)
-            return eyesType6(id)
-            break
-        case 7:
-            normalEyes(id)
-            return eyesType7(id)
-            break
-    }
-}
-
 // cases 1-7
 function normalEyes(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border`, `none`)
@@ -344,37 +245,37 @@ function eyesType7(id) {
     $(`#right_pupil${id}`).removeClass(`up`);
 }
 
-// functions for marking shape variateions
-function markingsVariation(num, id) {
-    $(`#dnaMarkingsShape${id}`).html(num)
+// functions for eye shape variations
+function eyeVariation(num, id) {
+
+    $(`#dnashape${id}`).html(num, id)
     switch (num) {
         case 1:
-            $(`#markingsName${id}`).html(`Basic`)
-            normalMarkings()
+            normalEyes(id)
             break
         case 2:
-            $(`#markingsName${id}`).html(`Long`)
-            markings2()
+            normalEyes(id)
+            return eyesType2(id)
             break
         case 3:
-            $(`#markingsName${id}`).html(`Long Outwards`)
-            markings3()
+            normalEyes(id)
+            return eyesType3(id)
             break
         case 4:
-            $(`#markingsName${id}`).html(`Long Inwards`)
-            markings4()
+            normalEyes(id)
+            return eyesType4(id)
             break
         case 5:
-            $(`#markingsName${id}`).html(`Short`)
-            markings5()
+            normalEyes(id)
+            return eyesType5(id)
             break
         case 6:
-            $(`#markingsName${id}`).html(`Short Outwards`)
-            markings6()
+            normalEyes(id)
+            return eyesType6(id)
             break
         case 7:
-            $(`#markingsName${id}`).html(`Short Inwards`)
-            markings7()
+            normalEyes(id)
+            return eyesType7(id)
             break
     }
 }
@@ -436,3 +337,30 @@ async function markings7(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
+// functions for marking shape variateions
+function markingsVariation(num, id) {
+    $(`#dnaMarkingsShape${id}`).html(num)
+    switch (num) {
+        case 1:
+            normalMarkings(id)
+            break
+        case 2:
+            markings2(id)
+            break
+        case 3:
+            markings3(id)
+            break
+        case 4:
+            markings4(id)
+            break
+        case 5:
+            markings5(id)
+            break
+        case 6:
+            markings6(id)
+            break
+        case 7:
+            markings7(id)
+            break
+    }
+}

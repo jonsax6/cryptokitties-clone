@@ -22,17 +22,17 @@ $( document ).ready(function() {
   $('#dnamouth').html(defaultDNA.mouthColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
   $('#dnaears').html(defaultDNA.earsColor);
-    
-  $('#dnashape').html(defaultDNA.eyesShape)
-  $('#dnamarkings').html(defaultDNA.markingsShape)
-  $('#dnaMarkingsMid').html(defaultDNA.markingsMidColor)
-  $('#dnaMarkingsOuter').html(defaultDNA.markingsOuterColor)
-  $('#dnaAnimation').html(defaultDNA.animation)
-  $('#dnaspecial').html(defaultDNA.lastNum)
+  $('#dnashape').html(defaultDNA.eyesShape);
+  $('#dnamarkings').html(defaultDNA.markingsShape);
+  $('#dnaMarkingsMid').html(defaultDNA.markingsMidColor);
+  $('#dnaMarkingsOuter').html(defaultDNA.markingsOuterColor);
+  $('#dnaAnimation').html(defaultDNA.animation);
+  $('#dnaspecial').html(defaultDNA.lastNum);
 
   renderCat(defaultDNA)
 });
 
+// creates the DNA string and then parseInt into an integer.  /index.js createKitty() to send DNA integer to createKittyGen0() function call in Kittycontract.sol 
 function getDna(){
     var dna = ''
     dna += $('#dnabody').html()
