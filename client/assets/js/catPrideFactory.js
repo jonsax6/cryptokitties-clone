@@ -368,16 +368,17 @@ function markingsVariation(num, id) {
 
 // code for fetching kitties from blockchain and rendering to grid
 
-function getUserIds(user) {
-    let userTokens = instance.methods.getKittiesByUser(user).call();
+async function getUserIds(user) {
+    let userTokens = await instance.methods.getKittiesByUser(user).call();
     return userTokens;
 }
 
-function getKittyObject(idsArray){
+async function getKittyObject(idsArray){
     let ownerKitties = [];
     for(let i = 0; i < idsArray.length; i++){
         // each loop pushes a kitty object from the getKitty function call into the ownerKitties object array
-        ownerKitties.push(instance.methods.getKitty(idsArray[i]).call());
+        let kitty = await instance.methods.getKitty(idsArray[i]).call();
+        ownerKitties.push(kitty);
     }
 return ownerKitties;
 }
@@ -399,12 +400,12 @@ return DNA;
 }
 
 // now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
-function addToKittyPride(CatObjectArray){
+async function addToKittyPride(CatObjectArray, ids){
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
         // the catObjectArray index mirrors the tokenIds array index (containing the cat ids), therefore we can 
         // take the tokenIds value at each index[i] to get the cat id.
-        let id = tokenIds[i];
+        let id = ids[i];
 
         // get genes from cat object array
         let genes = CatObjectArray[i].genes;
@@ -522,15 +523,16 @@ function addToKittyPride(CatObjectArray){
 
 // listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
 // calls addToKittyPride function to populate page with all owned kitties.
-$('#submit_eth_address').click(() =>{
+$('#submit_eth_address').click(async() =>{
     // bind user addres to user variable
     user = $("#enter_owner_eth_address").val();
-
+    
     // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
-    var tokenIds = getUserIds(user);
+    var tokenIds = await getUserIds(user);
 
     // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
-    addToKittyPride(getKittyObject(tokenIds)); 
+    let catObj = await getKittyObject(tokenIds);
+    addToKittyPride(catObj, tokenIds); 
 })
 
