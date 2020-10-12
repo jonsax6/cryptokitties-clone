@@ -57,6 +57,12 @@
             <h1 class="c-white">See All Your Kitties</h1>
             <p class="c-white">Your Purrrfect Family</p>
             </div>
+            <div class="input-group mb-3">
+                <input type="text" id="enter_owner_eth_address" class="form-control" placeholder="Enter ETH Address">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" id="submit_eth_address">See Your Kitties</button>
+                </div>
+              </div>
             <div class="row breeder-body" id="kitty-pride-grid">
                 <div class="col-lg-4 prideBox">
                     <div class="cat">
@@ -117,15 +123,14 @@
                     </div>
                     <br>
                     <div class="dnaDiv" id="catDNA">
+                        <b>ID = ${id}</b><br>
+                        <b>Generation: ${generation}</b><br>
                         <b>
                             DNA:
-                            <!-- Colors -->
                              <span id="dnabody"></span>
                              <span id="dnamouth"></span>
                              <span id="dnaeyes"></span>
                              <span id="dnaears"></span>
-                            
-                             <!-- Cattributes -->
                              <span id="dnashape"></span>
                              <span id="dnaMarkingsShape"></span>
                              <span id="dnaMarkingsMid"></span>
@@ -133,9 +138,9 @@
                              <span id="dnaAnimation"></span>
                              <span id="dnaspecial"></span>
                         </b>
+
                     </div>
                 </div>
-
             </div>
 
             <div class="row">

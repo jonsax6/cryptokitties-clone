@@ -39,21 +39,52 @@ function createKitty(){
     })
 }
 
+$('#submit_eth_address').click(() =>{
+    user = $("#enter_owner_eth_address").val();
+    console.log(user);
+})
+
 function getUserIds(user) {
-    let tokenIds = instance.methods.getKittiesByUser(user).call();
-    return tokenIds;
+    let userTokens = instance.methods.getKittiesByUser(user).call();
+    return userTokens;
 }
 
 var tokenIds = getUserIds(user);
 
-function addToKittyPride(ids){
-    let cats = [];
-    for(let i = 0; i < ids.length; i++){
-        // push the kitty object returned from getKitty function call into the cats array
-        cats.push(instance.methods.getKitty(tokenIds[i]).call());
+function addToKittyPride(idsArray){
+    let ownerKitties = [];
+    for(let i = 0; i < idsArray.length; i++){
+        // each loop pushes a kitty object from the getKitty function call into the ownerKitties object array
+        ownerKitties.push(instance.methods.getKitty(idsArray[i]).call());
     }
-    // after we get the full object array do something else still figuring out...      
-    $('#kitty-pride-grid').append(
+return ownerKitties;
+}
+
+function makeDNA(genes){
+    var DNA = {
+        headColor : genes.substr(0,2),
+        mouthColor : genes.substr(2,2),
+        eyesColor : genes.substr(4,2),
+        earsColor : genes.substr(6,2),
+        markingsMidColor : genes.substr(8,1),
+        markingsOuterColor : genes.substr(9,1),
+        eyesShape : genes.substr(10,2),
+        markingsShape : genes.substr(12,2),
+        animation :  genes.substr(14,1),
+        lastNum :  1
+    }
+return DNA;
+}
+
+// now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
+function addToKittyPride(CatObjectArray){
+    for(let i = 0; i < CatObjectArray.length; i++){
+        let id = tokenIds[i];
+        let genes = CatObjectArray[i].genes;
+        let generation = CatObjectArray[i].generation;
+        
+        // populate the html with the kitty w/id
+        $('#kitty-pride-grid').append(
             `
             <div class="col-lg-4 prideBox">
             <div class="cat">
@@ -114,28 +145,54 @@ function addToKittyPride(ids){
             </div>
             <br>
             <div class="dnaDiv" id="catDNA${id}">
+                <b>ID = ${id}</b><br>
+                <b>Generation: ${generation}</b><br>
                 <b>
                     DNA:
-                    <!-- Colors -->
-                     <span id="dnabody${id}"></span>
-                     <span id="dnamouth${id}"></span>
-                     <span id="dnaeyes${id}"></span>
-                     <span id="dnaears${id}"></span>
-                    
-                     <!-- Cattributes -->
-                     <span id="dnashape${id}"></span>
-                     <span id="dnaMarkingsShape${id}"></span>
-                     <span id="dnaMarkingsMid${id}"></span>
-                     <span id="dnaMarkingsOuter${id}"></span>
-                     <span id="dnaAnimation${id}"></span>
-                     <span id="dnaspecial${id}"></span>
+                    <span id="dnabody${id}"></span>
+                    <span id="dnamouth${id}"></span>
+                    <span id="dnaeyes${id}"></span>
+                    <span id="dnaears${id}"></span>
+                    <span id="dnashape${id}"></span>
+                    <span id="dnaMarkingsShape${id}"></span>
+                    <span id="dnaMarkingsMid${id}"></span>
+                    <span id="dnaMarkingsOuter${id}"></span>
+                    <span id="dnaAnimation${id}"></span>
+                    <span id="dnaspecial${id}"></span>
                 </b>
             </div>
         </div>
             `
         )
+        
+        // make the DNA object
+        let DNA`${id}` = makeDNA(genes);
+        
+        // populates the appended html with the DNA data
+        $(`#dnabody${id}`).html(DNA`${id}`.headColor);
+        $(`#dnamouth${id}`).html(DNA`${id}`.mouthColor);
+        $(`#dnaeyes${id}`).html(DNA`${id}`.eyesColor);
+        $(`#dnaears${id}`).html(DNA`${id}`.earsColor);
+        $(`#dnashape${id}`).html(DNA`${id}`.eyesShape)
+        $(`#dnamarkings${id}`).html(DNA`${id}`.markingsShape)
+        $(`#dnaMarkingsMid${id}`).html(DNA`${id}`.markingsMidColor)
+        $(`#dnaMarkingsOuter${id}`).html(DNA`${id}`.markingsOuterColor)
+        $(`#dnaAnimation${id}`).html(DNA`${id}`.animation)
+        $(`#dnaspecial${id}`).html(DNA`${id}`.lastNum)
+
+        // populate the appended html with the Kitty generation
+        // code
+
+        // populate the appended html with the kitty ID
+        // code    
+
+        // use a function to put genes into a genes object and then render cat
+        renderCat(DNA`${id}`);
+    }
 }
 
+
+$
 
 
 // function to call the smart contract and fetch kitties owner by "user"
@@ -143,5 +200,6 @@ function addToKittyPride(ids){
 // need to use instance.methods.getKittiesByUser(user).call()
 // once we get the ids, we need to populate the pride
 // maybe we need to loop and get each kitty's info instance.methods.getKitty(id).call()
+// loop the kitty id array inside instance.methods.getKitty(tokenIdsArray[i]).call() to create a kitty object array ownerKitties.
 // we get the genes (uint 2353845345078) and generation of each kitty  
 
