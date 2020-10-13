@@ -1,15 +1,16 @@
 var colors = Object.values(allColors())
 
 function renderCat(dna, id){
-  headColor(colors[dna.headColor], id)
-  mouthColor(colors[dna.mouthColor], id)
-  eyesColor(colors[dna.eyesColor], id)
-  earsColor(colors[dna.earsColor], id)
-  eyeVariation(dna.eyesShape, id)
-  markingsVariation(dna.markingsShape, id)
-  markingsMidColor(colors[dna.markingsMidColor], id)
-  markingsOuterColor(colors[dna.markingsOuterColor], id)
-  animationVariation(dna.animation, id)
+  headColor(colors[dna.headColor], id);
+  mouthColor(colors[dna.mouthColor], id);
+  eyesColor(colors[dna.eyesColor], id);
+  earsColor(colors[dna.earsColor], id);
+  eyeVariation(dna.eyesShape, id);
+  markingsVariation(dna.markingsShape, id);
+  markingsMidColor(colors[dna.markingsMidColor], id);
+  markingsOuterColor(colors[dna.markingsOuterColor], id);
+  animationVariation(dna.animation, id);
+  console.log(dna.eyesShape);
 }
 
 $(`#breeder-btn`).click(()=>{
@@ -50,8 +51,8 @@ function markingsOuterColor(color, id) {
 
 // cases 1-6
 function animationType1(id) {
-    $(`#leftEar${id}`).removeClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).removeClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
     $(`#whiskers_left${id}`).removeClass(`twitch_Whiskers_Left`)
     $(`#whiskers_right${id}`).removeClass(`twitch_Whiskers_Right`)
@@ -60,8 +61,8 @@ function animationType1(id) {
     $(`#nose${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).removeClass(`nose_Chest_Wiggle`)
-    $(`#leftEar${id}`).removeClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).removeClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).removeClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).removeClass(`perky_Ear_Right`)
     $(`#head_and_ears${id}`).addClass(`moving_Head`);
 }
 
@@ -75,16 +76,16 @@ function animationType2(id) {
     $(`#nose${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).removeClass(`nose_Chest_Wiggle`)
-    $(`#leftEar${id}`).removeClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).removeClass(`perky_Ear_Right`)
-    $(`#leftEar${id}`).addClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).addClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).removeClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).addClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).addClass(`moving_Right_Ear`)
 }
 
 function animationType3(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
-    $(`#leftEar${id}`).removeClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).removeClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#whiskers_left${id}`).removeClass(`twitch_Whiskers_Left`)
     $(`#whiskers_right${id}`).removeClass(`twitch_Whiskers_Right`)
     $(`#right_paw${id}`).removeClass(`tap_Right_Paw`)
@@ -92,32 +93,32 @@ function animationType3(id) {
     $(`#nose${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).removeClass(`nose_Chest_Wiggle`)
-    $(`#leftEar${id}`).addClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).addClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).addClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).addClass(`perky_Ear_Right`)
     $(`#tail${id}`).addClass(`tail_Rotation`)
 
 }
 
 function animationType4(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
-    $(`#leftEar${id}`).removeClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).removeClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
     $(`#right_paw${id}`).removeClass(`tap_Right_Paw`)
     $(`#nose${id}`).removeClass(`nose_Wiggle`)
     $(`#nose${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).removeClass(`nose_Chest_Wiggle`)
-    $(`#leftEar${id}`).removeClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).removeClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).removeClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).removeClass(`perky_Ear_Right`)
     $(`#whiskers_left${id}`).addClass(`twitch_Whiskers_Left`)
     $(`#whiskers_right${id}`).addClass(`twitch_Whiskers_Right`)
 }
 
 function animationType5(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
-    $(`#leftEar${id}`).removeClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).removeClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
     $(`#whiskers_left${id}`).removeClass(`twitch_Whiskers_Left`)
     $(`#whiskers_right${id}`).removeClass(`twitch_Whiskers_Right`)
@@ -125,28 +126,28 @@ function animationType5(id) {
     $(`#nose${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).removeClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).removeClass(`nose_Chest_Wiggle`)
-    $(`#leftEar${id}`).addClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).addClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).addClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).addClass(`perky_Ear_Right`)
     $(`#right_paw${id}`).addClass(`tap_Right_Paw`)
 }
 
 function animationType6(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
-    $(`#leftEar${id}`).removeClass(`moving_Left_Ear`)
-    $(`#rightEar${id}`).removeClass(`moving_Right_Ear`)
+    $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
+    $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
     $(`#whiskers_left${id}`).removeClass(`twitch_Whiskers_Left`)
     $(`#whiskers_right${id}`).removeClass(`twitch_Whiskers_Right`)
     $(`#right_paw${id}`).removeClass(`tap_Right_Paw`)
-    $(`#leftEar${id}`).removeClass(`perky_Ear_Left`)
-    $(`#rightEar${id}`).removeClass(`perky_Ear_Right`)
+    $(`#left_ear${id}`).removeClass(`perky_Ear_Left`)
+    $(`#right_ear${id}`).removeClass(`perky_Ear_Right`)
     $(`#nose${id}`).addClass(`nose_Chest_Wiggle`)
     $(`#chest${id}`).addClass(`nose_Chest_Wiggle`)
     $(`#belly${id}`).addClass(`nose_Chest_Wiggle`)
 }
 
-function animationVariation (num, id) {
-    switch (num) {
+function animationVariation(num, id) {
+    switch (parseInt(num)) {
         case 1:
             animationType1(id)
             break
@@ -229,34 +230,34 @@ function eyesType7(id) {
 
 // functions for eye shape variations
 function eyeVariation(num, id) {
-    switch (num) {
+    switch (parseInt(num)) {
         case 1:
-            normalEyes(id)
-            break
+            normalEyes(id);
+            break;
         case 2:
-            normalEyes(id)
-            return eyesType2(id)
-            break
+            normalEyes(id);
+            return eyesType2(id);
+            break;
         case 3:
-            normalEyes(id)
-            return eyesType3(id)
-            break
+            normalEyes(id);
+            return eyesType3(id);
+            break;
         case 4:
-            normalEyes(id)
-            return eyesType4(id)
-            break
+            normalEyes(id);
+            return eyesType4(id);
+            break;
         case 5:
-            normalEyes(id)
-            return eyesType5(id)
-            break
+            normalEyes(id);
+            return eyesType5(id);
+            break;
         case 6:
-            normalEyes(id)
-            return eyesType6(id)
-            break
+            normalEyes(id);
+            return eyesType6(id);
+            break;
         case 7:
-            normalEyes(id)
-            return eyesType7(id)
-            break
+            normalEyes(id);
+            return eyesType7(id);
+            break;
     }
 }
 
@@ -319,28 +320,34 @@ async function markings7(id) {
 
 // functions for marking shape variateions
 function markingsVariation(num, id) {
-    switch (num) {
+    switch (parseInt(num)) {
         case 1:
-            normalMarkings(id)
-            break
+            normalMarkings(id);
+            break;
         case 2:
-            markings2(id)
-            break
+            normalMarkings(id);
+            return markings2(id);
+            break;
         case 3:
-            markings3(id)
-            break
+            normalMarkings(id);
+            return markings3(id);
+            break;
         case 4:
-            markings4(id)
-            break
+            normalMarkings(id);
+            return markings4(id);
+            break;
         case 5:
-            markings5(id)
-            break
+            normalMarkings(id);
+            return markings5(id);
+            break;
         case 6:
-            markings6(id)
-            break
+            normalMarkings(id);
+            return markings6(id);
+            break;
         case 7:
-            markings7(id)
-            break
+            normalMarkings(id);
+            return markings7(id);
+            break;
     }
 }
 
@@ -458,19 +465,7 @@ async function addToKittyPride(CatObjectArray, ids){
             <div class="dnaDiv">
                 <b id="cat_id${id}"></b><br>
                 <b id="generation${id}"></b><br>
-                <b>
-                    DNA:
-                    <span id="dnabody${id}"></span>
-                    <span id="dnamouth${id}"></span>
-                    <span id="dnaeyes${id}"></span>
-                    <span id="dnaears${id}"></span>
-                    <span id="dnashape${id}"></span>
-                    <span id="dnaMarkingsShape${id}"></span>
-                    <span id="dnaMarkingsMid${id}"></span>
-                    <span id="dnaMarkingsOuter${id}"></span>
-                    <span id="dnaAnimation${id}"></span>
-                    <span id="dnaspecial${id}"></span>
-                </b>
+                <b>Genes: ${genes}</b>
             </div>
         </div>
             `
@@ -485,7 +480,7 @@ async function addToKittyPride(CatObjectArray, ids){
         $(`#dnaeyes${id}`).html(DNA.eyesColor);
         $(`#dnaears${id}`).html(DNA.earsColor);
         $(`#dnashape${id}`).html(DNA.eyesShape);
-        $(`#dnamarkings${id}`).html(DNA.markingsShape);
+        $(`#dnaMarkingsShape${id}`).html(DNA.markingsShape);
         $(`#dnaMarkingsMid${id}`).html(DNA.markingsMidColor);
         $(`#dnaMarkingsOuter${id}`).html(DNA.markingsOuterColor);
         $(`#dnaAnimation${id}`).html(DNA.animation);
