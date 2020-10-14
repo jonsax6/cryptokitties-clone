@@ -28,22 +28,26 @@ $(document).ready(async function(){
     })
     .on('error', console.error);
 
+    // get msg.sender kitties from blockchain
     fetchCats(user);
 
+    // hides all page divs for clean page load on click listeners and page refresh.
     function hideAll(){
         $('#homepage_link').hide();
         $('#breeder_link').hide();
         $('#pride_link').hide();
     }
-
+    // hide all on page load, then show homepage div
     hideAll();
     $('#homepage_link').show();
 
+    // homepage nav menu click listener
     $('#nav_homepage').click(()=>{
         hideAll();
         $('#homepage_link').show();
     })
 
+    // kitty pride nav menu click listener
     $('#nav_pride').click(async()=>{
         hideAll();
         $('#kitty-pride-grid').empty();
@@ -51,17 +55,20 @@ $(document).ready(async function(){
         $('#pride_link').show();
     })
 
+    // Breeder nav menu click listener
     $('#nav_breeder').click(()=>{
         hideAll();
         $('#breeder_link').show();
     })
 
+    // Breeder click listener in homepage banner
     $('#nav_breeder2').click(()=>{
         hideAll();
         $('#breeder_link').show();
     })
 })
 
+// creates a new kitty and transfers to msg.sender eth address.
 function createKitty(user){
     let dnaStr = getDna();
     instance.methods.createKittyGen0(dnaStr).send({}, function(error, txHash){
