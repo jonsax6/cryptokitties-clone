@@ -29,9 +29,40 @@ $(document).ready(async function(){
     .on('error', console.error);
 
     fetchCats(user);
+
+    function hideAll(){
+        $('#homepage_link').hide();
+        $('#breeder_link').hide();
+        $('#pride_link').hide();
+    }
+
+    hideAll();
+    $('#homepage_link').show();
+
+    $('#nav_homepage').click(()=>{
+        hideAll();
+        $('#homepage_link').show();
+    })
+
+    $('#nav_pride').click(async()=>{
+        hideAll();
+        $('#kitty-pride-grid').empty();
+        fetchCats(user)        
+        $('#pride_link').show();
+    })
+
+    $('#nav_breeder').click(()=>{
+        hideAll();
+        $('#breeder_link').show();
+    })
+
+    $('#nav_breeder2').click(()=>{
+        hideAll();
+        $('#breeder_link').show();
+    })
 })
 
-function createKitty(){
+function createKitty(user){
     let dnaStr = getDna();
     instance.methods.createKittyGen0(dnaStr).send({}, function(error, txHash){
         if(error)

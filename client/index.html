@@ -24,9 +24,9 @@
     <div class="row nav-container">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark">
-                <div class="d-flex flex-grow-1">
+                <div id="nav_homepage" class="d-flex flex-grow-1">
                     <span class="w-100 d-lg-none d-block"><!-- hidden spacer to center brand on mobile --></span>
-                    <a class="navbar-brand" href="/client/index.html">
+                    <a class="navbar-brand" href="#">
                         JC-Kitties
                     </a>
                     <div class="w-100 text-right">
@@ -40,10 +40,10 @@
                         <li class="nav-item">
                             <a href="#" class="navbar-dark nav-link"><b class="text-light">Adopt</b></a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/client/Your-Pride.html" class="nav-link"><b class="text-light">Kitty Pride</b></a>
+                        <li id="nav_pride" class="nav-item">
+                            <a href="#" class="nav-link"><b class="text-light">Kitty Pride</b></a>
                         </li>
-                        <button type="submit" class="btn btn-light start-btn" id="breeder-btn"><b class="text-light m-2">Breeder</b></button>
+                        <button id="nav_breeder" type="submit" class="btn btn-light start-btn"><b class="text-light m-2">Breeder</b></button>
     
                     </ul>
                 </div>
@@ -51,7 +51,7 @@
     
         </div>
     </div>
-    <div class="custom-shape-divider-bottom-1602163266">
+    <div id="homepage_link" class="custom-shape-divider-bottom-1602163266">
         <div class="container p-5 curved-div" style="margin-top: 8vh;margin-bottom: 10vh;">
             <div class="row homepage-container">
                     <img src="/client/assets/raster images/Kitty Homepage2.png" class="homepage-image">
@@ -60,7 +60,7 @@
                     <div class="col-lg-8 homepage-banner"></div>
                     <div class="col-lg-6 homepage-title">Breed and Adopt A Furry Friend</div>
                     <div class="homepage-btn">
-                        <button type="submit" class="btn btn-light start-btn" id="homepage-btn"><b class="text-light m-2">Breed & Adopt a Kitty</b></button>
+                        <button id="nav_breeder2" type="submit" class="btn btn-light start-btn"><b class="text-light m-2">Breed & Adopt a Kitty</b></button>
                     </div>
                 </div>
             </div>
@@ -71,8 +71,189 @@
             <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
         </svg>
     </div>    
+    <div id="breeder_link" class="custom-shape-divider-bottom-1602163266">
+        <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
+            <div align="center">
+            <h1 class="c-white">Kittie Breeder</h1>
+            <p class="c-white">Breed your favorite Kitty</p>
+            </div>
+            <div class="row breeder-body">
+                <div class="col-lg-4 m-2 catBox float-right light-b-shadow">
+                    <div class="cat">
+                        <div id="head_and_ears">
+    
+                            <div id="cat_ears" class="cat__ear">
+                                <div id="leftEar" class="cat__ear--left">
+                                    <div class="cat__ear--left-inside"></div>
+                                </div>
+                                <div id="rightEar" class="cat__ear--right">
+                                    <div class="cat__ear--right-inside"></div>
+                                </div>
+                            </div>
+        
+                            <div id="head" class="cat__head">
+                                <div id="midDot" class="cat__head-dots">
+                                    <div id="leftDot" class="cat__head-dots_first"></div>
+                                    <div id="rightDot" class="cat__head-dots_second"></div>
+                                </div>
+                                <div class="cat__eye">
+                                    <div class="cat__eye--left">
+                                        <span class="pupil-left"></span>
+                                    </div>
+                                    <div class="cat__eye--right">
+                                        <span class="pupil-right"></span>
+                                    </div>
+                                </div>
+                                <div id="nose" class="cat__nose"></div>
+        
+                                <div class="cat__mouth-contour"></div>
+                                <div class="cat__mouth-left"></div>
+                                <div class="cat__mouth-right"></div>
+        
+                                <div id="whiskers_left" class="cat__whiskers-left"></div>
+                                <div id="whiskers_right" class="cat__whiskers-right"></div>
+                            </div>
+    
+                        </div>
+                        
+    
+                        <div class="cat__body">
+    
+                            <div id="chest" class="cat__chest"></div>
+    
+                            <div id="belly" class="cat__chest_inner"></div>
+    
+    
+                            <div class="cat__paw-left"></div>
+                            <div class="cat__paw-left_inner"></div>
+    
+    
+                            <div id="right_paw" class="cat__paw-right"></div>
+                            <div class="cat__paw-right_inner"></div>
+    
+    
+                            <div id="tail" class="cat__tail"></div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="dnaDiv" id="catDNA">
+                        <b>
+                            DNA:
+                            <!-- Colors -->
+                             <span id="dnabody"></span>
+                             <span id="dnamouth"></span>
+                             <span id="dnaeyes"></span>
+                             <span id="dnaears"></span>
+                            
+                             <!-- Cattributes -->
+                             <span id="dnashape"></span>
+                             <span id="dnaMarkingsShape"></span>
+                             <span id="dnaMarkingsMid"></span>
+                             <span id="dnaMarkingsOuter"></span>
+                             <span id="dnaAnimation"></span>
+                             <span id="dnaspecial"></span>
+                        </b>
+                    </div>
+                </div>
+                <div class="col-lg-7 m-2 cattributes float-left light-b-shadow">
+                    <nav>
+                        <div class="nav nav-pills primary breeder-body" id="nav-tab" role="tablist">
+                          <a class="nav-link active cattributes_tabs light-b-shadow" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"><b>Colors</b></a>
+                          <a class="nav-link cattributes_tabs light-b-shadow" style="margin-right: 0px;" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"><b>Cattributes</b></a>
+                        </div>
+                    </nav>
+                    <div class="tab-content cat_fonts" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="form-group cattributesSpanLeft mt-4">
+                                <label for="formControlRange"><b>Head & body</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
+                            </div>
+                            <div class="form-group cattributesSpanRight mt-4">
+                                <label for="formControlRange"><b>Mouth, Belly & Tail</b><span class="badge badge-dark ml-2" id="mouthCode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="mouthColor">
+                            </div>
+                            <div class="form-group cattributesSpanLeft">
+                                <label for="formControlRange"><b>Eyes</b><span class="badge badge-dark ml-2" id="eyesCode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="eyesColor">
+                            </div>
+                            <div class="form-group cattributesSpanRight">
+                                <label for="formControlRange"><b>Ears and Paws</b><span class="badge badge-dark ml-2" id="earsCode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="earsColor">
+                            </div>
+                            <div class="form-group cattributesSpanLeft">
+                                <label for="formControlRange"><b>Mid Mark</b><span class="badge badge-dark ml-2" id="markingsMidCode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="markingsMidColor">
+                            </div>
+                            <div class="form-group cattributesSpanRight">
+                                <label for="formControlRange"><b>Outer Mark</b><span class="badge badge-dark ml-2" id="markingsOuterCode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="markingsOuterColor">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="form-group mt-4">
+                                <label for="formControlRange"><b>Eyes Shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
+                                <input type="range" min="1" max="7" class="form-control-range" id="eyesShape">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Markings Shape</b><span class="badge badge-dark ml-2" id="markingsName"></span></label>
+                                <input type="range" min="1" max="7" class="form-control-range" id="markingsPattern">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
+                                <input type="range" min="1" max="6" class="form-control-range" id="animation">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row breeder-body">
+                <div class="col-lg-4 m-2">
+                    <button id="defaultCat" type="button" class="btn btn-primary generator_buttons light-b-shadow" onclick="defaultCat()"><b>Default</b></button>
+                    <button id="randomCat" type="button" class="btn btn-primary generator_buttons light-b-shadow float-right" onclick="randomCat()"><b>Random</b></button>
+                </div>
+                <div class="col-lg-7 m-2">
+                    <button id="birthCat" type="button" class="btn btn-success generator_buttons light-b-shadow float-right" onclick="createKitty()"><b>Create Kitty</b></button>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-lg-11 m-2">
+                    <div class="alert alert-success" role="alert" id="kittyCreation" style="display:none"></div>
+                </div>
+            </div>
+                <br>
+        </div>
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+        
+    </div>
+    <div id="pride_link" class="custom-shape-divider-bottom-1602163266">
+        <div class="container mt-3 p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
+            <div align="center">
+            <h1 class="c-white">See All Your Kitties</h1>
+            <p class="c-white">Your Purrrfect Family</p>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" id="enter_owner_eth_address" class="form-control" placeholder="Enter ETH Address">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" id="submit_eth_address">See Your Kitties</button>
+                </div>
+              </div>
+            <div class="row breeder-body" id="kitty-pride-grid">
+            </div>
 
-
+            <div class="row">
+                <div class="col-lg-11 m-2">
+                    <div class="alert alert-success" role="alert" id="kittyCreation" style="display:none"></div>
+                </div>
+            </div>
+                <br>
+        </div>
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" class="shape-fill"></path>
+        </svg>
+    </div>
 
 
 
@@ -85,6 +266,7 @@
     <script src="assets/js/colors.js"></script>
     <script src="assets/js/catSettings.js"></script>
     <script src="assets/js/catFactory.js"></script>
+    <script src="assets/js/catPrideFactory.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>

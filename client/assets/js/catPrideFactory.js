@@ -1,48 +1,47 @@
 var colors = Object.values(allColors())
 
-function renderCat(dna, id){
-  headColor(colors[dna.headColor], id);
-  mouthColor(colors[dna.mouthColor], id);
-  eyesColor(colors[dna.eyesColor], id);
-  earsColor(colors[dna.earsColor], id);
-  eyeVariation(dna.eyesShape, id);
-  markingsVariation(dna.markingsShape, id);
-  markingsMidColor(colors[dna.markingsMidColor], id);
-  markingsOuterColor(colors[dna.markingsOuterColor], id);
-  animationVariation(dna.animation, id);
-  console.log(dna.eyesShape);
+function _renderCat(dna, id){
+    _headColor(colors[dna.headColor], id);
+    _mouthColor(colors[dna.mouthColor], id);
+    _eyesColor(colors[dna.eyesColor], id);
+    _earsColor(colors[dna.earsColor], id);
+    _eyeVariation(dna.eyesShape, id);
+    _markingsVariation(dna.markingsShape, id);
+    _markingsMidColor(colors[dna.markingsMidColor], id);
+    _markingsOuterColor(colors[dna.markingsOuterColor], id);
+    _animationVariation(dna.animation, id);
 }
 
-$(`#breeder-btn`).click(()=>{
-  window.location.href='/client/breeder.html';
-})
+// $(`#breeder-btn`).click(()=>{
+//   window.location.href='/client/breeder.html';
+// })
 
-$(`#homepage-btn`).click(()=>{
-  window.location.href='/client/breeder.html';
-})
+// $(`#homepage-btn`).click(()=>{
+//   window.location.href='/client/breeder.html';
+// })
 
 //These functions create each kitty's various css stylings according to id
-function headColor(color, id) {
+function _headColor(color, id) {
     $(`#head${id}, #chest${id}, #left_ear${id}, #right_ear${id}`).css('background', '#' + color)  //This changes the color of the cat
 }
 
-function mouthColor(color, id) {
+function _mouthColor(color, id) {
     $(`#mouth_contour${id}, #belly${id}, #tail${id}`).css('background', '#' + color)
 }
 
-function eyesColor(color, id) {
+function _eyesColor(color, id) {
     $(`#left_pupil${id}, #right_pupil${id}`).css('background', '#' + color)
 }
 
-function earsColor(color, id) {
+function _earsColor(color, id) {
     $(`#left_ear_inside${id}, #right_ear_inside${id}, #left_paw${id}, #right_paw${id}, #right_paw_inner${id}, #paw_left_inner${id}`).css('background', '#' + color)
 }
 
-function markingsMidColor(color, id) {
+function _markingsMidColor(color, id) {
     $(`#mid-dot${id}`).css('background', '#' + color)
 }
 
-function markingsOuterColor(color, id) {
+function _markingsOuterColor(color, id) {
     $(`#left_dot${id}`).css('background', '#' + color)
     $(`#right_dot${id}`).css('background', '#' + color)
 }
@@ -50,7 +49,7 @@ function markingsOuterColor(color, id) {
 // funtions for animation
 
 // cases 1-6
-function animationType1(id) {
+function _animationType1(id) {
     $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
     $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
@@ -66,7 +65,7 @@ function animationType1(id) {
     $(`#head_and_ears${id}`).addClass(`moving_Head`);
 }
 
-function animationType2(id) {
+function _animationType2(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
     $(`#tail${id}`).removeClass(`tail_Rotation`)
     $(`#whiskers_left${id}`).removeClass(`twitch_Whiskers_Left`)
@@ -82,7 +81,7 @@ function animationType2(id) {
     $(`#right_ear${id}`).addClass(`moving_Right_Ear`)
 }
 
-function animationType3(id) {
+function _animationType3(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
     $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
     $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
@@ -99,7 +98,7 @@ function animationType3(id) {
 
 }
 
-function animationType4(id) {
+function _animationType4(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
     $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
     $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
@@ -115,7 +114,7 @@ function animationType4(id) {
     $(`#whiskers_right${id}`).addClass(`twitch_Whiskers_Right`)
 }
 
-function animationType5(id) {
+function _animationType5(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
     $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
     $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
@@ -131,7 +130,7 @@ function animationType5(id) {
     $(`#right_paw${id}`).addClass(`tap_Right_Paw`)
 }
 
-function animationType6(id) {
+function _animationType6(id) {
     $(`#head_and_ears${id}`).removeClass(`moving_Head`)
     $(`#left_ear${id}`).removeClass(`moving_Left_Ear`)
     $(`#right_ear${id}`).removeClass(`moving_Right_Ear`)
@@ -146,31 +145,31 @@ function animationType6(id) {
     $(`#belly${id}`).addClass(`nose_Chest_Wiggle`)
 }
 
-function animationVariation(num, id) {
+function _animationVariation(num, id) {
     switch (parseInt(num)) {
         case 1:
-            animationType1(id)
+            _animationType1(id)
             break
         case 2:
-            animationType2(id)
+            _animationType2(id)
             break
         case 3:
-            animationType3(id)
+            _animationType3(id)
             break
         case 4:
-            animationType4(id)
+            _animationType4(id)
             break
         case 5:
-            animationType5(id)
+            _animationType5(id)
             break
         case 6:
-            animationType6(id)
+            _animationType6(id)
             break
     }
 }
 
 // cases 1-7
-function normalEyes(id) {
+function _normalEyes(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border`, `none`)
     $(`#left_pupil${id}`).removeClass(`left`);
     $(`#left_pupil${id}`).removeClass(`up`);
@@ -178,7 +177,7 @@ function normalEyes(id) {
     $(`#right_pupil${id}`).removeClass(`up`);
 }
 
-function eyesType2(id) {
+function _eyesType2(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-top`, `15px solid`)
     $(`#left_pupil${id}`).removeClass(`left`);
     $(`#left_pupil${id}`).removeClass(`up`);
@@ -186,7 +185,7 @@ function eyesType2(id) {
     $(`#right_pupil${id}`).removeClass(`up`);
 }
 
-function eyesType3(id) {
+function _eyesType3(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-top`, `10px solid`)
     $(`#cat_eye${id}`).find(`span`).css(`border-bottom`, `10px solid`)
     $(`#left_pupil${id}`).removeClass(`left`);
@@ -196,7 +195,7 @@ function eyesType3(id) {
 
 }
 
-function eyesType4(id) {
+function _eyesType4(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-bottom`, `10px solid`)
     $(`#left_pupil${id}`).addClass(`left`);
     $(`#left_pupil${id}`).addClass(`up`);
@@ -204,7 +203,7 @@ function eyesType4(id) {
     $(`#right_pupil${id}`).addClass(`up`);
 }
 
-function eyesType5(id) {
+function _eyesType5(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-top`, `20px solid`)
     $(`#left_pupil${id}`).removeClass(`left`);
     $(`#left_pupil${id}`).removeClass(`up`);
@@ -212,7 +211,7 @@ function eyesType5(id) {
     $(`#right_pupil${id}`).removeClass(`up`);
 }
 
-function eyesType6(id) {
+function _eyesType6(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-left`, `10px solid`)
     $(`#left_pupil${id}`).removeClass(`left`);
     $(`#left_pupil${id}`).removeClass(`up`);
@@ -220,7 +219,7 @@ function eyesType6(id) {
     $(`#right_pupil${id}`).removeClass(`up`);
 }
 
-function eyesType7(id) {
+function _eyesType7(id) {
     $(`#cat_eye${id}`).find(`span`).css(`border-right`, `10px solid`)
     $(`#left_pupil${id}`).addClass(`left`);
     $(`#right_pupil${id}`).addClass(`left`);
@@ -229,40 +228,40 @@ function eyesType7(id) {
 }
 
 // functions for eye shape variations
-function eyeVariation(num, id) {
+function _eyeVariation(num, id) {
     switch (parseInt(num)) {
         case 1:
-            normalEyes(id);
+            _normalEyes(id);
             break;
         case 2:
-            normalEyes(id);
-            return eyesType2(id);
+            _normalEyes(id);
+            return _eyesType2(id);
             break;
         case 3:
-            normalEyes(id);
-            return eyesType3(id);
+            _normalEyes(id);
+            return _eyesType3(id);
             break;
         case 4:
-            normalEyes(id);
-            return eyesType4(id);
+            _normalEyes(id);
+            return _eyesType4(id);
             break;
         case 5:
-            normalEyes(id);
-            return eyesType5(id);
+            _normalEyes(id);
+            return _eyesType5(id);
             break;
         case 6:
-            normalEyes(id);
-            return eyesType6(id);
+            _normalEyes(id);
+            return _eyesType6(id);
             break;
         case 7:
-            normalEyes(id);
-            return eyesType7(id);
+            _normalEyes(id);
+            return _eyesType7(id);
             break;
     }
 }
 
 // cases 1-7
-async function normalMarkings(id) {
+async function _normalMarkings(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -270,7 +269,7 @@ async function normalMarkings(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings2(id) {
+async function _markings2(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -278,7 +277,7 @@ async function markings2(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(0deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings3(id) {
+async function _markings3(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -286,7 +285,7 @@ async function markings3(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(-10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings4(id) {
+async function _markings4(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "58px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -294,7 +293,7 @@ async function markings4(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(10deg)", "height": "45px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings5(id) {
+async function _markings5(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -302,7 +301,7 @@ async function markings5(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(0deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings6(id) {
+async function _markings6(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -310,7 +309,7 @@ async function markings6(id) {
     $(`#right_dot${id}`).css({ "transform": "rotate(-10deg)", "height": "25px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-async function markings7(id) {
+async function _markings7(id) {
     //Remove all style from other decorations
     //In this way we can also use normalDecoration() to reset the decoration style
     $(`#mid-dot${id}`).css({ "transform": "rotate(0deg)", "height": "38px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
@@ -319,34 +318,34 @@ async function markings7(id) {
 }
 
 // functions for marking shape variateions
-function markingsVariation(num, id) {
+function _markingsVariation(num, id) {
     switch (parseInt(num)) {
         case 1:
-            normalMarkings(id);
+            _normalMarkings(id);
             break;
         case 2:
-            normalMarkings(id);
-            return markings2(id);
+            _normalMarkings(id);
+            return _markings2(id);
             break;
         case 3:
-            normalMarkings(id);
-            return markings3(id);
+            _normalMarkings(id);
+            return _markings3(id);
             break;
         case 4:
-            normalMarkings(id);
-            return markings4(id);
+            _normalMarkings(id);
+            return _markings4(id);
             break;
         case 5:
-            normalMarkings(id);
-            return markings5(id);
+            _normalMarkings(id);
+            return _markings5(id);
             break;
         case 6:
-            normalMarkings(id);
-            return markings6(id);
+            _normalMarkings(id);
+            return _markings6(id);
             break;
         case 7:
-            normalMarkings(id);
-            return markings7(id);
+            _normalMarkings(id);
+            return _markings7(id);
             break;
     }
 }
@@ -487,7 +486,7 @@ async function addToKittyPride(CatObjectArray, ids){
         $(`#dnaspecial${id}`).html(DNA.lastNum);
 
         // render cat from DNA for kitty id
-        renderCat(DNA, id);
+        _renderCat(DNA, id);
 
         // populate the appended html with the Kitty generation
         $(`#cat_id${id}`).html(`ID: ${id}`);
@@ -499,12 +498,13 @@ async function addToKittyPride(CatObjectArray, ids){
 
 async function fetchCats(_user){
     // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
-    var tokenIds = await getUserIds(_user);
+    let tokenIds = await getUserIds(_user);
 
     // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
     let catObj = await getKittyObject(tokenIds);
     addToKittyPride(catObj, tokenIds); 
+
 } 
 
 // listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
