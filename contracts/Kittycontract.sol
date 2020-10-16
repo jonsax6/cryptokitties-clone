@@ -17,6 +17,15 @@ contract Kittycontract is IERC721, Ownable {
         uint256 genes
     );
 
+    // @dev Emitted when `tokenId` token is transfered from `from` to `to`.
+    event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
+
+    // @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
+    event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
+    
+    // @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
+    event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+
     struct Kitty {
         uint256 genes;
         uint64 birthTime;
@@ -99,42 +108,28 @@ contract Kittycontract is IERC721, Ownable {
         return userTokenIds;
     } 
 
-    /// @notice Change or reaffirm the approved address for an NFT
-    /// @dev The zero address indicates there is no approved address.
-    ///  Throws unless `msg.sender` is the current NFT owner, or an authorized
-    ///  operator of the current owner.
-    /// @param _approved The new approved NFT controller
-    /// @param _tokenId The NFT to approve
-    function approve(address _approved, uint256 _tokenId) external{
-        require(kittyIndexToOwner[_tokenId] == msg.sender);
-        kittyIndexToApproved[_tokenId] = _approved;    
+    function approve(address approved, uint256 tokenId) external {
+        require(_owns(msg.sender, tokenId));
+        kittyIndexToApproved[tokenId] = approved;  
+        emit Approval(msg.sender, approved, tokenId);  
     }
 
-
-    /// @notice Enable or disable approval for a third party ("operator") to manage
-    ///  all of `msg.sender`'s assets
-    /// @dev Emits the ApprovalForAll event. The contract MUST allow
-    ///  multiple operators per owner.
-    /// @param _operator Address to add to the set of authorized operators
-    /// @param _approved True if the operator is approved, false to revoke approval
-    function setApprovalForAll(address _operator, bool _approved) external {
-        
+    function setApprovalForAll(address operator, bool approved) external {
+        require(operator != msg.sender);
+        _operatorApprovals[msg.sender][operator] = approved;
+        emit ApprovalForAll(msg.sender, operator, approved); 
     }
 
-    /// @notice Get the approved address for a single NFT
-    /// @dev Throws if `_tokenId` is not a valid NFT.
-    /// @param _tokenId The NFT to find the approved address for
-    /// @return The approved address for this NFT, or the zero address if there is none
-    function getApproved(uint256 _tokenId) external view returns (address);
+    function getApproved(uint256 tokenId) external view returns (address) {
+        require(tokenId < kitties.length); // verifies the tokenId is somewhere in the array
+        return kittyIndexToApproved[tokenId]; 
+    }
 
-    /// @notice Query if an address is an authorized operator for another address
-    /// @param _owner The address that owns the NFTs
-    /// @param _operator The address that acts on behalf of the owner
-    /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
-    function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+    function isApprovedForAll(address owner, address operator) external view returns (bool) {
+        return _operatorApprovals[owner][operator];
+    }
 
-    function balanceOf(address owner) external view returns (uint256 balance) 
-    {
+    function balanceOf(address owner) external view returns (uint256 balance) {
         return ownershipTokenCount[owner];
     }
 
@@ -142,13 +137,11 @@ contract Kittycontract is IERC721, Ownable {
         return kitties.length;    
     }
 
-    function name() external view returns (string memory) 
-    {
+    function name() external view returns (string memory) {
         return _name;
     }
 
-    function symbol() external view returns (string memory tokenSymbol) 
-    {
+    function symbol() external view returns (string memory tokenSymbol) {
         return _symbol;
     }
 
@@ -171,6 +164,7 @@ contract Kittycontract is IERC721, Ownable {
         
         if(_from != address(0)){
             ownershipTokenCount[_from]--;
+            delete kittyIndexToApproved[_tokenId];
         }
         // Emit transfer event
         emit Transfer(_from, _to, _tokenId);
