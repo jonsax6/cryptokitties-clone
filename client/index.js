@@ -36,7 +36,13 @@ $(document).ready(async function(){
         $('#homepage_link').hide();
         $('#breeder_link').hide();
         $('#pride_link').hide();
+        $('#breed_0_link').hide();
+        $('#breed_kittens_link').hide();
+        $('#breeding_form').hide();
+        $('#pride_subtitle').hide();
+        $('#breed_subtitle').hide();
     }
+
     // hide all on page load, then show homepage div
     hideAll();
     $('#homepage_link').show();
@@ -51,21 +57,50 @@ $(document).ready(async function(){
     $('#nav_pride').click(async()=>{
         hideAll();
         $('#kitty-pride-grid').empty();
+        $('#pride_subtitle').show();
         fetchCats(user)        
         $('#pride_link').show();
     })
 
-    // Breeder nav menu click listener
-    $('#nav_breeder').click(()=>{
+    // Breed from parents nav menu click listener
+    $('#nav_breed_kittens').click(async()=>{
         hideAll();
-        $('#breeder_link').show();
+        $('#kitty-pride-grid').empty();
+        $('#breed_subtitle').show();
+        $('#breeding_form').show();
+        fetchCats(user)        
+        $('#pride_link').show();
+    }) 
+
+    // Breeder nav menu click listener
+    $('#nav_breed_0').click(()=>{
+        hideAll();
+        $('#breed_0_link').show();
     })
 
     // Breeder click listener in homepage banner
-    $('#nav_breeder2').click(()=>{
+    $('#nav_breed_0_2').click(()=>{
         hideAll();
-        $('#breeder_link').show();
+        $('#breed_0_link').show();
     })
+
+    // breeding cats
+    var dadCat;
+    var momCat;
+
+    $('#breedCats').click(async()=>{
+        dadCat = await $('#dadCat').val();
+        momCat = await $('#momCat').val();
+        $('#momCat').val('');
+        $('#dadCat').val('');
+        breedCats(dadCat, momCat);
+        hideAll();
+        $('#kitty-pride-grid').empty();
+        $('#breed_subtitle').show();
+        $('#breeding_form').show();
+        fetchCats(user)        
+        $('#pride_link').show();
+    }) 
 })
 
 // creates a new kitty and transfers to msg.sender eth address.
@@ -76,5 +111,14 @@ function createKitty(user){
             console.log(err);
         else
             console.log(txHash);
-    })
+    });
+}
+
+function breedCats(user){
+    instance.methods.breed(dadCat, momCat).send({}, function(error, txHash){
+        if(error)
+            console.log(err);
+        else
+            consold.log(txHash);
+    }); 
 }

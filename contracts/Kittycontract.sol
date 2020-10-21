@@ -49,6 +49,27 @@ contract Kittycontract is IERC721, IERC721Receiver, Ownable {
     
     uint256 public gen0Counter;
 
+    function breed(uint256 _dadId, uint256 _momId) public returns(uint256) {
+        // check ownership
+        require(_owns(msg.sender, _dadId) && _owns(msg.sender, _momId));
+        (uint256 dadDna,,,,uint256 dadGen) = getKitty(_dadId);
+        (uint256 momDna,,,,uint256 momGen) = getKitty(_momId);
+        uint256 kidGen = 0;
+        if(dadGen > momGen){
+            kidGen = dadGen + 1;
+        } else if(dadGen < momGen){
+            kidGen = momGen + 1;
+        } else {
+            kidGen = dadGen + 1;
+        }
+        uint256 newDna = _mixDna(dadDna, momDna);
+
+        _createKitty(_momId,_dadId, kidGen, newDna, msg.sender);
+    }
+
+    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
     function supportsInterface(bytes4 _interfaceId) external view returns (bool) {
         return (_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
     }
@@ -86,7 +107,7 @@ contract Kittycontract is IERC721, IERC721Receiver, Ownable {
         return newKittenId;
     } 
 
-    function getKitty(uint256 _id) external view returns (
+    function getKitty(uint256 _id) public view returns (
         uint256 genes,
         uint256 birthTime,
         uint256 momId,
@@ -238,5 +259,13 @@ contract Kittycontract is IERC721, IERC721Receiver, Ownable {
 
         // spender is from OR spender is approved for tokenId OR spender is operator for from
         return(_spender == _from || _approvedFor(_spender, _tokenId) || isApprovedForAll(_from, _spender));
+    }
+
+    function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
+        uint256 firstHalf = _dadDna / 100000000; 
+        uint256 secondHalf = _momDna % 100000000;
+        uint256 newDna = firstHalf * 100000000;
+        newDna = newDna + secondHalf;
+        return newDna;
     }
 }

@@ -77,6 +77,9 @@ body {
 .custom-shape-divider-bottom-1602163266 .shape-fill {
   fill: #ffffff;
 }
+.breedCatInputs {
+  width: 150px;
+}
 
 .breeder-body {
   justify-content: center;
