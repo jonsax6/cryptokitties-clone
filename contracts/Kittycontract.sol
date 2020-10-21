@@ -1,10 +1,10 @@
 pragma solidity ^0.5.12;
 
 import "./IERC721.sol";
-import "./Ownable.sol";
 import "./IERC721Receiver.sol";
+import "./Ownable.sol";
 
-contract Kittycontract is IERC721, IERC721Receiver, Ownable {
+contract Kittycontract is IERC721, Ownable {
 
     uint256 public constant CREATION_LIMIT_GEN0 = 100;
     string public constant _name = "JC_Kitties";
@@ -84,6 +84,10 @@ contract Kittycontract is IERC721, IERC721Receiver, Ownable {
 
     bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
     bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
+    function onERC721Received(address operator, address from, uint tokenId, bytes calldata data) external returns (bytes4) {
+
+    }
 
     function supportsInterface(bytes4 _interfaceId) external view returns (bool) {
         return (_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);

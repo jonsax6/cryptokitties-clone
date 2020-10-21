@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0xe004125b1ce5EBB09103E161Fa2780DE4B11E217";
+var contractAddress = "0xfBa3c66d0b2043368b613a5d74226cb3892e3550";
 
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
@@ -92,17 +92,17 @@ $(document).ready(async function(){
     // resets form inputs to ''
     // calls breetCats(datCat, momCat) which sends cat IDs to Kittycontract breed function.
     // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
-    $('#breedCats').click(async()=>{
-        dadCat = await $('#dadCat').val();
-        momCat = await $('#momCat').val();
+    $('#breedCats').click(()=>{
+        dadCat = parseInt($('#dadCat').val());
+        momCat = parseInt($('#momCat').val());
         $('#momCat').val('');
         $('#dadCat').val('');
         breedCats(dadCat, momCat);
-        hideAll();
+        fetchCats(user);
+        hideAll();        
         $('#kitty-pride-grid').empty();
         $('#breed_subtitle').show();
         $('#breeding_form').show();
-        fetchCats(user)        
         $('#pride_link').show();
     }) 
 })
@@ -118,11 +118,11 @@ function createKitty(user){
     });
 }
 
-function breedCats(user){
-    instance.methods.breed(dadCat, momCat).send({}, function(error, txHash){
+function breedCats(_dadId, _momId){
+    instance.methods.breed(_dadId, _momId).send({}, function(error, txHash){
         if(error)
-            console.log(err);
+            console.log(error);
         else
-            consold.log(txHash);
+            console.log(txHash);
     }); 
 }
