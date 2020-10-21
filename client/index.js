@@ -88,6 +88,10 @@ $(document).ready(async function(){
     var dadCat;
     var momCat;
 
+    // the "Get Them A Room!" button.  Captures mom and dad ID selections from 'breeding_form' inputs
+    // resets form inputs to ''
+    // calls breetCats(datCat, momCat) which sends cat IDs to Kittycontract breed function.
+    // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
     $('#breedCats').click(async()=>{
         dadCat = await $('#dadCat').val();
         momCat = await $('#momCat').val();
