@@ -4,6 +4,12 @@ var instance;
 var user;
 var contractAddress = "0xfBa3c66d0b2043368b613a5d74226cb3892e3550";
 
+// Array to record both parents.  It gets zero'd out on pride page load so new parents can be selected.
+var parents = [];
+
+// Tracking variable for navigation/location
+var loc = '';
+
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
     instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
@@ -40,26 +46,33 @@ $(document).ready(async function(){
         $('#breed_kittens_link').hide();
         // $('#breeding_form').hide();
         $('#pride_subtitle').hide();
-        $('#breed_subtitle').hide();
+        $('#breeding_subtitle').hide();
+        $('#breeding_title').hide();
+        $('#pride_title').hide();
+
     }
 
-    // Array to record both parents.  It gets zero'd out on pride page load so new parents can be selected.
-    var parents = [];
+
 
     // hide all on page load, then show homepage div
     hideAll();
     $('#homepage_link').show();
+    loc = "home";
 
     // homepage nav menu click listener
     $('#nav_homepage').click(()=>{
         hideAll();
         $('#homepage_link').show();
+        loc = "home";
     })
 
     // kitty pride nav menu click listener
     $('#nav_pride').click(()=>{
+        loc = "pride";
         hideAll();
         parents = [];
+        $('#launch_menu_modal_1').empty();
+        $('#launch_menu_modal_2').empty();
         $('#pride_link').show();
         $('#kitty-pride-grid').empty();
         $('#kitty-menu-grid').empty();
@@ -68,17 +81,32 @@ $(document).ready(async function(){
         $('#pride_subtitle').show();
         $('#breeding_form').hide();
         $('#breed_Select').show();
+        $('#breeding_title').hide();
+        $('#pride_title').show();
+        $('#launch_breeder').show();
+        $('#launch_menu_modal_1').html(
+            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_2').html(
+            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_1').addClass('breed_select');
+        $('#launch_menu_modal_1').removeClass('showcase_box');
+        $('#launch_menu_modal_2').addClass('breed_select');
+        $('#launch_menu_modal_2').removeClass('showcase_box');
         fetchCats(user, "pride");
     })
 
     // Breeder nav menu click listener
     $('#nav_breed_0').click(()=>{
+        loc = "gen0";
         hideAll();
         $('#breed_0_link').show();
     })
 
     // Breeder click listener in homepage banner
     $('#nav_breed_0_2').click(()=>{
+        loc = "gen0";
         hideAll();
         $('#breed_0_link').show();
     })
@@ -87,91 +115,55 @@ $(document).ready(async function(){
     // resets form inputs to ''
     // calls breetCats(datCat, momCat) which sends cat IDs to Kittycontract breed function.
     // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
-    $('#breed_Select').click(()=>{
+    $('#breedCats').click(()=>{
         hideAll();
-        parents = [];
-        // div containing the male-female chooser boxes
+        
+        // assign respective ID's to momId and dadId from the parents array, created from cat choices
+        momId = parents[0];
+        dadId = parents[1];
+
+        // breeds the two cats, and sends to blockchain.  After tx receipt, rerenders the kitty pride page.
+        breedCats(momId, dadId, "pride");
+        
+        // reloads the kitty pride page
         $('#pride_link').show();
-        $('#breeding_form').show();
+        $('#breeding_form').hide();
+
         // hides the cat grid div
         $('#kitty-pride-grid').hide();
         $('#breed_Select').hide();
     })
 
-    $('#launch_menu_modal').click(()=>{
+    $('#launch_menu_modal_1').click(()=>{
+        loc = "female_showcase";
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid').empty();
         $('#kitty-menu-grid').empty();
         // now put the kitty grid into DOM @menu_modal
-        $('#kitty-menu-grid').append(
-            `
-            <div class="col-lg-4 prideBox m-5" onclick="selectCat(${id})">
-            <div class="cat">
-                <div id="head_and_ears${id}">
-                    <div id="cat_ear${id}" class="cat__ear">
-                        <div id="left_ear${id}" class="cat__ear--left">
-                            <div id="left_ear_inside${id}" class="cat__ear--left-inside"></div>
-                        </div>
-                        <div id="right_ear${id}" class="cat__ear--right">
-                            <div id="right_ear_inside${id}" class="cat__ear--right-inside"></div>
-                        </div>
-                    </div>
-    
-                    <div id="head${id}" class="cat__head">
-                        <div id="mid-dot${id}" class="cat__head-dots">
-                            <div id="left_dot${id}" class="cat__head-dots_first"></div>
-                            <div id="right_dot${id}" class="cat__head-dots_second"></div>
-                        </div>
-                        <div id="cat_eye${id}" class="cat__eye">
-                            <div id="cat_eye_left${id}" class="cat__eye--left">
-                                <span id="left_pupil${id}" class="pupil-left"></span>
-                            </div>
-                            <div class="cat__eye--right">
-                                <span id="right_pupil${id}" class="pupil-right"></span>
-                            </div>
-                        </div>
-                        <div id="nose${id}" class="cat__nose"></div>
-    
-                        <div id="mouth_contour${id}" class="cat__mouth-contour"></div>
-                        <div class="cat__mouth-left"></div>
-                        <div class="cat__mouth-right"></div>
-    
-                        <div id="whiskers_left${id}" class="cat__whiskers-left"></div>
-                        <div id="whiskers_right${id}" class="cat__whiskers-right"></div>
-                    </div>
-    
-                </div>
-                
-    
-                <div class="cat__body">
-    
-                    <div id="chest${id}" class="cat__chest"></div>
-    
-                    <div id="belly${id}" class="cat__chest_inner"></div>
-    
-    
-                    <div id="left_paw${id}" class="cat__paw-left"></div>
-                    <div id="paw_left_inner${id}" class="cat__paw-left_inner"></div>
-    
-    
-                    <div id="right_paw${id}" class="cat__paw-right"></div>
-                    <div id="right_paw_inner${id}"class="cat__paw-right_inner"></div>
-    
-    
-                    <div id="tail${id}" class="cat__tail"></div>
-                </div>
-            </div>
-            <br>
-            <div class="dnaDiv">
-                <b>ID:<span id="cat_id${id}"></span></b><br>
-                <b id="generation${id}"></b><br>
-                <b>Genes: ${genes}</b>
-            </div>
-        </div>
-            `
-        )
         // populate grid inside menu modal
         fetchCats(user, "menu");
+    })
+
+    $('#launch_menu_modal_2').click(()=>{
+        loc = "male_showcase";
+        // first empty all grids to avoid id conflicts
+        $('#kitty-pride-grid').empty();
+        $('#kitty-menu-grid').empty();
+        // now put the kitty grid into DOM @menu_modal
+        // populate grid inside menu modal
+        fetchCats(user, "menu");
+    })
+
+    $('#launch_breeder').click(()=>{
+        hideAll();
+        $('#launch_breeder').hide();
+        $('#pride_link').show();
+        $('#kitty-pride-grid').empty();
+        $('#breeding_form').show();
+        $('#breeding_title').show();
+        $('#breeding_subtitle').show();
+        $('#pride_title').hide();
+
     })
 
     $('#breedCats').click(()=>{
@@ -200,29 +192,40 @@ function createKitty(user){
     });
 }
 
-// this is called when catbox divs are clicked on.  after two selections, an alert is thrown.
+// this is called when catbox divs are clicked on.  after two parent selections, an alert is thrown.
+// the parents array gets emptied every time nav_pride gets clicked.
 function selectCat(id) {
-    if(parents.length < 2){
+    if(loc == "menu" && parents.length < 2){
         parents.push(id); 
         console.log(parents);
-    } else {
-        alert("only two cats can mate!");
+    } else if(loc == "menu"){
+        alert("Choose only two cats!");
     }
+    // hides the modal menu after every cat selection
+    $("#menu_modal").modal('hide');
+    catParentsShowcase(loc, id);
 }
 
-function catParentsMenu() {
-    // Whenever possible, place your modal HTML in a top-level position to avoid potential 
-    // interference from other elements. You’ll likely run into issues when nesting a .modal 
-    // within another fixed element.
-    $('body').append(
-        // modal window popout
-        `<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        test content
-        </div>`
-    )
+// This gets called when we click on a cat in the menu_modal pop up menu
+function catParentsShowcase(page, catId){
+    // checks to see which page state is active
+    if(page == "female_showcase"){
+        $('#launch_menu_modal_1').empty();
+        $('#launch_menu_modal_1').addClass('showcase_box');
+        $('#launch_menu_modal_1').removeClass('breed_select');
+        fetchSingleCat(user, "launch_menu_modal_1", catId);
+        parents[0] = catId;
+    } else {
+        $('#launch_menu_modal_2').empty();
+        $('#launch_menu_modal_2').addClass('showcase_box');
+        $('#launch_menu_modal_2').removeClass('breed_select');
+        fetchSingleCat(user, "launch_menu_modal_2", catId);
+        parents[1] = catId;
+    }
+    console.log(parents);
 }
 
-function breedCats(_dadId, _momId, grid){
+function breedCats(_dadId, _momId, pride){
     // instance.methods.breed(_dadId, _momId).send({}, function(error, txHash){
     //     if(error)
     //         console.log(error);
@@ -239,7 +242,33 @@ function breedCats(_dadId, _momId, grid){
     .on("receipt", function (receipt) {
         // receipt example
         console.log(receipt);
-        fetchCats(user, grid);
+        loc = "pride";
+        hideAll();
+        parents = [];
+        $('#launch_menu_modal_1').empty();
+        $('#launch_menu_modal_2').empty();
+        $('#pride_link').show();
+        $('#kitty-pride-grid').empty();
+        $('#kitty-menu-grid').empty();
+        $('#kitty-pride-grid').show();
+
+        $('#pride_subtitle').show();
+        $('#breeding_form').hide();
+        $('#breed_Select').show();
+        $('#breeding_title').hide();
+        $('#pride_title').show();
+        $('#launch_breeder').show();
+        $('#launch_menu_modal_1').html(
+            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_2').html(
+            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_1').addClass('breed_select');
+        $('#launch_menu_modal_1').removeClass('showcase_box');
+        $('#launch_menu_modal_2').addClass('breed_select');
+        $('#launch_menu_modal_2').removeClass('showcase_box');
+        fetchCats(user, pride);    
     })
     .on("error", (error) => {
 

@@ -230,13 +230,23 @@
     </div>
     <div id="pride_link" class="custom-shape-divider-bottom-1602163266">
         <div class="row">
-            <!-- modal for kitty breeding menu -->
+          
+        </div>
+        <div class="container mt-3 p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
+            <div align="center">
+            <h1 id="pride_title" class="c-white">See All Your Kitties</h1>
+            <h1 id="breeding_title" class="c-white">Kitty Breeding</h1>
+
+            <p id="pride_subtitle" class="c-white">Your Purrrfect Family</p>
+            <p id="breeding_subtitle" class="c-white">Breed Two of Your Favorite Cats!</p>
+            
+            </div>
             <div class="col-12">
                 <div class="modal fade" id="menu_modal">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1>title</h1>
+                                <h1>My Kitty Pride</h1>
                             </div>
                             <!-- to be populated with kitty grid when modal opens -->
                             <div class="modal-body">
@@ -251,38 +261,69 @@
                     </div>        
                 </div>
                 <!-- Button for kitty menu modal -->
-                <button type="button" id="launch_menu_modal" class="btn btn-primary" data-toggle="modal" data-target="#menu_modal">
-                    Lauch Kitty Menu
-                </button>  
-            </div>            
-        </div>
-        <div class="container mt-3 p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
-            <div align="center">
-            <h1 class="c-white">See All Your Kitties</h1>
-            <p id="pride_subtitle" class="c-white">Your Purrrfect Family</p>
-            <p id="breed_subtitle" class="c-white">Breed Two of Your Favorite Cats!</p>
-            </div>
-            <div id="breeding_form" class="container">
-                <form>
-                    <div class="row">
-                        <div id="" class="col-5 m-auto breed_select" onclick="catParentsMenu()">
-                            <img src="/client/assets/raster images/female_cat.png" class="breed_select_icon">
+                <!-- <div id="breeding_form" class="container">
+                    <form>
+                        <div class="row">
+                            <div id="" class="col-5 m-auto breed_select" onclick="catParentsMenu()" data-toggle="modal" data-target="#menu_modal">
+                                <img src="/client/assets/raster images/female_cat.png" class="breed_select_icon">
+                            </div>
+                            <div class="col-5 m-auto breed_select" onclick="catParentsMenu()">
+                                <img src="/client/assets/raster images/male_cat.png" class="breed_select_icon">
+                            </div>
                         </div>
-                        <div class="col-5 m-auto breed_select" onclick="catParentsMenu()">
-                            <img src="/client/assets/raster images/male_cat.png" class="breed_select_icon">
+                        <div class="row">
+                            <div class="col-3 text-center m-auto">
+                                <button id="breedCats" type="submit" class="btn btn-light start-btn m-2" data-toggle="modal" data-target="#menu_modal"><b class="text-light">Get Them A Room!</b></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-3 text-center m-auto">
-                            <button id="breedCats" type="submit" class="btn btn-light start-btn m-2"><b class="text-light">Get Them A Room!</b></button>
+                    </form>
+                </div> -->
+
+
+                <div id="breeding_form" class="container">
+                    <form>
+                        <div class="row">
+                            <div class="col-4 m-auto text-center"><h3 class="text-light">Dame</h3></div>
+                            <div class="col-4 m-auto text-center"><h3 class="text-light">Sire</h3></div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="row mt-5">
-                <div class="col-3 m-auto text-center">
-                    <button id="breed_Select" type="submit" class="btn btn-light start-btn m-2"><b class="text-light">Breed!</b></button>
+                        <div class="row mb-3">
+                            <div class="col-4 m-auto text-center"><b class="text-light">This Kitty's in Heat!</b></div>
+                            <div class="col-4 m-auto text-center"><b class="text-light">The Alpha Male!</b></div>
+                        </div>
+                        <div class="row">
+                            <div id="launch_menu_modal_1" class="col-4 m-auto breed_select" data-toggle="modal" data-target="#menu_modal">
+                                <img src="/client/assets/raster images/female_cat.png" class="breed_select_icon">
+                            </div>
+                            <div id="launch_menu_modal_2" class="col-4 m-auto breed_select" data-toggle="modal" data-target="#menu_modal">
+                                <img src="/client/assets/raster images/male_cat.png" class="breed_select_icon">
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-3 text-center m-auto">
+                                <button id="breedCats" type="submit" class="btn btn-light start-btn m-2"><b class="text-light">Get Them A Room!</b></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            </div> 
+
+
+
+
+
+
+
+
+            <div class="row mt-5">
+            <!-- modal for kitty breeding menu -->
+ 
+            <div class="col-3 m-auto mt-5 text-center">
+                <button id="launch_breeder" class="btn btn-light start-btn m-2">
+                    <b class="text-light">Breed!</b>
+                </button>
+            </div>
+                <!-- <div class="col-3 m-auto mt-5 text-center">
+                </div> -->
             </div>
             <div id="kitty-pride-grid" class="row breeder-body">
             </div>
