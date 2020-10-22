@@ -385,15 +385,17 @@ return DNA;
 }
 
 // now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
-async function addToKittyPride(CatObjectArray, ids){
-    // empty grid prior to populating
+async function addToKittyGrid(CatObjectArray, ids, grid){
+    // empty all kitty grids prior to populating any fresh grid 
+    // to avoid attribute id conflicts and to avoid adding new grid to bottom of old one
     $('#kitty-pride-grid').empty();
-    $('#kitty-mating-grid').empty();
+    $('#kitty-menu-grid').empty();
+
 
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
-        // the catObjectArray index mirrors the tokenIds array index (containing the cat ids), therefore we can 
-        // take the tokenIds value at each index[i] to get the cat id.
+        // the catObjectArray index mirrors the ids array index (containing the cat ids), therefore we can 
+        // take the ids array value at each index[i] to get the cat id.
         let id = ids[i];
 
         // get genes from cat object array
@@ -403,9 +405,11 @@ async function addToKittyPride(CatObjectArray, ids){
         let generation = CatObjectArray[i].generation;
         
         // populate the html with the kitty w/id: id 
-        $('#kitty-pride-grid').append(
+
+        // populate either kitty-pride-grid or kitty-menu-grid
+        $(`#kitty-${grid}-grid`).append(
             `
-            <div class="col-lg-4 prideBox">
+            <div class="col-lg-4 prideBox m-5" onclick="selectCat(${id})">
             <div class="cat">
                 <div id="head_and_ears${id}">
                     <div id="cat_ear${id}" class="cat__ear">
@@ -463,7 +467,7 @@ async function addToKittyPride(CatObjectArray, ids){
             </div>
             <br>
             <div class="dnaDiv">
-                <b id="cat_id${id}"></b><br>
+                <b>ID:<span id="cat_id${id}"></span></b><br>
                 <b id="generation${id}"></b><br>
                 <b>Genes: ${genes}</b>
             </div>
@@ -471,105 +475,27 @@ async function addToKittyPride(CatObjectArray, ids){
             `
         )
 
-        $('#kitty-mating-grid').append(
-            `
-            <div class="col-lg-4 prideBox">
-            <div class="cat">
-                <div id="head_and_ears${id}">
-                    <div id="cat_ear${id}" class="cat__ear">
-                        <div id="left_ear${id}" class="cat__ear--left">
-                            <div id="left_ear_inside${id}" class="cat__ear--left-inside"></div>
-                        </div>
-                        <div id="right_ear${id}" class="cat__ear--right">
-                            <div id="right_ear_inside${id}" class="cat__ear--right-inside"></div>
-                        </div>
-                    </div>
-    
-                    <div id="head${id}" class="cat__head">
-                        <div id="mid-dot${id}" class="cat__head-dots">
-                            <div id="left_dot${id}" class="cat__head-dots_first"></div>
-                            <div id="right_dot${id}" class="cat__head-dots_second"></div>
-                        </div>
-                        <div id="cat_eye${id}" class="cat__eye">
-                            <div id="cat_eye_left${id}" class="cat__eye--left">
-                                <span id="left_pupil${id}" class="pupil-left"></span>
-                            </div>
-                            <div class="cat__eye--right">
-                                <span id="right_pupil${id}" class="pupil-right"></span>
-                            </div>
-                        </div>
-                        <div id="nose${id}" class="cat__nose"></div>
-    
-                        <div id="mouth_contour${id}" class="cat__mouth-contour"></div>
-                        <div class="cat__mouth-left"></div>
-                        <div class="cat__mouth-right"></div>
-    
-                        <div id="whiskers_left${id}" class="cat__whiskers-left"></div>
-                        <div id="whiskers_right${id}" class="cat__whiskers-right"></div>
-                    </div>
-    
-                </div>
-                
-    
-                <div class="cat__body">
-    
-                    <div id="chest${id}" class="cat__chest"></div>
-    
-                    <div id="belly${id}" class="cat__chest_inner"></div>
-    
-    
-                    <div id="left_paw${id}" class="cat__paw-left"></div>
-                    <div id="paw_left_inner${id}" class="cat__paw-left_inner"></div>
-    
-    
-                    <div id="right_paw${id}" class="cat__paw-right"></div>
-                    <div id="right_paw_inner${id}"class="cat__paw-right_inner"></div>
-    
-    
-                    <div id="tail${id}" class="cat__tail"></div>
-                </div>
-            </div>
-            <br>
-            <div class="dnaDiv">
-                <b id="cat_id${id}"></b><br>
-                <b id="generation${id}"></b><br>
-                <b>Genes: ${genes}</b><br>
-                <b>Radio Button here</b>
-            </div>
-        </div>
-            `
-        )
-        
         // now create the DNA object from the genes fetched from the cat object array
         let DNA = makeDNA(genes);
 
         // render cat from DNA for kitty id
         _renderCat(DNA, id);
 
-        // populate the appended html with the Kitty generation
-        $(`#cat_id${id}`).html(`ID: ${id}`);
+        // populate the appended html with the Kitty ID
+        $(`#cat_id${id}`).html(`${id}`);
 
-        // populate the appended html with the kitty ID
+        // populate the appended html with the kitty generation
         $(`#generation${id}`).html(`Generation: ${generation}`);
     }
 }
 
-async function fetchCats(_user, page){
+async function fetchCats(_user, grid){
     // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
     let tokenIds = await getUserIds(_user);
 
     // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
     let catObj = await getKittyObject(tokenIds);
-    addToKittyPride(catObj, tokenIds, page); 
+    addToKittyGrid(catObj, tokenIds, grid); 
 } 
-
-// listener for ETH address form - collects user address, pings Kittycontract.sol for tokenId array, 
-// calls addToKittyPride function to populate page with all owned kitties.
-$('#submit_eth_address').click(async() =>{
-    // bind user addres to user variable
-    const ethUser = $("#enter_owner_eth_address").val();
-    
-    fetchCats(ethUser);
-})
 
