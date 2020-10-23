@@ -385,7 +385,7 @@ return DNA;
 }
 
 // now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
-async function addToKittyGrid(CatObjectArray, ids, grid){
+async function appendGrid(CatObjectArray, ids, grid){
     // empty all kitty grids prior to populating any fresh grid 
     // to avoid attribute id conflicts and to avoid adding new grid to bottom of old one
     $('#kitty-pride-grid').empty();
@@ -403,7 +403,6 @@ async function addToKittyGrid(CatObjectArray, ids, grid){
 
         // get generation from cat object array
         let generation = CatObjectArray[i].generation;
-        
         // populate the html with the kitty w/id: id 
 
         // populate either kitty-pride-grid or kitty-menu-grid
@@ -489,14 +488,14 @@ async function addToKittyGrid(CatObjectArray, ids, grid){
     }
 }
 
-async function addToKittyShowcase(CatObjectArray, idarray, id, box){
-    // see comments for addToKittyGrid above, this function is identical, except with no looping, renders one cat into a div
+async function appendShowcase(CatObjectArray, id, box){
+    // see comments for appendGrid above, this function is identical, except with no looping, renders one cat into a div
     // make sure ALL cat grids are empty first to avoid id conflicts
     $(`#kitty-pride-grid`).empty();
     $(`#kitty-menu-grid`).empty();
     $(`#${box}`).empty();
 
-    // fetch kitty parameters
+    // fetch kitty parameters from variables obtained from blockchain
     let genes = CatObjectArray[id-1].genes;
     let generation = CatObjectArray[id-1].generation;
     
@@ -574,23 +573,12 @@ async function addToKittyShowcase(CatObjectArray, idarray, id, box){
     $(`#generation${id}`).html(`Generation: ${generation}`);
 }
 
-async function fetchSingleCat(_user, box, id){
+async function fetchCats(_user){
     // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
-    let tokenIds = await getUserIds(_user);
+    tokenIds = await getUserIds(_user);
 
     // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
-    let catObj = await getKittyObject(tokenIds);
-    addToKittyShowcase(catObj, tokenIds, id, box);
-} 
-
-async function fetchCats(_user, grid){
-    // now we fetch the user id array from Kittycontract.sol and bind to the tokenIds variable
-    let tokenIds = await getUserIds(_user);
-
-    // now execute the main function to populate the page with the user's kitties using getKittyObject() function call
-    // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
-    let catObj = await getKittyObject(tokenIds);
-    addToKittyGrid(catObj, tokenIds, grid); 
+    catObj = await getKittyObject(tokenIds);
 } 
 

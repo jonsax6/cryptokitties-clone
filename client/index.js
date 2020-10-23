@@ -2,7 +2,9 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0xfBa3c66d0b2043368b613a5d74226cb3892e3550";
+var contractAddress = "0xA927c30c93637B1c5c3090D7EA82e4838C143C6d";
+var tokenIds;
+var catObj;
 
 // Array to record both parents.  It gets zero'd out on pride page load so new parents can be selected.
 var parents = [];
@@ -35,7 +37,7 @@ $(document).ready(async function(){
     .on('error', console.error);
 
     // get msg.sender kitties from blockchain
-    fetchCats(user, "pride");
+    fetchCats(user);
 
     // hides all page divs for clean page load on click listeners and page refresh.
     function hideAll(){
@@ -94,7 +96,7 @@ $(document).ready(async function(){
         $('#launch_menu_modal_1').removeClass('showcase_box');
         $('#launch_menu_modal_2').addClass('breed_select');
         $('#launch_menu_modal_2').removeClass('showcase_box');
-        fetchCats(user, "pride");
+        appendGrid(catObj, tokenIds, "pride");
     })
 
     // Breeder nav menu click listener
@@ -113,7 +115,7 @@ $(document).ready(async function(){
 
     // the "Get Them A Room!" button.  Captures mom and dad ID selections from 'breeding_form' inputs
     // resets form inputs to ''
-    // calls breetCats(datCat, momCat) which sends cat IDs to Kittycontract breed function.
+    // calls breetCats(dadCat, momCat) which sends cat IDs to Kittycontract breed function.
     // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
     $('#breedCats').click(()=>{
         hideAll();
@@ -125,13 +127,13 @@ $(document).ready(async function(){
         // breeds the two cats, and sends to blockchain.  After tx receipt, rerenders the kitty pride page.
         breedCats(momId, dadId, "pride");
         
-        // reloads the kitty pride page
-        $('#pride_link').show();
-        $('#breeding_form').hide();
+        // // reloads the kitty pride page
+        // $('#pride_link').show();
+        // $('#breeding_form').hide();
 
-        // hides the cat grid div
-        $('#kitty-pride-grid').hide();
-        $('#breed_Select').hide();
+        // // hides the cat grid div
+        // $('#kitty-pride-grid').hide();
+        // $('#breed_Select').hide();
     })
 
     $('#launch_menu_modal_1').click(()=>{
@@ -141,7 +143,7 @@ $(document).ready(async function(){
         $('#kitty-menu-grid').empty();
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
-        fetchCats(user, "menu");
+        appendGrid(catObj, tokenIds, "menu");
     })
 
     $('#launch_menu_modal_2').click(()=>{
@@ -151,7 +153,7 @@ $(document).ready(async function(){
         $('#kitty-menu-grid').empty();
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
-        fetchCats(user, "menu");
+        appendGrid(catObj, tokenIds, "menu");
     })
 
     $('#launch_breeder').click(()=>{
@@ -166,19 +168,19 @@ $(document).ready(async function(){
 
     })
 
-    $('#breedCats').click(()=>{
-        dadCat = parseInt($('#dadCat').val());
-        momCat = parseInt($('#momCat').val());
-        $('#momCat').val('');
-        $('#dadCat').val('');
-        breedCats(dadCat, momCat, "pride");
-        fetchCats(user, "pride");
-        hideAll();        
-        $('#kitty-pride-grid').empty();
-        $('#breed_subtitle').show();
-        $('#breeding_form').show();
-        $('#pride_link').show();
-    }) 
+    // $('#breedCats').click(()=>{
+    //     dadCat = parseInt($('#dadCat').val());
+    //     momCat = parseInt($('#momCat').val());
+    //     $('#momCat').val('');
+    //     $('#dadCat').val('');
+    //     breedCats(dadCat, momCat, "pride");
+    //     fetchCats(user, "pride");
+    //     hideAll();        
+    //     $('#kitty-pride-grid').empty();
+    //     $('#breed_subtitle').show();
+    //     $('#breeding_form').show();
+    //     $('#pride_link').show();
+    // }) 
 })
 
 // creates a new kitty and transfers to msg.sender eth address.
@@ -195,44 +197,38 @@ function createKitty(user){
 // this is called when catbox divs are clicked on.  after two parent selections, an alert is thrown.
 // the parents array gets emptied every time nav_pride gets clicked.
 function selectCat(id) {
-    if(loc == "menu" && parents.length < 2){
+    // must be in the menu page 
+    if(loc == "menu"){
         parents.push(id); 
         console.log(parents);
-    } else if(loc == "menu"){
-        alert("Choose only two cats!");
-    }
+     
     // hides the modal menu after every cat selection
     $("#menu_modal").modal('hide');
     catParentsShowcase(loc, id);
+    }
 }
 
 // This gets called when we click on a cat in the menu_modal pop up menu
 function catParentsShowcase(page, catId){
-    // checks to see which page state is active
+    // checks to see which page state ("female_showcase" or "male_showcase") is active set when "dame" or "sire" div was clicked
     if(page == "female_showcase"){
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_1').addClass('showcase_box');
         $('#launch_menu_modal_1').removeClass('breed_select');
-        fetchSingleCat(user, "launch_menu_modal_1", catId);
+        appendShowcase(catObj, catId, "launch_menu_modal_1");
         parents[0] = catId;
     } else {
         $('#launch_menu_modal_2').empty();
         $('#launch_menu_modal_2').addClass('showcase_box');
         $('#launch_menu_modal_2').removeClass('breed_select');
-        fetchSingleCat(user, "launch_menu_modal_2", catId);
+        appendShowcase(catObj, catId, "launch_menu_modal_2");
         parents[1] = catId;
     }
     console.log(parents);
 }
 
 function breedCats(_dadId, _momId, pride){
-    // instance.methods.breed(_dadId, _momId).send({}, function(error, txHash){
-    //     if(error)
-    //         console.log(error);
-    //     else
-    //         console.log(txHash);
-    // }); 
-
+    console.log(_dadId);
     instance.methods
     .breed(_dadId, _momId)
     .send()
@@ -268,7 +264,7 @@ function breedCats(_dadId, _momId, pride){
         $('#launch_menu_modal_1').removeClass('showcase_box');
         $('#launch_menu_modal_2').addClass('breed_select');
         $('#launch_menu_modal_2').removeClass('showcase_box');
-        fetchCats(user, pride);    
+        fetchCats(user);    
     })
     .on("error", (error) => {
 
