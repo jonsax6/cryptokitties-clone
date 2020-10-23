@@ -12,6 +12,20 @@ var parents = [];
 // Tracking variable for navigation/location
 var loc = '';
 
+function hideAll(){
+    $('#homepage_page').hide();
+    $('#breeder_link').hide();
+    $('#pride_page').hide();
+    $('#breed_0_page').hide();
+    // $('#breeding_form').hide();
+    $('#pride_title').hide();
+    $('#pride_subtitle').hide();
+    $('#breeding_title').hide();
+    $('#breeding_subtitle').hide();
+    $('#breeding_form').hide();
+    $('#launch_breeder_btn').hide();
+}
+
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
     instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
@@ -40,52 +54,33 @@ $(document).ready(async function(){
     fetchCats(user);
 
     // hides all page divs for clean page load on click listeners and page refresh.
-    function hideAll(){
-        $('#homepage_link').hide();
-        $('#breeder_link').hide();
-        $('#pride_link').hide();
-        $('#breed_0_link').hide();
-        $('#breed_kittens_link').hide();
-        // $('#breeding_form').hide();
-        $('#pride_subtitle').hide();
-        $('#breeding_subtitle').hide();
-        $('#breeding_title').hide();
-        $('#pride_title').hide();
-
-    }
-
-
 
     // hide all on page load, then show homepage div
     hideAll();
-    $('#homepage_link').show();
+    $('#homepage_page').show();
     loc = "home";
 
     // homepage nav menu click listener
     $('#nav_homepage').click(()=>{
         hideAll();
-        $('#homepage_link').show();
+        $('#homepage_page').show();
         loc = "home";
     })
 
     // kitty pride nav menu click listener
-    $('#nav_pride').click(()=>{
+    $('#nav_pride').click(async()=>{
         loc = "pride";
         hideAll();
         parents = [];
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_2').empty();
-        $('#pride_link').show();
+        $('#pride_page').show();
         $('#kitty-pride-grid').empty();
         $('#kitty-menu-grid').empty();
         $('#kitty-pride-grid').show();
-
         $('#pride_subtitle').show();
-        $('#breeding_form').hide();
-        $('#breed_Select').show();
-        $('#breeding_title').hide();
         $('#pride_title').show();
-        $('#launch_breeder').show();
+        $('#launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
             `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
         );
@@ -96,44 +91,36 @@ $(document).ready(async function(){
         $('#launch_menu_modal_1').removeClass('showcase_box');
         $('#launch_menu_modal_2').addClass('breed_select');
         $('#launch_menu_modal_2').removeClass('showcase_box');
+        await fetchCats(user);
         appendGrid(catObj, tokenIds, "pride");
     })
 
     // Breeder nav menu click listener
     $('#nav_breed_0').click(()=>{
         loc = "gen0";
+        $('#kittyCreation').hide();
         hideAll();
-        $('#breed_0_link').show();
+        $('#breed_0_page').show();
     })
 
     // Breeder click listener in homepage banner
     $('#nav_breed_0_2').click(()=>{
         loc = "gen0";
+        $('#kittyCreation').hide();
         hideAll();
-        $('#breed_0_link').show();
+        $('#breed_0_page').show();
     })
 
-    // the "Get Them A Room!" button.  Captures mom and dad ID selections from 'breeding_form' inputs
-    // resets form inputs to ''
+    // the "Get Them A Room!" button.  Captures mom and dad ID selections from parents array
     // calls breetCats(dadCat, momCat) which sends cat IDs to Kittycontract breed function.
     // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
     $('#breedCats').click(()=>{
         hideAll();
-        
         // assign respective ID's to momId and dadId from the parents array, created from cat choices
         momId = parents[0];
         dadId = parents[1];
-
         // breeds the two cats, and sends to blockchain.  After tx receipt, rerenders the kitty pride page.
         breedCats(momId, dadId, "pride");
-        
-        // // reloads the kitty pride page
-        // $('#pride_link').show();
-        // $('#breeding_form').hide();
-
-        // // hides the cat grid div
-        // $('#kitty-pride-grid').hide();
-        // $('#breed_Select').hide();
     })
 
     $('#launch_menu_modal_1').click(()=>{
@@ -141,9 +128,14 @@ $(document).ready(async function(){
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid').empty();
         $('#kitty-menu-grid').empty();
-        // now put the kitty grid into DOM @menu_modal
-        // populate grid inside menu modal
+        // now put the kitty grid into DOM @menu_modal, populate grid inside menu modal
         appendGrid(catObj, tokenIds, "menu");
+        // this control flow removes the chosen catIds from the appended Grid inside the modal only if they are defined
+        if(parents[0] !== "undefined"){
+            $(`#box${parents[0]}`).hide();
+        } if(parents[1] !== "undefined"){
+            $(`#box${parents[1]}`).hide();
+        }
     })
 
     $('#launch_menu_modal_2').click(()=>{
@@ -154,80 +146,69 @@ $(document).ready(async function(){
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
         appendGrid(catObj, tokenIds, "menu");
+        if(parents[0] !== "undefined"){
+            $(`#box${parents[0]}`).hide();
+        } if(parents[1] !== "undefined"){
+            $(`#box${parents[1]}`).hide();
+        }
     })
 
-    $('#launch_breeder').click(()=>{
+    $('#launch_breeder_btn').click(()=>{
         hideAll();
-        $('#launch_breeder').hide();
-        $('#pride_link').show();
+        $('#pride_page').show();
         $('#kitty-pride-grid').empty();
         $('#breeding_form').show();
         $('#breeding_title').show();
         $('#breeding_subtitle').show();
-        $('#pride_title').hide();
-
     })
-
-    // $('#breedCats').click(()=>{
-    //     dadCat = parseInt($('#dadCat').val());
-    //     momCat = parseInt($('#momCat').val());
-    //     $('#momCat').val('');
-    //     $('#dadCat').val('');
-    //     breedCats(dadCat, momCat, "pride");
-    //     fetchCats(user, "pride");
-    //     hideAll();        
-    //     $('#kitty-pride-grid').empty();
-    //     $('#breed_subtitle').show();
-    //     $('#breeding_form').show();
-    //     $('#pride_link').show();
-    // }) 
 })
 
 // creates a new kitty and transfers to msg.sender eth address.
-function createKitty(user){
+async function createKitty(_user){
     let dnaStr = getDna();
-    instance.methods.createKittyGen0(dnaStr).send({}, function(error, txHash){
-        if(error)
-            console.log(err);
-        else
-            console.log(txHash);
-    });
+    try {
+        const tx = await instance.methods.createKittyGen0(dnaStr).send({});
+    } catch (error) {
+        console.log(error.message);
+    }
+    await fetchCats(_user);
 }
 
-// this is called when catbox divs are clicked on.  after two parent selections, an alert is thrown.
-// the parents array gets emptied every time nav_pride gets clicked.
+// called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
+// which are saved into the parents array.  The parents array gets emptied every time nav_pride gets clicked or a cat is bred.
 function selectCat(id) {
-    // must be in the menu page 
-    if(loc == "menu"){
-        parents.push(id); 
-        console.log(parents);
-     
-    // hides the modal menu after every cat selection
-    $("#menu_modal").modal('hide');
-    catParentsShowcase(loc, id);
+    if(loc == "female_showcase"){
+        // populate the appropriate showcase box according to page location (loc) 
+        parents[0] = id;
+        catParentsShowcase(loc, id);
+        // hides the modal menu after every cat selection
+        $("#menu_modal").modal('hide');
+    } else if (loc == "male_showcase"){
+        parents[1] = id;
+        catParentsShowcase(loc, id);
+        $("#menu_modal").modal('hide');
     }
 }
 
-// This gets called when we click on a cat in the menu_modal pop up menu
+// This gets called inside selectCat() when we click on a cat in menu_modal -renders cat selection into showcase div
 function catParentsShowcase(page, catId){
-    // checks to see which page state ("female_showcase" or "male_showcase") is active set when "dame" or "sire" div was clicked
+    // checks to see which page state ("female_showcase" or "male_showcase") is active when "dame" or "sire" div is clicked
     if(page == "female_showcase"){
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_1').addClass('showcase_box');
         $('#launch_menu_modal_1').removeClass('breed_select');
         appendShowcase(catObj, catId, "launch_menu_modal_1");
-        parents[0] = catId;
     } else {
         $('#launch_menu_modal_2').empty();
         $('#launch_menu_modal_2').addClass('showcase_box');
         $('#launch_menu_modal_2').removeClass('breed_select');
         appendShowcase(catObj, catId, "launch_menu_modal_2");
-        parents[1] = catId;
     }
     console.log(parents);
 }
 
-function breedCats(_dadId, _momId, pride){
+// combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
+function breedCats(_dadId, _momId, grid){
     console.log(_dadId);
     instance.methods
     .breed(_dadId, _momId)
@@ -238,22 +219,20 @@ function breedCats(_dadId, _momId, pride){
     .on("receipt", function (receipt) {
         // receipt example
         console.log(receipt);
+
+        // reloads pride_page
         loc = "pride";
         hideAll();
         parents = [];
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_2').empty();
-        $('#pride_link').show();
+        $('#pride_page').show();
         $('#kitty-pride-grid').empty();
         $('#kitty-menu-grid').empty();
         $('#kitty-pride-grid').show();
-
         $('#pride_subtitle').show();
-        $('#breeding_form').hide();
-        $('#breed_Select').show();
-        $('#breeding_title').hide();
         $('#pride_title').show();
-        $('#launch_breeder').show();
+        $('#launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
             `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
         );
@@ -264,9 +243,10 @@ function breedCats(_dadId, _momId, pride){
         $('#launch_menu_modal_1').removeClass('showcase_box');
         $('#launch_menu_modal_2').addClass('breed_select');
         $('#launch_menu_modal_2').removeClass('showcase_box');
-        fetchCats(user);    
+        fetchCats(user);
+        appendGrid(catObj, tokenIds, grid);  
     })
     .on("error", (error) => {
-
+        console.log(error);
     })
 }

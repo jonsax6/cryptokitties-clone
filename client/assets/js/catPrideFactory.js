@@ -408,7 +408,7 @@ async function appendGrid(CatObjectArray, ids, grid){
         // populate either kitty-pride-grid or kitty-menu-grid
         $(`#kitty-${grid}-grid`).append(
             `
-            <div class="col-lg-4 prideBox m-5" onclick="selectCat(${id})">
+            <div id="box${id}" class="col-lg-4 prideBox m-5" onclick="selectCat(${id})">
             <div class="cat">
                 <div id="head_and_ears${id}">
                     <div id="cat_ear${id}" class="cat__ear">
