@@ -496,8 +496,8 @@ async function appendShowcase(CatObjectArray, id, box){
     $(`#${box}`).empty();
 
     // fetch kitty parameters from variables obtained from blockchain
-    let genes = CatObjectArray[id-1].genes;
-    let generation = CatObjectArray[id-1].generation;
+    let genes = CatObjectArray[id].genes;
+    let generation = CatObjectArray[id].generation;
     
     // render the html structure to the div
     $(`#${box}`).append(

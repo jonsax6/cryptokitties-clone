@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0xA927c30c93637B1c5c3090D7EA82e4838C143C6d";
+var contractAddress = "0x2c5fa819b50aab7892b2748BabAAbf3537DBAF9a";
 var tokenIds;
 var catObj;
 
@@ -249,4 +249,5 @@ function breedCats(_dadId, _momId, grid){
     .on("error", (error) => {
         console.log(error);
     })
+
 }
