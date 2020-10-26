@@ -467,7 +467,7 @@ async function appendGrid(CatObjectArray, ids, grid){
                 </div>
             </div>
             <br>
-            <div class="dnaDiv">
+            <div class="dnaDiv text-light">
                 <b>ID:<span id="cat_id${id}"></span></b><br>
                 <b id="generation${id}"></b><br>
                 <b>momID:${momId}, dadID:${dadId}</b><br>
