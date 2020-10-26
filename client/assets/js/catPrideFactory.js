@@ -469,9 +469,21 @@ async function appendGrid(CatObjectArray, ids, grid){
             <br>
             <div class="dnaDiv text-light">
                 <b>ID:<span id="cat_id${id}"></span></b><br>
+                <b>dadID:&nbsp${dadId}</b><br>
+                <b>momID:&nbsp${momId}</b><br>
                 <b id="generation${id}"></b><br>
-                <b>momID:${momId}, dadID:${dadId}</b><br>
-                <b>Genes: ${genes}</b>
+                <b>DNA:
+                    <span id="dnabody${id}"></span>
+                    <span id="dnamouth${id}"></span>
+                    <span id="dnaeyes${id}"></span>
+                    <span id="dnaears${id}"></span>
+                    <span id="dnashape${id}"></span>
+                    <span id="dnaMarkingsShape${id}"></span>
+                    <span id="dnaMarkingsMid${id}"></span>
+                    <span id="dnaMarkingsOuter${id}"></span>
+                    <span id="dnaAnimation${id}"></span>
+                    <span id="dnaspecial${id}"></span>
+                </b>
             </div>
         </div>
             `
@@ -480,11 +492,23 @@ async function appendGrid(CatObjectArray, ids, grid){
         // now create the DNA object from the genes fetched from the cat object array
         let DNA = makeDNA(genes);
 
+        // populate the DNA spans
+        $(`#dnabody${id}`).html(DNA.headColor);
+        $(`#dnamouth${id}`).html(DNA.mouthColor);
+        $(`#dnaeyes${id}`).html(DNA.eyesColor);
+        $(`#dnaears${id}`).html(DNA.earsColor);
+        $(`#dnashape${id}`).html(DNA.eyesShape);
+        $(`#dnaMarkingsShape${id}`).html(DNA.markingsShape);
+        $(`#dnaMarkingsMid${id}`).html(DNA.markingsMidColor);
+        $(`#dnaMarkingsOuter${id}`).html(DNA.markingsOuterColor);
+        $(`#dnaAnimation${id}`).html(DNA.animation);
+        $(`#dnaspecial${id}`).html(DNA.lastNum);
+
         // render cat from DNA for kitty id
         _renderCat(DNA, id);
 
         // populate the appended html with the Kitty ID
-        $(`#cat_id${id}`).html(`${id}`);
+        $(`#cat_id${id}`).html(`&nbsp${id}`);
 
         // populate the appended html with the kitty generation
         $(`#generation${id}`).html(`Generation: ${generation}`);
@@ -563,17 +587,42 @@ async function appendShowcase(CatObjectArray, id, box){
                 </div>
             </div>
             <br>
-            <div class="dnaDiv">
-                <b>ID:<span id="cat_id${id}"></span></b><br>
-                <b id="generation${id}"></b><br>
-                <b>momID:${momId}, dadID:${dadId}</b><br>
-                <b>Genes: ${genes}</b>
+            <div class="dnaDiv text-light">
+            <b>ID:<span id="cat_id${id}"></span></b><br>
+            <b>dadID:&nbsp${dadId}</b><br>
+            <b>momID:&nbsp${momId}</b><br>
+            <b id="generation${id}"></b><br>
+            <b>DNA:
+                <span id="dnabody${id}"></span>
+                <span id="dnamouth${id}"></span>
+                <span id="dnaeyes${id}"></span>
+                <span id="dnaears${id}"></span>
+                <span id="dnashape${id}"></span>
+                <span id="dnaMarkingsShape${id}"></span>
+                <span id="dnaMarkingsMid${id}"></span>
+                <span id="dnaMarkingsOuter${id}"></span>
+                <span id="dnaAnimation${id}"></span>
+                <span id="dnaspecial${id}"></span>
+            </b>
             </div>
             `
     )
     
     // render the cat into the appended html
     let DNA = makeDNA(genes);
+
+    // populate the DNA spans
+    $(`#dnabody${id}`).html(DNA.headColor);
+    $(`#dnamouth${id}`).html(DNA.mouthColor);
+    $(`#dnaeyes${id}`).html(DNA.eyesColor);
+    $(`#dnaears${id}`).html(DNA.earsColor);
+    $(`#dnashape${id}`).html(DNA.eyesShape);
+    $(`#dnaMarkingsShape${id}`).html(DNA.markingsShape);
+    $(`#dnaMarkingsMid${id}`).html(DNA.markingsMidColor);
+    $(`#dnaMarkingsOuter${id}`).html(DNA.markingsOuterColor);
+    $(`#dnaAnimation${id}`).html(DNA.animation);
+    $(`#dnaspecial${id}`).html(DNA.lastNum);
+
     _renderCat(DNA, id);
     $(`#cat_id${id}`).html(`${id}`);
     $(`#generation${id}`).html(`Generation: ${generation}`);

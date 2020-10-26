@@ -219,11 +219,12 @@ function breedCats(_dadId, _momId, grid){
     .on("receipt", function (receipt) {
         // receipt example
         console.log(receipt);
-        console.log(fetchCats());
         // reloads pride_page
         loc = "pride";
         hideAll();
-        parents = [];
+        parents = []; // resets the parents array to empty
+
+        //refresh the page divs back to kitty pride page
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_2').empty();
         $('#pride_page').show();
@@ -243,7 +244,11 @@ function breedCats(_dadId, _momId, grid){
         $('#launch_menu_modal_1').removeClass('showcase_box');
         $('#launch_menu_modal_2').addClass('breed_select');
         $('#launch_menu_modal_2').removeClass('showcase_box');
+
+        // fetch new cats
         fetchCats(user);
+
+        // append the entire grid now to include newly breeded cat.
         appendGrid(catObj, tokenIds, grid);  
     })
     .on("error", (error) => {
