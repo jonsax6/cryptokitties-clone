@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x2c5fa819b50aab7892b2748BabAAbf3537DBAF9a";
+var contractAddress = "0x4adeA3Fc83eF205019A39F04493a786E359d0dB4";
 var tokenIds;
 var catObj;
 
@@ -164,14 +164,14 @@ $(document).ready(async function(){
 })
 
 // creates a new kitty and transfers to msg.sender eth address.
-async function createKitty(_user){
+async function createKitty(){
     let dnaStr = getDna();
     try {
         const tx = await instance.methods.createKittyGen0(dnaStr).send({});
     } catch (error) {
         console.log(error.message);
     }
-    await fetchCats(_user);
+    await fetchCats(user);
 }
 
 // called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
@@ -219,7 +219,7 @@ function breedCats(_dadId, _momId, grid){
     .on("receipt", function (receipt) {
         // receipt example
         console.log(receipt);
-
+        console.log(fetchCats());
         // reloads pride_page
         loc = "pride";
         hideAll();

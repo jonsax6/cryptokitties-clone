@@ -281,10 +281,35 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
-        uint256 firstHalf = _dadDna / 100000000; 
-        uint256 secondHalf = _momDna % 100000000;
-        uint256 newDna = firstHalf * 100000000;
-        newDna = newDna + secondHalf;
-        return newDna;
+        uint256[8] memory geneArray;
+
+        uint8 random = uint8(now % 255); // pseudo-random 8 bit integer 00000000 - 11111111
+        uint256 i =1; // i starts at 1 which is 00000001 in binary
+        uint256 index = 7;
+
+        for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
+            if(index == 2){ // at index 2 we need a totally random number here (eye color)
+                geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
+            }
+            else if(random & i != 0 && index != 2){ // the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
+                geneArray[index] = uint8(_momDna % 100); // the % 100 => gives us the last two digits of the dna number as the remainder
+            }
+            else if(index != 2){
+                geneArray[index] = uint8(_dadDna % 100); // same but uses the dadDna if (random & i != 0) returns "false"
+            }
+            _momDna = _momDna / 100; // dividing by 100 turns the last two digits of DNA numbers into decimals.
+            _dadDna = _dadDna / 100; // since we are working with integers, they disappear
+            index = index - 1; // now move to index 6 (from 7) and so on...
+        }
+        uint256 newGene; // newGene declaration
+
+        for(i = 0; i < 8; i++){ // loop through index 0 - 7 of the geneArray[]
+            newGene = newGene + geneArray[i]; // build the newGene number two digits at a time
+            if(i != 7){ // after index 6, we don't want to increase newGene by 100, we do addition, by not * 100
+                newGene = newGene * 100; // newGene now becomes ##00, so next loop two digits get added at 1 and 10 slots (## "00" )
+            } 
+
+        }
+        return newGene;
     }
 }

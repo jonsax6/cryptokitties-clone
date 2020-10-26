@@ -400,6 +400,8 @@ async function appendGrid(CatObjectArray, ids, grid){
 
         // get genes from cat object array
         let genes = CatObjectArray[i].genes;
+        let momId = CatObjectArray[id].momId;
+        let dadId = CatObjectArray[id].dadId;
 
         // get generation from cat object array
         let generation = CatObjectArray[i].generation;
@@ -468,6 +470,7 @@ async function appendGrid(CatObjectArray, ids, grid){
             <div class="dnaDiv">
                 <b>ID:<span id="cat_id${id}"></span></b><br>
                 <b id="generation${id}"></b><br>
+                <b>momID:${momId}, dadID:${dadId}</b><br>
                 <b>Genes: ${genes}</b>
             </div>
         </div>
@@ -498,6 +501,8 @@ async function appendShowcase(CatObjectArray, id, box){
     // fetch kitty parameters from variables obtained from blockchain
     let genes = CatObjectArray[id].genes;
     let generation = CatObjectArray[id].generation;
+    let momId = CatObjectArray[id].momId;
+    let dadId = CatObjectArray[id].dadId;
     
     // render the html structure to the div
     $(`#${box}`).append(
@@ -561,6 +566,7 @@ async function appendShowcase(CatObjectArray, id, box){
             <div class="dnaDiv">
                 <b>ID:<span id="cat_id${id}"></span></b><br>
                 <b id="generation${id}"></b><br>
+                <b>momID:${momId}, dadID:${dadId}</b><br>
                 <b>Genes: ${genes}</b>
             </div>
             `
@@ -581,4 +587,3 @@ async function fetchCats(_user){
     // as the argument to fetch the kittyObject from Kittycontract.sol and pass into the addToKittyPride() function
     catObj = await getKittyObject(tokenIds);
 } 
-
