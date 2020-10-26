@@ -47,7 +47,7 @@ function getDna(){
     dna += $('#dnaAnimation').html()
     dna += $('#dnaspecial').html()
 
-    return parseInt(dna)
+    return (dna)
 }
 
 function renderCat(dna){

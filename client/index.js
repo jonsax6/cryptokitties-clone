@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x864F367a7E71346be9dE0657f18b7F0b6728Bd55";
+var contractAddress = "0x5EcD5c208fCa910561c0af1De87bea6286a5786D";
 var tokenIds;
 var catObj;
 
@@ -216,7 +216,7 @@ function breedCats(_dadId, _momId, grid){
     .on("transactionHash", function (hash) {
         console.log(hash); // 'etherscan.io/tx/${hash}'
     })
-    .on("receipt", function (receipt) {
+    .on("receipt", async function (receipt) {
         // receipt example
         console.log(receipt);
         // reloads pride_page
@@ -225,29 +225,22 @@ function breedCats(_dadId, _momId, grid){
         parents = []; // resets the parents array to empty
 
         //refresh the page divs back to kitty pride page
-        $('#launch_menu_modal_1').empty();
-        $('#launch_menu_modal_2').empty();
+        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
         $('#pride_page').show();
-        $('#kitty-pride-grid').empty();
-        $('#kitty-menu-grid').empty();
-        $('#kitty-pride-grid').show();
-        $('#pride_subtitle').show();
-        $('#pride_title').show();
-        $('#launch_breeder_btn').show();
+        $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
             `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_modal_2').html(
             `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
         );
-        $('#launch_menu_modal_1').addClass('breed_select');
-        $('#launch_menu_modal_1').removeClass('showcase_box');
-        $('#launch_menu_modal_2').addClass('breed_select');
-        $('#launch_menu_modal_2').removeClass('showcase_box');
+        $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
+        $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
 
         // fetch new cats
-        fetchCats(user);
+        await fetchCats(user);
 
+        console.log("appending kitty grid");
         // append the entire grid now to include newly breeded cat.
         appendGrid(catObj, tokenIds, grid);  
     })
