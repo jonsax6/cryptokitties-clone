@@ -284,6 +284,8 @@ contract Kittycontract is IERC721, Ownable {
         uint256[8] memory geneArray;
 
         uint8 random = uint8(now % 255); // pseudo-random 8 bit integer 00000000 - 11111111
+        uint8 rand100 = uint8(now % 100);
+        uint8 rand10 = uint8(now % 10);
         uint256 i; // i declaration for the binary 'slot' below
         uint256 index = 7;
 
@@ -292,9 +294,12 @@ contract Kittycontract is IERC721, Ownable {
                 geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'
-                if(now % 10 < 8 && now % 100 < 80){ // only numbers less than 80 (for the 'tens' digit) AND less than 8
-                                                    // (for the 'ones' digit) are eligible.  (87 or 78 return false).
+                if(rand10 < 8 && rand10 > 0 && rand100 > 0 && rand100 < 80){ // only numbers less than 80 (for the 'tens' digit) 
+                                                                            // AND less than 8 (for the 'ones' digit) are eligible.  
+                                                                            // (87 or 78 return false).
                     geneArray[4] = uint8((now % 100)); // if above is true, then these two settings are random
+                } else{
+                    geneArray[4] = uint8(_momDna % 100); // if above is false, use _momDna by default
                 }
             }
             else if(random & i != 0 && index != 2 && index != 4){ // the bitwise operator "&" compares the random 8bit to "1" at every 

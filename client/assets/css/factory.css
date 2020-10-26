@@ -14,14 +14,17 @@
     padding-bottom: 65px;
     height: 435px;
     width: 300px;
-    /* border-style: solid;
-    border-width: 11px; */
+    border-style: solid;
+    border-width: 11px;
     border-radius: 35px;
-    /* border-color: #607d8b; */
+    border-color: #607d8b;
 }
 
+.modal-content {
+    background: #607d8b;
+}
 .prideBox:hover {
-    box-shadow: 0px 5px 7px 0px #444444;  
+    background-color: #84acc2;
 }
 
 .cattributes {
