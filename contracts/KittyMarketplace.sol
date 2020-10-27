@@ -22,10 +22,6 @@ address public instance;
 
 mapping(uint256 => Offer) tokenIdToOffer;
 
-    /**
-    * Set the current KittyContract address and initialize the instance of Kittycontract.
-    * Requirement: Only the contract owner can call.
-     */
     function setKittyContract(address _kittyContractAddress) public onlyOwner {
         _kittycontract = Kittycontract(_kittyContractAddress);
     }
@@ -105,8 +101,11 @@ mapping(uint256 => Offer) tokenIdToOffer;
         // The msg.value needs to equal the price of _tokenId
         require(msg.value == _offer.price, "payment amount must be the same as the price");
         // There must be an active _offer for _tokenId
-        require(_offer.active == true, "no _offer is active"); 
+        require(_offer.active == true, "no offer is active"); 
         
+        delete _offer;
+        offers[_offer.index].active = false;
+
         _offer.seller.transfer(_offer.price); 
 
         _kittycontract.transferFrom(_offer.seller, msg.sender, _tokenId);
