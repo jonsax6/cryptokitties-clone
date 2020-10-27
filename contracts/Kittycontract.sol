@@ -294,13 +294,17 @@ contract Kittycontract is IERC721, Ownable {
                 geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'
-                if(rand10 < 8 && rand10 > 0 && rand100 > 0 && rand100 < 80){ // only numbers less than 80 (for the 'tens' digit) 
-                                                                            // AND less than 8 (for the 'ones' digit) are eligible.  
-                                                                            // (87 or 78 return false).
-                    geneArray[4] = uint8((now % 100)); // if above is true, then these two settings are random
-                } else{
-                    geneArray[4] = uint8(_momDna % 100); // if above is false, use _momDna by default
-                }
+                if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){ // only numbers less than 80 (for the 'tens' digit) 
+                                                                                // AND less than 8 (for the 'ones' digit) are eligible.  
+                                                                                // (87 or 78 return false for example).
+                    geneArray[4] = rand100; // if above is true, then these two settings are random
+                } 
+                else if(rand10 > 4){ // if rand10 is 5 - 9 use momDna
+                    geneArray[4] = uint8(_momDna % 100); 
+                } 
+                else { // if rand10 is 0 - 4 use _dadDna 
+                    geneArray[4] = uint8(_dadDna % 100); 
+                } 
             }
             else if(random & i != 0 && index != 2 && index != 4){ // the bitwise operator "&" compares the random 8bit to "1" at every 
                                                                   //  slot and returns 1 (true) or 0 (false) for all 'index' vals except 2 or 4
@@ -309,7 +313,7 @@ contract Kittycontract is IERC721, Ownable {
             else if(index != 2 && index != 4){
                 geneArray[index] = uint8(_dadDna % 100); // same but uses the dadDna if (random & i != 0) returns "false" above
             }
-            _momDna = _momDna / 100; // dividing by 100 turns the last two digits of DNA numbers into decimals.
+            _momDna = _momDna / 100; // dividing by 100 turns the last two digits of DNA numbers into decimals,
             _dadDna = _dadDna / 100; // since we are working with integers, they disappear
             index = index - 1; // now move to index 6 (from 7) and so on...
         }
@@ -319,7 +323,7 @@ contract Kittycontract is IERC721, Ownable {
             newGene = newGene + geneArray[i]; // build the newGene number two digits at a time
             if(i != 7){ // after index 6, we don't want to increase newGene by 100, we do addition, but not * 100.
                 newGene = newGene * 100;    // newGene (##) becomes (##00), so next loop the two new index digits 
-                                            // get added at 1 and 10 slots (## + the new "00").
+                                            // get added at 1 and 10 slots (## + the new digit take the place of "00").
             } 
 
         }
