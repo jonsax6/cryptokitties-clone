@@ -85,10 +85,6 @@ contract Kittycontract is IERC721, Ownable {
     bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
     bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
 
-    function onERC721Received(address operator, address from, uint tokenId, bytes calldata data) external returns (bytes4) {
-
-    }
-
     function supportsInterface(bytes4 _interfaceId) external view returns (bool) {
         return (_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
     }
