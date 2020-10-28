@@ -3,6 +3,7 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var user;
 var contractAddress = "0xD722B0CC489DB3e2B3104Bd5DD2Bd7afFd7B2526";
+var marketplaceAddress = "0x3c1e081c2f416C8e0c1224Ccc5B8F7904b31D5FE";
 var tokenIds;
 var catObj;
 
@@ -29,6 +30,7 @@ function hideAll(){
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
     instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+    marketplace = new web3.eth.Contract(abiMarket, marketplaceAddress, {from: accounts[0]});
     user = accounts[0];
 
     console.log(instance);
@@ -190,12 +192,10 @@ function catParentsShowcase(page, catId){
         $('#launch_menu_modal_2').removeClass('breed_select');
         appendShowcase(catObj, catId, "launch_menu_modal_2");
     }
-    console.log(parents);
 }
 
 // combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
 function breedCats(_dadId, _momId, grid){
-    console.log(_dadId);
     instance.methods
     .breed(_dadId, _momId)
     .send()
