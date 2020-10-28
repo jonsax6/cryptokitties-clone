@@ -399,7 +399,7 @@ async function appendGrid(CatObjectArray, ids, grid){
         let id = ids[i];
 
         // get genes from cat object array
-        let genes = CatObjectArray[i].genes;
+        let genes = CatObjectArray[id].genes;
         let momId = CatObjectArray[id].momId;
         let dadId = CatObjectArray[id].dadId;
 
