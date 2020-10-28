@@ -49,17 +49,26 @@ mapping(uint256 => Offer) tokenIdToOffer;
  
     function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
         uint256 numOffers = offers.length;
-        require(numOffers > 0, "empty"); // requires that there are offers, empty error thrown if not
 
-        uint256[] memory offerList = new uint256[](numOffers); // sets the returned array to fixed length, which is length of 'offers'.
-        for(uint256 i = 0; i < offers.length; i++){ // loops through each index
-            if(offers[i].active == true){
-                offerList[i] = offers[i].tokenId; // assigns the token id at each index to the listOfOffers array at that same index.
-            }
-        } 
-        return offerList;
+        // check if there are any offers, if not return empty array
+        if(numOffers == 0){ 
+            return new uint256[](0);
+        }
+        else{
+            // sets the returned array to fixed length, which is length of 'offers'.
+            uint256[] memory offerList = new uint256[](numOffers); 
+            // loops through each index
+            for(uint256 i = 0; i < offers.length; i++){ 
+                if(offers[i].active == true){
+                    // assigns the token id at each index to the listOfOffers array at that same index.
+                    offerList[i] = offers[i].tokenId; 
+                }
+            } 
+            return offerList;
+        }
+
     }
-
+  
     function setOffer(uint256 _price, uint256 _tokenId) external{
         // only owner can create offer
         require(_kittycontract.ownerOf(_tokenId) == msg.sender, "only owner can sell tokenId"); 

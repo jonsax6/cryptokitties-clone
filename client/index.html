@@ -38,8 +38,8 @@
                 </div>
                 <div class="collapse navbar-collapse flex-grow-1 text-right" id="myNavbar7">
                     <ul class="navbar-nav ml-auto flex-nowrap">
-                        <li class="nav-item">
-                            <a href="#" class="navbar-dark nav-link"><b class="text-light">Adopt</b></a>
+                        <li id="nav_adopt" class="nav-item">
+                            <a href="#" class="navbar-dark nav-link"><b class="text-light">Adopt Kitties</b></a>
                         </li>
                         <li id="nav_pride" class="nav-item">
                             <a href="#" class="nav-link"><b class="text-light">Kitty Pride</b></a>
@@ -234,10 +234,11 @@
             <div align="center">
             <h1 id="pride_title" class="c-white">See All Your Kitties</h1>
             <h1 id="breeding_title" class="c-white">Kitty Breeding</h1>
+            <h1 id="adopt_title" class="c-white">Adopt or Sell A Kitty</h1>
 
             <p id="pride_subtitle" class="c-white">Your Purrrfect Family</p>
             <p id="breeding_subtitle" class="c-white">Breed Two of Your Favorite Cats!</p>
-            
+            <p id="adopt_subtitle" class="c-white">Welcome to the Marketplace!</p>
             </div>
             <div class="col-12">
                 <div class="modal fade" id="menu_modal">
@@ -284,14 +285,17 @@
                     </form>
                 </div>
             </div> 
+            <div id="adopt_buttons" class="row">
+                <div class="col-4 m-auto mt-5 text-center">
+                    <button id="buy_btn" class="btn btn-light start-btn m-2">
+                        <b class="text-light">Buy Kitties</b>
+                    </button>
+                    <button id="sell_btn" class="btn btn-light start-btn m-2">
+                        <b class="text-light">Sell Kitties</b>
+                    </button>
+                </div>
 
-
-
-
-
-
-
-
+            </div>
             <div class="row mt-5">
             <!-- modal for kitty breeding menu -->
  
@@ -304,6 +308,8 @@
                 </div> -->
             </div>
             <div id="kitty-pride-grid" class="row breeder-body">
+            </div>
+            <div id="kitty-adopt-grid" class="row breeder-body">
             </div>
 
             <div class="row">

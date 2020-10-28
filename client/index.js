@@ -1,6 +1,7 @@
 var web3 = new Web3(Web3.givenProvider);
 
 var instance;
+var marketplaceInstance;
 var user;
 var contractAddress = "0xD722B0CC489DB3e2B3104Bd5DD2Bd7afFd7B2526";
 var marketplaceAddress = "0x3c1e081c2f416C8e0c1224Ccc5B8F7904b31D5FE";
@@ -10,32 +11,64 @@ var catObj;
 // Array to record both parents.  It gets zero'd out on pride page load so new parents can be selected.
 var parents = [];
 
-// Tracking variable for navigation/location
+// Tracking variable declaration for navigation/location
 var loc = '';
+
+async function initMarketplace() {
+    var isMarketplaceOperator = await instance.methods.isApprovedForAll(user, marketplaceAddress).call();
+
+    if(isMarketplaceOperator){
+        getInventory();
+    }
+    else{
+        await instance.methods.setApprovalForAll(marketplaceAddress, true).send().on('receipt', function(receipt){
+            console.log("tx done");
+            getInventory();
+        })
+    }
+}
+
+async function getInventory() {
+    var userCatIds = await marketplaceInstance.methods.getAllTokenOnSale().call();
+    var catsOnSaleObj = await getKittyObject(userCatIds);
+    console.log(userCatIds);
+    for(let i = 0; i < userCatIds.length; i++){
+        if(userCatIds[i] != 0){
+            appendGrid(catsOnSaleObj, "adopt");
+        }
+    }
+}
 
 function hideAll(){
     $('#homepage_page').hide();
+    $('#homepage_page').hide();
     $('#breeder_link').hide();
-    $('#pride_page').hide();
     $('#breed_0_page').hide();
-    // $('#breeding_form').hide();
+    $('#pride_page').hide();
+    $('#adopt_page').hide();
+    $('#breeding_form').hide();
     $('#pride_title').hide();
+    $('#adopt_title').hide();
     $('#pride_subtitle').hide();
     $('#breeding_title').hide();
     $('#breeding_subtitle').hide();
+    $('#adopt_subtitle').hide();
     $('#breeding_form').hide();
     $('#launch_breeder_btn').hide();
+    $('#adopt_buttons').hide();
+    $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').hide();
 }
 
 $(document).ready(async function(){
     const accounts = await window.ethereum.enable();
-    instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
-    marketplace = new web3.eth.Contract(abiMarket, marketplaceAddress, {from: accounts[0]});
+    instance = new web3.eth.Contract(abi.kittycontract, contractAddress, {from: accounts[0]});
+    marketplaceInstance = new web3.eth.Contract(abi.marketplace, marketplaceAddress, {from: accounts[0]});
     user = accounts[0];
 
     console.log(instance);
 
-    instance.events.Birth().on('data', function(event){
+    instance.events.Birth()
+    .on('data', function(event){
         console.log(event);
         let owner = event.returnValues.owner;
         let kittenId = event.returnValues.kittenId;
@@ -52,6 +85,25 @@ $(document).ready(async function(){
     })
     .on('error', console.error);
 
+    marketplaceInstance.events.MarketTransaction()
+    .on('data', (event) =>{
+        console.log(event);
+        var eventType = event.returnValues["TxType"].toString();
+        var tokenId = event.returnValues["tokenId"];
+        if(eventType == "Buy") {
+            alert_msg(`successful Kitty Adoption! Now you own this Kitty with TokenId: ${tokenId}`, 'success');
+        }
+        if(eventType == "Create offer") {
+            alert_msg(`successful Offer set for this Kitty id: ${tokenId}`, 'success');
+            // add jquery selectors/actions here...
+        }
+        if(eventType == "Remove offer") {
+            alert_msg(`successful Offer removal for Kitty id: ${tokenId}`, 'success');
+            // add jquery selectors/actions here...
+        }
+    })
+    .on('error', console.error);
+
     // get msg.sender kitties from blockchain
     fetchCats(user);
 
@@ -65,6 +117,7 @@ $(document).ready(async function(){
     // homepage nav menu click listener
     $('#nav_homepage').click(()=>{
         hideAll();
+        parents = [];
         $('#homepage_page').show();
         loc = "home";
     })
@@ -74,7 +127,7 @@ $(document).ready(async function(){
         loc = "pride";
         hideAll();
         parents = [];
-        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
+        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
         $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
             `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
@@ -88,11 +141,24 @@ $(document).ready(async function(){
         appendGrid(catObj, "pride");
     })
 
+    // kitty pride nav menu click listener
+    $('#nav_adopt').click(async()=>{
+        loc = "adopt";
+        hideAll();
+        initMarketplace();
+        parents = [];
+        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
+        $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
+        await fetchCats(user);
+        appendGrid(catObj, "adopt");
+    })
+
     // Breeder nav menu click listener
     $('#nav_breed_0').click(()=>{
         loc = "gen0";
         $('#kittyCreation').hide();
         hideAll();
+        parents = [];
         $('#breed_0_page').show();
     })
 
@@ -101,6 +167,7 @@ $(document).ready(async function(){
         loc = "gen0";
         $('#kittyCreation').hide();
         hideAll();
+        parents = [];
         $('#breed_0_page').show();
     })
 
@@ -120,7 +187,9 @@ $(document).ready(async function(){
         loc = "female_showcase";
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid, #kitty-menu-grid').empty();
+        $('#kitty-menu-grid').show();
         // now put the kitty grid into DOM @menu_modal, populate grid inside menu modal
+        console.log(catObj);
         appendGrid(catObj, "menu");
         // this control flow removes the chosen catIds from the appended Grid inside the modal only if they are defined
         if(parents[0] !== "undefined"){
@@ -134,8 +203,10 @@ $(document).ready(async function(){
         loc = "male_showcase";
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid, #kitty-menu-grid').empty();
+        $('#kitty-menu-grid').show();
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
+        console.log(catObj);
         appendGrid(catObj, "menu");
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
@@ -146,7 +217,7 @@ $(document).ready(async function(){
 
     $('#launch_breeder_btn').click(()=>{
         hideAll();
-        $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle').show();
+        $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle, #launch_menu_modal_1, #launch_menu_modal_2').show();
         $('#kitty-pride-grid').empty();
     })
 })
