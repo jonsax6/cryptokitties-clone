@@ -404,7 +404,7 @@ async function appendGrid(CatObjectArray, ids, grid){
         let dadId = CatObjectArray[id].dadId;
 
         // get generation from cat object array
-        let generation = CatObjectArray[i].generation;
+        let generation = CatObjectArray[id].generation;
         // populate the html with the kitty w/id: id 
 
         // populate either kitty-pride-grid or kitty-menu-grid

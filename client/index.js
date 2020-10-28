@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0xbdB494461131111Ad550a77543Dc2f51FB3EF395";
+var contractAddress = "0x6E725296951F71e0aA6f3e3ccfEFB0B886d5847a";
 var tokenIds;
 var catObj;
 
@@ -172,6 +172,7 @@ async function createKitty(){
         console.log(error.message);
     }
     await fetchCats(user);
+    console.log(tokenIds);
 }
 
 // called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 

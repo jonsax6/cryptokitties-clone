@@ -49,9 +49,9 @@ contract Kittycontract is IERC721, Ownable {
     
     uint256 public gen0Counter;
 
-    // constructor() public {
-    //     _createKitty(0,0,0, uint256(-1), address(0));
-    // }
+    constructor() public {
+        _createKitty(0,0,0, uint256(-1), address(0));
+    }
 
     function breed(uint256 _dadId, uint256 _momId) public returns(uint256) {
         // check ownership
@@ -117,7 +117,7 @@ contract Kittycontract is IERC721, Ownable {
             generation: uint16(_generation)
         });
 
-        uint256 newKittenId = kitties.push(_kitty) - 1;
+        uint256 newKittenId = kitties.push(_kitty) -1;
 
         emit Birth(_owner, newKittenId, _momId, _dadId, _genes);
 
@@ -146,7 +146,7 @@ contract Kittycontract is IERC721, Ownable {
     function getKittiesByUser(address user) public view returns (uint[] memory) {
         uint[] memory userTokenIds = new uint[](ownershipTokenCount[user]);
         uint counter = 0;
-        for(uint i = 0; i < kitties.length; i++){
+        for(uint i = 1; i <= kitties.length; i++){
             if(kittyIndexToOwner[i] == user){
                 userTokenIds[counter] = i;
                 counter++;
