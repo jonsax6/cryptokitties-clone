@@ -2,7 +2,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x6E725296951F71e0aA6f3e3ccfEFB0B886d5847a";
+var contractAddress = "0xD722B0CC489DB3e2B3104Bd5DD2Bd7afFd7B2526";
 var tokenIds;
 var catObj;
 
@@ -72,27 +72,18 @@ $(document).ready(async function(){
         loc = "pride";
         hideAll();
         parents = [];
-        $('#launch_menu_modal_1').empty();
-        $('#launch_menu_modal_2').empty();
-        $('#pride_page').show();
-        $('#kitty-pride-grid').empty();
-        $('#kitty-menu-grid').empty();
-        $('#kitty-pride-grid').show();
-        $('#pride_subtitle').show();
-        $('#pride_title').show();
-        $('#launch_breeder_btn').show();
+        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
+        $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
             `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_modal_2').html(
             `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
         );
-        $('#launch_menu_modal_1').addClass('breed_select');
-        $('#launch_menu_modal_1').removeClass('showcase_box');
-        $('#launch_menu_modal_2').addClass('breed_select');
-        $('#launch_menu_modal_2').removeClass('showcase_box');
+        $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
+        $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
         await fetchCats(user);
-        appendGrid(catObj, tokenIds, "pride");
+        appendGrid(catObj, "pride");
     })
 
     // Breeder nav menu click listener
@@ -126,10 +117,9 @@ $(document).ready(async function(){
     $('#launch_menu_modal_1').click(()=>{
         loc = "female_showcase";
         // first empty all grids to avoid id conflicts
-        $('#kitty-pride-grid').empty();
-        $('#kitty-menu-grid').empty();
+        $('#kitty-pride-grid, #kitty-menu-grid').empty();
         // now put the kitty grid into DOM @menu_modal, populate grid inside menu modal
-        appendGrid(catObj, tokenIds, "menu");
+        appendGrid(catObj, "menu");
         // this control flow removes the chosen catIds from the appended Grid inside the modal only if they are defined
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
@@ -141,11 +131,10 @@ $(document).ready(async function(){
     $('#launch_menu_modal_2').click(()=>{
         loc = "male_showcase";
         // first empty all grids to avoid id conflicts
-        $('#kitty-pride-grid').empty();
-        $('#kitty-menu-grid').empty();
+        $('#kitty-pride-grid, #kitty-menu-grid').empty();
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
-        appendGrid(catObj, tokenIds, "menu");
+        appendGrid(catObj, "menu");
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
         } if(parents[1] !== "undefined"){
@@ -155,11 +144,8 @@ $(document).ready(async function(){
 
     $('#launch_breeder_btn').click(()=>{
         hideAll();
-        $('#pride_page').show();
+        $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle').show();
         $('#kitty-pride-grid').empty();
-        $('#breeding_form').show();
-        $('#breeding_title').show();
-        $('#breeding_subtitle').show();
     })
 })
 
@@ -172,7 +158,6 @@ async function createKitty(){
         console.log(error.message);
     }
     await fetchCats(user);
-    console.log(tokenIds);
 }
 
 // called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
@@ -180,12 +165,12 @@ async function createKitty(){
 function selectCat(id) {
     if(loc == "female_showcase"){
         // populate the appropriate showcase box according to page location (loc) 
-        parents[0] = id;
+        parents[1] = id;
         catParentsShowcase(loc, id);
         // hides the modal menu after every cat selection
         $("#menu_modal").modal('hide');
     } else if (loc == "male_showcase"){
-        parents[1] = id;
+        parents[0] = id;
         catParentsShowcase(loc, id);
         $("#menu_modal").modal('hide');
     }
@@ -243,7 +228,7 @@ function breedCats(_dadId, _momId, grid){
 
         console.log("appending kitty grid");
         // append the entire grid now to include newly breeded cat.
-        appendGrid(catObj, tokenIds, grid);  
+        appendGrid(catObj, grid);  
     })
     .on("error", (error) => {
         console.log(error);

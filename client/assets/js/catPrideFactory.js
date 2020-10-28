@@ -12,14 +12,6 @@ function _renderCat(dna, id){
     _animationVariation(dna.animation, id);
 }
 
-// $(`#breeder-btn`).click(()=>{
-//   window.location.href='/client/breeder.html';
-// })
-
-// $(`#homepage-btn`).click(()=>{
-//   window.location.href='/client/breeder.html';
-// })
-
 //These functions create each kitty's various css stylings according to id
 function _headColor(color, id) {
     $(`#head${id}, #chest${id}, #left_ear${id}, #right_ear${id}`).css('background', '#' + color)  //This changes the color of the cat
@@ -358,11 +350,18 @@ async function getUserIds(user) {
     return userTokens;
 }
 
+// use the id array fetched from getKittiesByUser() from Kittycontract via getUserIds() js function 
+// and now fetch each cat object using getKitty() from Kittycontract
 async function getKittyObject(idsArray){
-    let ownerKitties = [];
-    for(let i = 0; i < idsArray.length; i++){
+    let ownerKitties = []; // local array we will build in this function
+    for(let i = 0; i < idsArray.length; i++){ // loop through each index of the idsArray
         // each loop pushes a kitty object from the getKitty function call into the ownerKitties object array
         let kitty = await instance.methods.getKitty(idsArray[i]).call();
+
+        // create a new value of catId to each kitty object in the array and assign it the correct id
+        kitty.catId = idsArray[i];
+
+        // now add the new kitty object to our local array ownerKitties
         ownerKitties.push(kitty);
     }
 return ownerKitties;
@@ -385,26 +384,26 @@ return DNA;
 }
 
 // now we have the full object array, grab the id, genes and generation for each kitty, then render each cat to the grid
-async function appendGrid(CatObjectArray, ids, grid){
+async function appendGrid(CatObjectArray, grid){
     // empty all kitty grids prior to populating any fresh grid 
     // to avoid attribute id conflicts and to avoid adding new grid to bottom of old one
     $('#kitty-pride-grid').empty();
     $('#kitty-menu-grid').empty();
 
-
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
         // the catObjectArray index mirrors the ids array index (containing the cat ids), therefore we can 
         // take the ids array value at each index[i] to get the cat id.
-        let id = ids[i];
+        let cat = CatObjectArray[i];
+        let id = cat.catId;
 
         // get genes from cat object array
-        let genes = CatObjectArray[id].genes;
-        let momId = CatObjectArray[id].momId;
-        let dadId = CatObjectArray[id].dadId;
+        let genes = cat.genes;
+        let momId = cat.momId;
+        let dadId = cat.dadId;
 
         // get generation from cat object array
-        let generation = CatObjectArray[id].generation;
+        let generation = cat.generation;
         // populate the html with the kitty w/id: id 
 
         // populate either kitty-pride-grid or kitty-menu-grid
@@ -511,7 +510,7 @@ async function appendGrid(CatObjectArray, ids, grid){
         $(`#cat_id${id}`).html(`&nbsp${id}`);
 
         // populate the appended html with the kitty generation
-        $(`#generation${id}`).html(`Generation: ${generation}`);
+        $(`#generation${id}`).html(`Generation: ${generation}`);        
     }
 }
 
@@ -522,11 +521,15 @@ async function appendShowcase(CatObjectArray, id, box){
     $(`#kitty-menu-grid`).empty();
     $(`#${box}`).empty();
 
+    // filter for the cat with catId == id.  Since this produces 
+    // a one element array, we just add [0] and assign this to local variable catParent.
+    let catParent = CatObjectArray.filter(cat => cat.catId == id)[0];
+
     // fetch kitty parameters from variables obtained from blockchain
-    let genes = CatObjectArray[id].genes;
-    let generation = CatObjectArray[id].generation;
-    let momId = CatObjectArray[id].momId;
-    let dadId = CatObjectArray[id].dadId;
+    let genes = catParent.genes;
+    let generation = catParent.generation;
+    let momId = catParent.momId;
+    let dadId = catParent.dadId;
     
     // render the html structure to the div
     $(`#${box}`).append(
