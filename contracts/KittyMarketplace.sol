@@ -17,6 +17,8 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
 Offer[] offers;
 
+uint256 activeOffers;
+
 address public instance;
 
 
@@ -48,20 +50,20 @@ mapping(uint256 => Offer) tokenIdToOffer;
     }
  
     function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
-        uint256 numOffers = offers.length;
-
         // check if there are any offers, if not return empty array
-        if(numOffers == 0){ 
+        if(activeOffers == 0){ 
             return new uint256[](0);
         }
         else{
-            // sets the returned array to fixed length, which is length of 'offers'.
-            uint256[] memory offerList = new uint256[](numOffers); 
+            // sets the returned array to fixed length, which is length of 'activeOffers'.
+            uint256[] memory offerList = new uint256[](activeOffers); 
             // loops through each index
+            uint256 index = 0;
             for(uint256 i = 0; i < offers.length; i++){ 
                 if(offers[i].active == true){
                     // assigns the token id at each index to the listOfOffers array at that same index.
-                    offerList[i] = offers[i].tokenId; 
+                    offerList[index] = offers[i].tokenId; 
+                    index++;
                 }
             } 
             return offerList;
@@ -87,19 +89,28 @@ mapping(uint256 => Offer) tokenIdToOffer;
         // update state variables
         tokenIdToOffer[_tokenId] = _offer;
         offers.push(_offer);
+        
+        // adds 1 to the activeOffers tracker.
+        activeOffers++;
 
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
     function removeOffer(uint256 _tokenId) external{
+        // finds the offer for _tokenId
         Offer memory _offer = tokenIdToOffer[_tokenId];
+        
         // Only the seller of _tokenId can remove an offer.
         require(_offer.seller == msg.sender, "only seller can remove offer");
 
         // change the offer active status from offers array with index tokenIdToOffer[_tokenId].index
         offers[_offer.index].active = false;
+        
         // now delete it from the mapping
         delete tokenIdToOffer[_tokenId];
+
+        // subtract 1 from activeOffers tracker.
+        activeOffers--;
 
         emit MarketTransaction("Remove offer", msg.sender, _tokenId);
     }

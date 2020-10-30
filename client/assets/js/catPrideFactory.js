@@ -402,6 +402,8 @@ async function appendGrid(CatObjectArray, grid){
         let genes = cat.genes;
         let momId = cat.momId;
         let dadId = cat.dadId;
+        
+        
 
         // get generation from cat object array
         let generation = cat.generation;
@@ -472,7 +474,7 @@ async function appendGrid(CatObjectArray, grid){
                 <b>dadID:&nbsp${dadId}</b><br>
                 <b>momID:&nbsp${momId}</b><br>
                 <b id="generation${id}"></b><br>
-                <b>DNA:
+                <b id="kitty_dna_block">DNA:
                     <span id="dnabody${id}"></span>
                     <span id="dnamouth${id}"></span>
                     <span id="dnaeyes${id}"></span>
@@ -484,6 +486,8 @@ async function appendGrid(CatObjectArray, grid){
                     <span id="dnaAnimation${id}"></span>
                     <span id="dnaspecial${id}"></span>
                 </b>
+                
+
             </div>
         </div>
             `

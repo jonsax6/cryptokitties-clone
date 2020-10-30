@@ -105,7 +105,16 @@ $(document).ready(async function(){
         catsForSaleObjArray = await getKittyObject(catsForSaleArray);
         console.log(catsForSaleArray);
         console.log(catsForSaleObjArray);
+        var ethprice;
+        for(i=0; i<catsForSaleObjArray; i++){
+            let cats = catsForSaleObjArray[i];
+            let _offer = await marketplaceInstance.methods.getOffer(cats.catId).call();
+            ethprice = _offer.price;
+            console.log(ethprice);
+            cats.price = ethprice;
+        }
     }
+    
 
     // get msg.sender kitties from blockchain
     fetchCats(user);
@@ -228,31 +237,15 @@ $(document).ready(async function(){
         $('#kitty-pride-grid').empty();
     })
 
-    $('#create_offer_btn').click(()=>{
+    $('#create_offer_btn').click(function() {
         let price = $('#eth_price').val();
         price = web3.utils.toWei(price);
         console.log(price);
         makeOffer(price, saleId);
     })
 
-    $('#remove_offer_btn').click(async()=>{
+    $('#remove_offer_btn').click(function() {
         deleteOffer(saleId); 
-        // now we reload the "Kitty Pride" page 
-        loc = "pride";
-        hideAll();
-        parents = [];
-        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
-        $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
-        $('#launch_menu_modal_1').html(
-            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
-        );
-        $('#launch_menu_modal_2').html(
-            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
-        );
-        $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
-        $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
-        await fetchCats(user);
-        appendGrid(catObj, "pride");
     })
 
     // combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
@@ -295,30 +288,48 @@ $(document).ready(async function(){
             console.log(error);
         })
     }
-    function makeOffer(price, tokenId){
+
+    async function makeOffer(price, tokenId){
         marketplaceInstance.methods
         .setOffer(price, tokenId)
         .send()
         .on("transactionHash", function (hash) {
             console.log(hash); // 'etherscan.io/tx/${hash}'
         })
-        .on("receipt", function (receipt) {
+        .on("receipt", async function (receipt) {
             console.log(receipt);
+            // now we reload the "Adopt Kitties" page 
+            loc = "adopt";
+            hideAll();
+            await getInventory();
+            parents = [];
+            $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
+            $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
+            appendGrid(catsForSaleObjArray, "adopt");
+
         })
         .on("error", function (error) {
             console.log(error)
         })
     }
     
-    function deleteOffer(tokenId){
+    async function deleteOffer(tokenId){
         marketplaceInstance.methods
         .removeOffer(tokenId)
         .send()
         .on("transactionHash", function (hash){
             console.log(hash);
         })
-        .on("receipt", function (receipt){
+        .on("receipt", async function (receipt){
             console.log(receipt);
+            // now we reload the "Adopt Kitties" page 
+            loc = "adopt";
+            hideAll();
+            await getInventory();
+            parents = [];
+            $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
+            $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
+            appendGrid(catsForSaleObjArray, "adopt");
         })
         .on("error", function (error){
             console.log(error);
@@ -327,6 +338,7 @@ $(document).ready(async function(){
     
 
 })
+/////////////////////////////////
 // end of document.ready function
 
 
