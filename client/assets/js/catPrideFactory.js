@@ -392,6 +392,7 @@ async function appendGrid(CatObjectArray, grid){
 
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
+        if(CatObjectArray[i].catId != 0){
         // the catObjectArray index mirrors the ids array index (containing the cat ids), therefore we can 
         // take the ids array value at each index[i] to get the cat id.
         let cat = CatObjectArray[i];
@@ -510,7 +511,11 @@ async function appendGrid(CatObjectArray, grid){
         $(`#cat_id${id}`).html(`&nbsp${id}`);
 
         // populate the appended html with the kitty generation
-        $(`#generation${id}`).html(`Generation: ${generation}`);        
+        $(`#generation${id}`).html(`Generation: ${generation}`);
+
+
+
+        }      
     }
 }
 
