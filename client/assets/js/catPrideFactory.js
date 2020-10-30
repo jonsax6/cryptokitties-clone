@@ -402,8 +402,7 @@ async function appendGrid(CatObjectArray, grid){
         let genes = cat.genes;
         let momId = cat.momId;
         let dadId = cat.dadId;
-        
-        
+        let price = cat.price;
 
         // get generation from cat object array
         let generation = cat.generation;
@@ -474,7 +473,7 @@ async function appendGrid(CatObjectArray, grid){
                 <b>dadID:&nbsp${dadId}</b><br>
                 <b>momID:&nbsp${momId}</b><br>
                 <b id="generation${id}"></b><br>
-                <b id="kitty_dna_block">DNA:
+                <b class="kitty_dna_block">DNA:
                     <span id="dnabody${id}"></span>
                     <span id="dnamouth${id}"></span>
                     <span id="dnaeyes${id}"></span>
@@ -486,8 +485,7 @@ async function appendGrid(CatObjectArray, grid){
                     <span id="dnaAnimation${id}"></span>
                     <span id="dnaspecial${id}"></span>
                 </b>
-                
-
+                <b class="kitty_price_block">Price: ${price} ETH</b>
             </div>
         </div>
             `
@@ -539,6 +537,7 @@ async function appendShowcase(CatObjectArray, id, box){
     let generation = catParent.generation;
     let momId = catParent.momId;
     let dadId = catParent.dadId;
+    let price = catParent.price;
     
     // render the html structure to the div
     $(`#${box}`).append(
@@ -604,7 +603,7 @@ async function appendShowcase(CatObjectArray, id, box){
             <b>dadID:&nbsp${dadId}</b><br>
             <b>momID:&nbsp${momId}</b><br>
             <b id="generation${id}"></b><br>
-            <b>DNA:
+            <b class="kitty_dna_block">DNA:
                 <span id="dnabody${id}"></span>
                 <span id="dnamouth${id}"></span>
                 <span id="dnaeyes${id}"></span>
@@ -616,6 +615,7 @@ async function appendShowcase(CatObjectArray, id, box){
                 <span id="dnaAnimation${id}"></span>
                 <span id="dnaspecial${id}"></span>
             </b>
+            <b class="kitty_price_block">Price: ${price} ETH</b>
             </div>
             `
     )

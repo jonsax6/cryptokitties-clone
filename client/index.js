@@ -3,13 +3,14 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var marketplaceInstance;
 var user;
-var contractAddress = "0xD722B0CC489DB3e2B3104Bd5DD2Bd7afFd7B2526";
-var marketplaceAddress = "0x3c1e081c2f416C8e0c1224Ccc5B8F7904b31D5FE";
+var contractAddress = "0x66d5c2b74448899d49F23729311b74751B752A14";
+var marketplaceAddress = "0x88e1aae3fa007a138FC2eE714b58103a7496E67E";
 var tokenIds;
 var catObj;
 var saleId;
 var catsForSaleObjArray;
 var catsForSaleArray;
+var isAuthorized;
 
 // Array to record both parents.  It gets zero'd out on pride page load so new parents can be selected.
 var parents = [];
@@ -39,6 +40,7 @@ function hideAll(){
     $("#details_box").hide();
     $("#sell_cat_form").hide();
     $("#remove_offer_form").hide();
+    $("#buy_cat_form").hide();
 }
 
 $(document).ready(async function(){
@@ -106,15 +108,14 @@ $(document).ready(async function(){
         console.log(catsForSaleArray);
         console.log(catsForSaleObjArray);
         var ethprice;
-        for(i=0; i<catsForSaleObjArray; i++){
+        for(i=0; i<catsForSaleObjArray.length; i++){
             let cats = catsForSaleObjArray[i];
             let _offer = await marketplaceInstance.methods.getOffer(cats.catId).call();
-            ethprice = _offer.price;
-            console.log(ethprice);
+            ethprice = web3.utils.fromWei(_offer.price);
             cats.price = ethprice;
         }
+        console.log(catsForSaleObjArray);
     }
-    
 
     // get msg.sender kitties from blockchain
     fetchCats(user);
@@ -154,6 +155,8 @@ $(document).ready(async function(){
         $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
         await fetchCats(user);
         appendGrid(catObj, "pride");
+        $('.kitty_price_block').hide();
+        $('.kitty_dna_block').show();
     })
 
     // kitty pride nav menu click listener
@@ -167,6 +170,8 @@ $(document).ready(async function(){
         $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
         await fetchCats(user);
         appendGrid(catsForSaleObjArray, "adopt");
+        $('.kitty_price_block').show();
+        $('.kitty_dna_block').hide();
     })
 
     // Breeder nav menu click listener
@@ -207,6 +212,8 @@ $(document).ready(async function(){
         // now put the kitty grid into DOM @menu_modal, populate grid inside menu modal
         console.log(catObj);
         appendGrid(catObj, "menu");
+        $('.kitty_price_block').hide();
+        $('.kitty_dna_block').show();
         // this control flow removes the chosen catIds from the appended Grid inside the modal only if they are defined
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
@@ -224,6 +231,8 @@ $(document).ready(async function(){
         // populate grid inside menu modal
         console.log(catObj);
         appendGrid(catObj, "menu");
+        $('.kitty_price_block').hide();
+        $('.kitty_dna_block').show();
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
         } if(parents[1] !== "undefined"){
@@ -246,6 +255,44 @@ $(document).ready(async function(){
 
     $('#remove_offer_btn').click(function() {
         deleteOffer(saleId); 
+    })
+
+    $('#buy_cat_btn').click(()=>{
+        marketplaceInstance.methods
+        .buyKitty(saleId)
+        .send()
+        .on("transactionHash", function (hash){
+            console.log(hash);
+        })
+        .on("receipt", async function (hash){
+            console.log(receipt);
+            // reloads pride_page
+            loc = "pride";
+            hideAll();
+            parents = []; // resets the parents array to empty
+
+            //refresh the page divs back to kitty pride page
+            $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
+            $('#pride_page').show();
+            $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
+            $('#launch_menu_modal_1').html(
+                `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+            );
+            $('#launch_menu_modal_2').html(
+                `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+            );
+            $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
+            $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
+
+            // fetch new cats
+            await fetchCats(user);
+
+            console.log("appending kitty grid");
+            // append the entire grid now to include newly breeded cat.
+            appendGrid(catObj, grid); 
+            $('.kitty_price_block').hide();
+        })
+
     })
 
     // combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
@@ -282,7 +329,8 @@ $(document).ready(async function(){
 
             console.log("appending kitty grid");
             // append the entire grid now to include newly breeded cat.
-            appendGrid(catObj, grid);  
+            appendGrid(catObj, grid); 
+            $('.kitty_price_block').hide();
         })
         .on("error", (error) => {
             console.log(error);
@@ -344,20 +392,20 @@ $(document).ready(async function(){
 
 
 // This gets called inside selectCat() when we click on a cat in menu_modal -renders cat selection into showcase div
-function catParentsShowcase(page, catId){
+function catParentsShowcase(page, catId, catIdsObj){
     // checks to see which page state ("female_showcase" or "male_showcase") is active when "dame" or "sire" div is clicked
     if(page == "female_showcase"){
         $('#launch_menu_modal_1').empty();
         $('#launch_menu_modal_1').addClass('showcase_box');
         $('#launch_menu_modal_1').removeClass('breed_select');
-        appendShowcase(catObj, catId, "launch_menu_modal_1");
+        appendShowcase(catIdsObj, catId, "launch_menu_modal_1");
     } else if(page == "male_showcase") {
         $('#launch_menu_modal_2').empty();
         $('#launch_menu_modal_2').addClass('showcase_box');
         $('#launch_menu_modal_2').removeClass('breed_select');
-        appendShowcase(catObj, catId, "launch_menu_modal_2");
+        appendShowcase(catIdsObj, catId, "launch_menu_modal_2");
     } else {
-        appendShowcase(catObj, catId, "details_box");
+        appendShowcase(catIdsObj, catId, "details_box");
     }
 }
 
@@ -378,41 +426,53 @@ function selectCat(id) {
     if(loc == "female_showcase"){
         // populate the appropriate showcase box according to page location (loc) 
         parents[1] = id;
-        catParentsShowcase(loc, id);
+        catParentsShowcase(loc, id, catObj);
         // hides the modal menu after every cat selection
         $("#menu_modal").modal('hide');
+        $('.kitty_price_block').hide();
+        $('.kitty_dna_block').show();
     } 
     else if (loc == "male_showcase"){
         parents[0] = id;
-        catParentsShowcase(loc, id);
+        catParentsShowcase(loc, id, catObj);
         $("#menu_modal").modal('hide');
+        $('.kitty_price_block').hide();
+        $('.kitty_dna_block').show();
     } 
-    else if(loc == "pride"){
+    else if(loc == "pride" || loc == "adopt"){
         let catOnSale = catsForSaleObjArray.filter(cat => cat.catId == id)[0];
-        if(catOnSale == undefined) {
-            $('#cat_details').show();
-            $('#details_box').show();
-            $('#launch_breeder_btn').hide();
-            $('#pride_title').hide();
-            $('#pride_subtitle').hide();
+        // if there is no offer for this cat:
+        if(loc == "pride" && catOnSale == undefined) {
+            $('#cat_details, #details_box').show();
+            $('#kitty-adopt-grid').empty();
+            $('#pride_title, #pride_subtitle, #launch_breeder_btn, #kitty-adopt-grid').hide();
             $("#sell_cat_form").show();
             saleId = id;
-            catParentsShowcase(loc, id);
+            catParentsShowcase(loc, id, catsForSaleObjArray);
+            $('.kitty_price_block').hide();
+            $('.kitty_dna_block').show();
         }
-        else {
-            $('#remove_offer_form').show();
-            $('#cat_details').show();
-            $('#details_box').show();
+        // if there is an active offer, this will allow us to remove it if its our offer
+        else if(tokenIds.includes(`${id}`)) {
+            $('#remove_offer_form, #cat_details, #details_box').show();
+            $('#kitty-adopt-grid').empty();
+            $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #kitty-adopt-grid, #launch_breeder_btn, #adopt_buttons, #buy_cat_form').hide();
             saleId = id;
-            catParentsShowcase(loc, id);
+            catParentsShowcase(loc, id, catsForSaleObjArray);
+            $('.kitty_price_block').show();
+            $('.kitty_dna_block').hide();
+        } else {
+            // buy this cat button buy_cat_form
+            $('#buy_cat_form, #cat_details, #details_box').show();
+            $('#kitty-adopt-grid').empty();
+            $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #kitty-adopt-grid, #launch_breeder_btn, #adopt_buttons, #remove_offer_form').hide();
+            saleId = id;
+            catParentsShowcase(loc, id, catsForSaleObjArray);
+            $('.kitty_price_block').show();
+            $('.kitty_dna_block').hide();
         }
     }
 }
-
-
-// let catIndex = CatObjectArray.filter(cat => cat.catId == id);
-//     let catParent = CatObjectArray[parseInt(catIndex[0])];
-//     console.log(catParent);
 
 
 
