@@ -123,7 +123,7 @@ mapping(uint256 => Offer) tokenIdToOffer;
         // There must be an active _offer for _tokenId
         require(_offer.active == true, "no offer is active"); 
         
-        delete _offer;
+        delete tokenIdToOffer[_tokenId];
         offers[_offer.index].active = false;
 
         _offer.seller.transfer(_offer.price); 
@@ -131,5 +131,4 @@ mapping(uint256 => Offer) tokenIdToOffer;
         _kittycontract.transferFrom(_offer.seller, msg.sender, _tokenId);
         emit MarketTransaction("buy", owner, _tokenId);
     }
-
 }
