@@ -103,14 +103,27 @@ $(document).ready(async function(){
     }
     
     async function getInventory() {
+        // first, get the array of cat IDs that have for sale offers
         catsForSaleArray = await marketplaceInstance.methods.getAllTokenOnSale().call();
+        
+        // then plug the above array into our function to get the array Kitty objects from the contract
         catsForSaleObjArray = await getKittyObject(catsForSaleArray);
+
+        // local ethereum price variable
         var ethprice;
+
         for(i=0; i<catsForSaleObjArray.length; i++){
-            let cats = catsForSaleObjArray[i];
-            let _offer = await marketplaceInstance.methods.getOffer(cats.catId).call();
+            // create local var 'cats' for the single Kitty object located at i.
+            let cat = catsForSaleObjArray[i];
+
+            // loop through each Kitty object, getting it's offer data from "getOffer", and binding to temp _offer variable,
+            let _offer = await marketplaceInstance.methods.getOffer(cat.catId).call();
+
+            // then convert the price data in _offer from Wei, into ETH, binding to local var ethprice.
             ethprice = web3.utils.fromWei(_offer.price);
-            cats.price = ethprice;
+
+            // then create the new value field in the catsForSaleObjArray and assign the ethereum price in ETH
+            cat.price = ethprice;
         }
     }
 
@@ -276,42 +289,47 @@ $(document).ready(async function(){
         deleteOffer(saleId); 
     })
 
-    $('#buy_cat_btn').click(()=>{
-        marketplaceInstance.methods
-        .buyKitty(saleId)
-        .send()
-        .on("transactionHash", function (hash){
-            console.log(hash);
-        })
-        .on("receipt", async function (hash){
-            console.log(receipt);
-            // reloads pride_page
-            loc = "pride";
-            hideAll();
-            parents = []; // resets the parents array to empty
+    async function buyCat(id, price) {
+        var amount = web3.utils.toWei(price, "ether")
+        try {
+            await marketplaceInstance.methods.buyKitty(id).send({value: amount});
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
-            //refresh the page divs back to kitty pride page
-            $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
-            $('#pride_page').show();
-            $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
-            $('#launch_menu_modal_1').html(
-                `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
-            );
-            $('#launch_menu_modal_2').html(
-                `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
-            );
-            $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
-            $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
+    $('#buy_cat_btn').click(async()=>{
+        let ethprice = catsForSaleObjArray[saleId].price;
+        // console.log(catsForSaleObjArray); 
 
-            // fetch new cats
-            await fetchCats(user);
+        console.log(catsForSaleObjArray);
+        console.log(catsForSaleArray);
+        await buyCat(saleId, ethprice);
 
-            console.log("appending kitty grid");
-            // append the entire grid now to include newly breeded cat.
-            appendGrid(catObj, grid); 
-            $('.kitty_price_block').hide();
-        })
+        // reloads pride_page
+        loc = "pride";
+        hideAll();
+        parents = []; // resets the parents array to empty
 
+        //refresh the page divs back to kitty pride page
+        $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid').empty();
+        $('#pride_page').show();
+        $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
+        $('#launch_menu_modal_1').html(
+            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_2').html(
+            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+        );
+        $('#launch_menu_modal_1, #launch_menu_modal_2').addClass('breed_select');
+        $('#launch_menu_modal_1, #launch_menu_modal_2').removeClass('showcase_box');
+
+        // fetch new cats
+        await fetchCats(user);
+
+        // append the entire grid now to include newly breeded cat.
+        appendGrid(catObj, "details_box"); 
+        $('.kitty_price_block').hide();
     })
 
     // combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
@@ -358,6 +376,7 @@ $(document).ready(async function(){
     }
 
     async function makeOffer(price, tokenId){
+        console.log('button clicked');
         marketplaceInstance.methods
         .setOffer(price, tokenId)
         .send()
@@ -366,6 +385,7 @@ $(document).ready(async function(){
         })
         .on("receipt", async function (receipt) {
             console.log(receipt);
+
             // now we reload the "Adopt Kitties" page 
             loc = "adopt";
             hideAll();

@@ -392,6 +392,7 @@ async function appendGrid(CatObjectArray, grid){
 
     // loop through each index of the cat object array
     for(let i = 0; i < CatObjectArray.length; i++){
+        // console.log(CatObjectArray);
         if(CatObjectArray[i].catId != 0){
         // the catObjectArray index mirrors the ids array index (containing the cat ids), therefore we can 
         // take the ids array value at each index[i] to get the cat id.
@@ -638,6 +639,9 @@ async function appendShowcase(CatObjectArray, id, box){
     _renderCat(DNA, id);
     $(`#cat_id${id}`).html(`${id}`);
     $(`#generation${id}`).html(`Generation: ${generation}`);
+    if(loc == "adopt"){
+        $(`#buy_price`).html(`Price: ${price} ETH`);
+    }
 }
 
 async function fetchCats(_user){
