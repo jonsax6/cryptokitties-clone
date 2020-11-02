@@ -105,8 +105,6 @@ $(document).ready(async function(){
     async function getInventory() {
         catsForSaleArray = await marketplaceInstance.methods.getAllTokenOnSale().call();
         catsForSaleObjArray = await getKittyObject(catsForSaleArray);
-        console.log(catsForSaleArray);
-        console.log(catsForSaleObjArray);
         var ethprice;
         for(i=0; i<catsForSaleObjArray.length; i++){
             let cats = catsForSaleObjArray[i];
@@ -114,7 +112,6 @@ $(document).ready(async function(){
             ethprice = web3.utils.fromWei(_offer.price);
             cats.price = ethprice;
         }
-        console.log(catsForSaleObjArray);
     }
 
     // get msg.sender kitties from blockchain
@@ -129,6 +126,8 @@ $(document).ready(async function(){
     hideAll();
     $('#homepage_page').show();
     loc = "home";
+    checkOwner();
+
 
     // homepage nav menu click listener
     $('#nav_homepage').click(()=>{
@@ -143,6 +142,7 @@ $(document).ready(async function(){
         loc = "pride";
         hideAll();
         parents = [];
+        checkOwner();
         $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
         $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_modal_1').html(
@@ -159,12 +159,23 @@ $(document).ready(async function(){
         $('.kitty_dna_block').show();
     })
 
+    async function checkOwner(){
+        let userAccount = web3.utils.toChecksumAddress(user);
+        let ownerAccount = await instance.methods.owner().call();
+        if(userAccount !== ownerAccount) {
+            $('#nav_breed_0').hide();
+            $('#breed_0_page').hide();
+        } 
+    }    
+
+
     // kitty pride nav menu click listener
     $('#nav_adopt').click(async()=>{
         loc = "adopt";
         hideAll();
         initMarketplace();
         getInventory();
+        checkOwner();
         parents = [];
         $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
         $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
@@ -179,6 +190,7 @@ $(document).ready(async function(){
         loc = "gen0";
         $('#kittyCreation').hide();
         hideAll();
+        checkOwner();
         parents = [];
         $('#breed_0_page').show();
     })
@@ -188,6 +200,7 @@ $(document).ready(async function(){
         loc = "gen0";
         $('#kittyCreation').hide();
         hideAll();
+        checkOwner();
         parents = [];
         $('#breed_0_page').show();
     })
@@ -197,6 +210,7 @@ $(document).ready(async function(){
     // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
     $('#breedCats').click(()=>{
         hideAll();
+        checkOwner();
         // assign respective ID's to momId and dadId from the parents array, created from cat choices
         momId = parents[0];
         dadId = parents[1];
@@ -206,6 +220,7 @@ $(document).ready(async function(){
 
     $('#launch_menu_modal_1').click(()=>{
         loc = "female_showcase";
+        checkOwner();
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid, #kitty-menu-grid').empty();
         $('#kitty-menu-grid').show();
@@ -224,6 +239,7 @@ $(document).ready(async function(){
 
     $('#launch_menu_modal_2').click(()=>{
         loc = "male_showcase";
+        checkOwner();
         // first empty all grids to avoid id conflicts
         $('#kitty-pride-grid, #kitty-menu-grid').empty();
         $('#kitty-menu-grid').show();
@@ -242,6 +258,7 @@ $(document).ready(async function(){
 
     $('#launch_breeder_btn').click(()=>{
         hideAll();
+        checkOwner();
         $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle, #launch_menu_modal_1, #launch_menu_modal_2').show();
         $('#kitty-pride-grid').empty();
     })
@@ -250,10 +267,12 @@ $(document).ready(async function(){
         let price = $('#eth_price').val();
         price = web3.utils.toWei(price);
         console.log(price);
+        checkOwner();
         makeOffer(price, saleId);
     })
 
     $('#remove_offer_btn').click(function() {
+        checkOwner();
         deleteOffer(saleId); 
     })
 
@@ -309,6 +328,7 @@ $(document).ready(async function(){
             // reloads pride_page
             loc = "pride";
             hideAll();
+            checkOwner();
             parents = []; // resets the parents array to empty
 
             //refresh the page divs back to kitty pride page
@@ -354,7 +374,8 @@ $(document).ready(async function(){
             $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
             $('#pride_page, #kitty-adopt-grid, #adopt_subtitle, #adopt_title, #adopt_buttons, #launch_offer_btn').show();
             appendGrid(catsForSaleObjArray, "adopt");
-
+            $('.kitty_price_block').show();
+            $('.kitty_dna_block').hide();
         })
         .on("error", function (error) {
             console.log(error)
@@ -448,7 +469,7 @@ function selectCat(id) {
             $('#pride_title, #pride_subtitle, #launch_breeder_btn, #kitty-adopt-grid').hide();
             $("#sell_cat_form").show();
             saleId = id;
-            catParentsShowcase(loc, id, catsForSaleObjArray);
+            catParentsShowcase(loc, id, catObj);
             $('.kitty_price_block').hide();
             $('.kitty_dna_block').show();
         }
