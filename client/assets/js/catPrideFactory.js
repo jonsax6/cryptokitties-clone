@@ -486,7 +486,7 @@ async function appendGrid(CatObjectArray, grid){
                     <span id="dnaAnimation${id}"></span>
                     <span id="dnaspecial${id}"></span>
                 </b>
-                <b class="kitty_price_block">Price: ${price} ETH</b>
+                <b class="kitty_price_block">Price: <span class="eth_symbol">Ξ</span>${price} ETH</b>
             </div>
         </div>
             `
@@ -616,7 +616,7 @@ async function appendShowcase(CatObjectArray, id, box){
                 <span id="dnaAnimation${id}"></span>
                 <span id="dnaspecial${id}"></span>
             </b>
-            <b class="kitty_price_block">Price: ${price} ETH</b>
+            <b class="kitty_price_block">Price: <span class="eth_symbol">Ξ</span>${price} ETH</b>
             </div>
             `
     )
@@ -640,7 +640,7 @@ async function appendShowcase(CatObjectArray, id, box){
     $(`#cat_id${id}`).html(`${id}`);
     $(`#generation${id}`).html(`Generation: ${generation}`);
     if(loc == "adopt"){
-        $(`#buy_price`).html(`Price: ${price} ETH`);
+        $(`#buy_price`).html(`Price: <span class="eth_symbol">Ξ</span>${price} ETH`);
     }
 }
 

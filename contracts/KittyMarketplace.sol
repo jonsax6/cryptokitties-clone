@@ -15,14 +15,13 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         bool active;
     }
 
-Offer[] offers;
+    Offer[] offers;
 
-uint256 activeOffers;
+    uint256 activeOffers;
 
-address public instance;
+    address public instance;
 
-
-mapping(uint256 => Offer) tokenIdToOffer;
+    mapping(uint256 => Offer) tokenIdToOffer;
 
     function setKittyContract(address _kittyContractAddress) public onlyOwner {
         _kittycontract = Kittycontract(_kittyContractAddress);

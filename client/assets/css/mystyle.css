@@ -19,6 +19,15 @@ body {
   justify-content: center;
 }
 
+.price_field {
+  background:  #80a9be;
+  border-radius: 15px;
+}
+
+.eth_symbol {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .kitty-image-container {
   justify-content: center;
 }
