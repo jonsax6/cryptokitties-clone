@@ -1,0 +1,26 @@
+{
+  "name": "cryptokitties-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "scripts": {
+    "ropsten": "truffle migrate --reset --network ropsten",
+    "local": "truffle migrate --reset"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonsax6/cryptokitties-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonsax6/cryptokitties-clone/issues"
+  },
+  "homepage": "https://github.com/jonsax6/cryptokitties-clone#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.2.0",
+    "@truffle/hdwallet-provider": "^1.2.0",
+    "dotenv": "^8.2.0"
+  }
+}
