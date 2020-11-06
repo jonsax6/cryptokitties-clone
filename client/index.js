@@ -3,8 +3,8 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var marketplaceInstance;
 var user;
-var contractAddress = "0x29c09BE25AD6c71aEb5891e9504C947A6d3f730c";
-var marketplaceAddress = "0x4B1335fF82407598e834d728Cf7918B7dBe33090";
+var contractAddress = "0xCb00AC66C809426943Bd866FfbeBa194fb9556Af";
+var marketplaceAddress = "0x513C3ECC0E2544F4Cb95fFC56c807EfbAB44e1e8";
 var tokenIds;
 var catObj;
 var saleId;
@@ -112,7 +112,7 @@ async function checkOwner(){
         $('#breed_0_page').hide();
     } 
 }    
-
+    
 async function buyCat(id, price) {
     marketplaceInstance.methods
     .buyKitty(id)
