@@ -321,7 +321,8 @@ async function createKitty(){
 }
 
 // called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
-// which are saved into the parents array.  The parents array gets emptied every time nav_pride gets clicked or a cat is bred.
+// which are saved into the parents array.  The parents array, which stores the selected cats, gets emptied every time 
+// nav_pride gets clicked or a cat is bred.
 function selectCat(id) {
     if(loc == "female_showcase"){
         // populate the appropriate showcase box according to page location (loc) 
@@ -340,6 +341,7 @@ function selectCat(id) {
         $('.kitty_dna_block').show();
     } 
     else if(loc == "pride" || loc == "adopt"){
+        // find the cat with "id" inside the catsForSaleObjArray using .filter
         let catOnSale = catsForSaleObjArray.filter(cat => cat.catId == id)[0];
         // if there is no offer for this cat:
         if(loc == "pride" && catOnSale == undefined) {
