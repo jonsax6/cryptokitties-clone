@@ -134,10 +134,10 @@ async function buyCat(id, price) {
         $('#pride_page').show();
         $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_1').html(
-            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/vH1X4uQ.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_2').html(
-            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/qKmniXD.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_1, #launch_menu_2').addClass('breed_select');
         $('#launch_menu_1, #launch_menu_2').removeClass('showcase_box');
@@ -176,10 +176,10 @@ function breedCats(_dadId, _momId, grid){
         $('#pride_page').show();
         $('#kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_1').html(
-            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/qKmniXD.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_2').html(
-            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/vH1X4uQ.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_1, #launch_menu_2').addClass('breed_select');
         $('#launch_menu_1, #launch_menu_2').removeClass('showcase_box');
@@ -413,10 +413,10 @@ function selectCat(id) {
         $('#launch_menu_1, #launch_menu_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
         $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_1').html(
-            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/qKmniXD.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_2').html(
-            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/vH1X4uQ.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_1, #launch_menu_2').addClass('breed_select');
         $('#launch_menu_1, #launch_menu_2').removeClass('showcase_box');
@@ -461,10 +461,10 @@ function selectCat(id) {
         $('#launch_menu_1, #launch_menu_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
         $('#pride_page, #kitty-pride-grid, #pride_subtitle, #pride_title, #launch_breeder_btn').show();
         $('#launch_menu_1').html(
-            `<img src="/client/assets/raster images/female_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/qKmniXD.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_2').html(
-            `<img src="/client/assets/raster images/male_cat.png" class="breed_select_icon"></img>`
+            `<img src="https://i.imgur.com/vH1X4uQ.png" class="breed_select_icon"></img>`
         );
         $('#launch_menu_1, #launch_menu_2').addClass('breed_select');
         $('#launch_menu_1, #launch_menu_2').removeClass('showcase_box');
