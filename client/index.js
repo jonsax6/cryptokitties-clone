@@ -343,22 +343,41 @@ function selectCat(id) {
     else if(loc == "pride" || loc == "adopt"){
         // find the cat with "id" inside the catsForSaleObjArray using .filter
         let catOnSale = catsForSaleObjArray.filter(cat => cat.catId == id)[0];
-        // if there is no offer for this cat:
+
+        // if there is no offer for this cat go to make offer page for cat
         if(loc == "pride" && catOnSale == undefined) {
+            // show the cat details showcase box
             $('#cat_details, #details_box').show();
+
+            // empty pride grid to avoid ID conflicts
             $('#kitty-adopt-grid').empty();
+
+            // hide all pride page elements
             $('#pride_title, #pride_subtitle, #launch_breeder_btn, #kitty-adopt-grid').hide();
+            
+            // show sell cat elements
             $("#sell_cat_form").show();
+
+            // bind id to global var saleId
             saleId = id;
+
+            // render this cat to the showcase box
             catParentsShowcase(loc, id, catObj);
+
+            // hide price and show DNA
             $('.kitty_price_block').hide();
             $('.kitty_dna_block').show();
         }
-        // if there is an active offer, this will allow us to remove it if its our offer
+        // if there is an active offer, this will allow us to remove it ONLY if we own the cat
         else if(tokenIds.includes(`${id}`)) {
+            // show the remove offer elements
             $('#remove_offer_form, #cat_details, #details_box').show();
+
+            // empty adopt grid to avoid ID conflicts
             $('#kitty-adopt-grid').empty();
-            $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #kitty-adopt-grid, #launch_breeder_btn, #adopt_buttons, #buy_cat_form').hide();
+
+            // hide main adopt page (marketplace) page elements
+            $('#adopt_title, #adopt_subtitle, #kitty-adopt-grid').hide();
             saleId = id;
             catParentsShowcase(loc, id, catsForSaleObjArray);
             $('.kitty_price_block').show();
@@ -411,8 +430,8 @@ function selectCat(id) {
     $('#nav_adopt').click(async()=>{
         loc = "adopt";
         hideAll();
-        initMarketplace();
-        getInventory();
+        await initMarketplace();
+        await getInventory();
         checkOwner();
         parents = [];
         $('#launch_menu_modal_1, #launch_menu_modal_2, #kitty-pride-grid, #kitty-menu-grid, #kitty-adopt-grid').empty();
