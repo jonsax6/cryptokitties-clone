@@ -377,7 +377,7 @@ function selectCat(id) {
             $('#kitty-adopt-grid').empty();
 
             // hide main adopt page (marketplace) page elements
-            $('#adopt_title, #adopt_subtitle, #kitty-adopt-grid').hide();
+            $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #launch_breeder_btn, #kitty-adopt-grid').hide();
             saleId = id;
             catParentsShowcase(loc, id, catsForSaleObjArray);
             $('.kitty_price_block').show();
