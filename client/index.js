@@ -324,23 +324,38 @@ async function createKitty(){
 // which are saved into the parents array.  The parents array, which stores the selected cats, gets emptied every time 
 // nav_pride gets clicked or a cat is bred.
 function selectCat(id) {
+    // if we've clicked on the female icon in the breed cat page this will be true
     if(loc == "female_showcase"){
         // populate the appropriate showcase box according to page location (loc) 
+
+        // set the two-element parents array at index [1], which is the momId
         parents[1] = id;
+
+        // render the selected cat
         catParentsShowcase(loc, id, catObj);
+
         // hides the modal menu after every cat selection
         $("#menu_modal").modal('hide');
+
+        // hide the price data, and show the dna data in cat description fields
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();
     } 
+    // if we've clicked on the male icon in the breed cat page this will be true
     else if (loc == "male_showcase"){
+        // set the parents array at index [0], which is the dadId
         parents[0] = id;
+
+        // render the cat
         catParentsShowcase(loc, id, catObj);
         $("#menu_modal").modal('hide');
+
+        // hide the price data, and show the dna data in cat description fields
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();
     } 
-    else if(loc == "pride" || loc == "adopt"){
+    // if we are coming from the pride page, or the adopt page:
+    else if(loc == "pride" || loc == "adopt"){ 
         // find the cat with "id" inside the catsForSaleObjArray using .filter
         let catOnSale = catsForSaleObjArray.filter(cat => cat.catId == id)[0];
 
@@ -358,7 +373,8 @@ function selectCat(id) {
             // show sell cat elements
             $("#sell_cat_form").show();
 
-            // bind id to global var saleId
+            // set global variable saleId to the current id, this allows us to "remember" it 
+            // when the create offer button is clicked in the following page
             saleId = id;
 
             // render this cat to the showcase box
@@ -368,7 +384,8 @@ function selectCat(id) {
             $('.kitty_price_block').hide();
             $('.kitty_dna_block').show();
         }
-        // if there is an active offer, this will allow us to remove it ONLY if we own the cat
+        // if there is an active offer, this will return true and allow us to remove offer 
+        // ONLY if we own the cat (in kitty pride):
         else if(tokenIds.includes(`${id}`)) {
             // show the remove offer elements
             $('#remove_offer_form, #cat_details, #details_box').show();
@@ -378,17 +395,31 @@ function selectCat(id) {
 
             // hide main adopt page (marketplace) page elements
             $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #launch_breeder_btn, #kitty-adopt-grid').hide();
+
+            // set global variable saleId to the current id, this allows us to "remember" it 
+            // when the remove offer button is clicked in the following page
             saleId = id;
+
+            // render the kitty into the remove offer page showcase
             catParentsShowcase(loc, id, catsForSaleObjArray);
+
+            // show the price data and hide the dna data in the rendered cat
             $('.kitty_price_block').show();
             $('.kitty_dna_block').hide();
         } else {
-            // buy this cat button buy_cat_form
+            // show the "buy this cat" button and buy_cat_form
             $('#buy_cat_form, #cat_details, #details_box').show();
             $('#kitty-adopt-grid').empty();
             $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #kitty-adopt-grid, #launch_breeder_btn, #adopt_buttons, #remove_offer_form').hide();
+            
+            // set global variable saleId to the current id, this allows us to "remember" it 
+            // when the buy this cat button is clicked in the following page
             saleId = id;
+
+            // render the kitty into buy this cat page showcase
             catParentsShowcase(loc, id, catsForSaleObjArray);
+
+            // show the price and hide the dna
             $('.kitty_price_block').show();
             $('.kitty_dna_block').hide();
         }
@@ -533,13 +564,22 @@ function selectCat(id) {
     })
 
     $('#create_offer_btn').click(async function() {
+        // get price from eth price form field
         let price = $('#eth_price').val();
+
+        // conerts the price to Wei.
         price = web3.utils.toWei(price);
         console.log("eth price", price);
+
+        // var is a boolean, if true, then marketplace has been approved to buy/sell on behalf of user
         var isApprovedForAll = await instance.methods.isApprovedForAll(user, marketplaceAddress).call();
+
+        // if isApprovedForAll is false, then marketplace needs to be approved by user to buy/sell
         if(!isApprovedForAll) {
             await setMarketApproval(marketplaceAddress); 
         } 
+
+        // sets the marketplace offer on the kitty with ID saleId global var
         await makeOffer(price, saleId);
     })
 
@@ -549,11 +589,14 @@ function selectCat(id) {
     })
 
     $('#buy_cat_btn').click(()=>{
+        // finds the ID of the cat in the catsForSaleObjArray with ID saleId
         let catToBuy = catsForSaleObjArray.filter(cat => cat.catId == saleId)[0];
+
+        // converts the price back to eth from Wei
         let ethprice = web3.utils.toWei(catToBuy.price, "ether");
 
-        // console.log(catsForSaleObjArray); 
-
+        // calls the function in Kittycontract to buy kitty with ID saleId 
+        // and transfers the cat to the user address, should now be in user's "Pride" page
         buyCat(saleId, ethprice);
     })
 
