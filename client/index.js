@@ -585,6 +585,8 @@ function selectCat(id) {
 
     $('#remove_offer_btn').click(function() {
         checkOwner();
+
+        // calls the removeOffer() function in Kittycontract for kitty ID saleId
         deleteOffer(saleId); 
     })
 
