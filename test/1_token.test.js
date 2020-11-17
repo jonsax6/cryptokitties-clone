@@ -1,5 +1,6 @@
 // import the contracts you are going to use
 const Kittycontract = artifacts.require("Kittycontract");
+const Marketplace = artifacts.require("KittyMarketPlace");
 
 // Main function that is executed during the test
 contract("Kittycontract", ([owner, alice, bob, charlie]) => {
@@ -29,49 +30,75 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
             assert.equal(kitty.genes, "5368298526545211"); 
         });
 
-        // it("should create a new kitty with given attributes", async function() {
-        //     const _momId = 1;
-        //     const _dadId = 2;
-        //     const _generation = 1;
-        //     const _genes = 5368298526545211;
-        //     const _owner = owner;
+        it("should breed two cats, returning correct parent IDs", async function(){
+            // first create 2 new cats
+            await kittycontract.createKittyGen0(5368298526545211);
+            await kittycontract.createKittyGen0(5289121556575841);
 
-        //     const kitty = await kittycontract._createKitty(_momId, _dadId, _generation, _genes, _owner);
+            // collect all cat birth events and bind to 'events' object
+            const events = await kittycontract.getPastEvents("Birth", {
+                fromBlock:0,
+                toBlock:"latest"
+            })
 
-        //     assert.equal(kitties[kitties.length].momId, kitty.momId);
-        //     assert.equal(kitties[kitties.length].dadId, kitty.dadId);
-        //     assert.equal(kitties[kitties.length].genes, kitty.dadId);
-        //     assert.equal(kitties[kitties.length].generation, kitty.generation);
-        //     assert.equal(kitties[kitties.length].owner, kitty.owner); 
-        // })
-        
-        // it("should return a kitty of given ID", async function() {
-        //     const kitties = await kittycontract.kitties();
-        //     await kittycontract._createKitty(0, 0, 0, 5368298526545211, owner);
-        //     const _kitty = await kittycontract.getKitty(kitties.length);
+            const cat1 = events[1];
+            const cat2 = events[2];
 
-        //     assert.equal(_kitty.momId, 0);
-        //     assert.equal(_kitty.dadId, 0);
-        //     assert.equal(_kitty.generation, 0);
-        //     assert.equal(_kitty.genes, 5368298526545211);
-        //     assert.equal(_kitty.owner, owner);    
-        // })
+            // create variables for mom and dad IDs from the events object
+            const _momId = cat1.returnValues.kittenId;
+            const _dadId = cat2.returnValues.kittenId;
 
-        it("should return ", async function() {
-            await kittycontract._createKitty(0, 0, 0, 5368298526545211, owner);
-            await kittycontract._createKitty(0, 0, 0, 5368298526545211, owner);
-            await kittycontract._createKitty(0, 0, 0, 5368298526545211, owner);
-            const owned = await kittycontract.getKittiesByUser();
-        
+            // breed a new kitty from mom and dad DNA
+            await kittycontract.breed(_dadId, _momId);
 
-            for (let i = 0; i < owned.length; i++) {
-                let cat = owned[i];
-                assert.equal(cat.owner, owner);
-            } 
+            // now get the updated events object
+            const recentEvents = await kittycontract.getPastEvents("Birth", {
+                fromBlock:0,
+                toBlock:"latest"
+            })
 
+            const newKitten = recentEvents.pop();
+
+            // test that mom and dad IDs are correct in the newKitten meta data
+            assert.equal(newKitten.returnValues.momId, _momId);
+            assert.equal(newKitten.returnValues.dadId, _dadId);
+            assert.equal(newKitten.returnValues.kittenId, recentEvents.length);
         })
 
+        it("owner should be 'owner' for any cat in events array", async function() {
+            await kittycontract.createKittyGen0(5368298526545211);
+            await kittycontract.createKittyGen0(5289121556575841);
+            await kittycontract.createKittyGen0(7884733212593141);
+            await kittycontract.createKittyGen0(6942691265662311);
 
+            const events = await kittycontract.getPastEvents("Birth", {
+                fromBlock:0,
+                toBlock:"latest"
+            })
+            
+            const lastCat = events.pop();
+            const _owner = lastCat.returnValues.owner;
+            assert.equal(_owner, owner);
+        })
+
+        it("should show approval = true for given accounts", async function() {
+            await kittycontract.createKittyGen0(5368298526545211);
+            await kittycontract.createKittyGen0(5289121556575841);
+            await kittycontract.createKittyGen0(7884733212593141);
+            await kittycontract.createKittyGen0(6942691265662311);
+
+            // set approval for alice and bob
+            const setApproval1 = await kittycontract.setApprovalForAll(alice, true);  
+            const setApproval2 = await kittycontract.setApprovalForAll(bob, true);
+            
+            // query approval for alice and bob (binded as boolean)
+            const isApproved1 = await kittycontract.isApprovedForAll(owner, alice);
+            const isApproved2 = await kittycontract.isApprovedForAll(owner, bob);
+
+            // test approval = true for alice and bob
+            assert.equal(isApproved1, true);
+            assert.equal(isApproved2, true);
+        })
     })
 
 
