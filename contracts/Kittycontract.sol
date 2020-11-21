@@ -60,14 +60,6 @@ contract Kittycontract is IERC721, Ownable {
         (uint256 dadDna,,,,uint256 dadGen) = getKitty(_dadId);
         (uint256 momDna,,,,uint256 momGen) = getKitty(_momId);
 
-        // this was the code I wrote for the assignment, 4 lines 
-        // as opposed to Filip's 2 lines.  He also made use of the getKitty function:
- 
-        // uint256 dadDna = kitties[_dadId].genes; 
-        // uint256 momDna = kitties[_momId].genes; 
-        // uint256 dadGen = kitties[_dadId].generation; 
-        // uint256 momGen = kitties[_momId].generation; 
-
         // control flow, makes kid generation the oldest parent +1, 
         // or if they are the same then dadGen +1 
         uint256 kidGen = 0;
@@ -83,7 +75,7 @@ contract Kittycontract is IERC721, Ownable {
         uint256 newDna = _mixDna(dadDna, momDna);
 
         // now use the new kitty params to make a new cat on the blockchain and send to msg.sender
-        _createKitty(_momId,_dadId, kidGen, newDna, msg.sender);
+        _createKitty(_momId, _dadId, kidGen, newDna, msg.sender);
     }
 
     bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;

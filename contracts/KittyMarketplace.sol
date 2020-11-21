@@ -17,12 +17,18 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     Offer[] offers;
 
-    uint256 activeOffers;
+    uint256 public activeOffers;
+
+    function totalOffers() public view returns(uint256 numOffers) {
+        numOffers = activeOffers;
+        return numOffers;
+    }
 
     address public instance;
 
     mapping(uint256 => Offer) tokenIdToOffer;
 
+    // Set the current KittyContract address and initialize the instance of Kittycontract
     function setKittyContract(address _kittyContractAddress) public onlyOwner {
         _kittycontract = Kittycontract(_kittyContractAddress);
     }
@@ -31,6 +37,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
          setKittyContract(_kittyContractAddress);
     }
 
+    // Get the details about an offer for _tokenId. Throws an error if there is no active offer for _tokenId.
     function getOffer(uint256 _tokenId) public view returns ( 
         address seller, 
         uint256 price, 
@@ -47,7 +54,8 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
             _offer.active
         );
     }
- 
+
+    // Get all tokenId's that are currently for sale. Returns an empty array if none exist.
     function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
         // check if there are any offers, if not return empty array
         if(activeOffers == 0){ 
@@ -70,6 +78,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     }
   
+    // Creates a new offer for _tokenId for the price _price.
     function setOffer(uint256 _price, uint256 _tokenId) external{
         // only owner can create offer
         require(_kittycontract.ownerOf(_tokenId) == msg.sender, "only owner can sell tokenId"); 
