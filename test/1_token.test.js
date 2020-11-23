@@ -16,6 +16,7 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
     const genes2 = 5289121556575841;
     const genes3 = 7884733212593141;
     const genes4 = 6942691265662311;
+    const genesSmall = 123;
     
     before(async function() {
         // Deploy Kittycontract to testnet
@@ -117,6 +118,22 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
             // test approval = true for alice and bob
             assert(isApproved1);
             assert(isApproved2);
+        })
+
+        it("should revert for a cat with small number DNA", async () => {
+            await kittycontract.createKittyGen0(genesSmall);
+
+            // collect all cat birth events and bind to 'events' object
+            const events = await kittycontract.getPastEvents("Birth", {
+                fromBlock:0,
+                toBlock:"latest"
+            })
+
+            const newCat = events.pop();
+            // console.log(newCat.genes);
+
+            assert.equal(newCat.genes, "123");
+
         })
     })
 })

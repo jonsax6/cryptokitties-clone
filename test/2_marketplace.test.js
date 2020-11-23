@@ -10,6 +10,7 @@ const {
     expectEvent,  // Assertions for emitted events
     expectRevert, // Assertions for transactions that should fail
   } = require('@openzeppelin/test-helpers');
+const balance = require('@openzeppelin/test-helpers/src/balance');
 
 // Main function that is executed during the test
 contract("Marketplace", ([owner, alice, bob, charlie]) => {
@@ -83,7 +84,7 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
             assert.equal(catsForSale.length, numOffers);
         })
 
-        it("should get an offer for kitty with tokenId ID", async () => {
+        it("should get the offer data for kitty with tokenId ID", async () => {
             const offer = await marketplace.getOffer(1);
 
             assert.equal(offer.seller, owner);
@@ -100,7 +101,7 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
             // getting an offer that doesn't exist, should return 0 values
             let offer = await marketplace.getOffer(5);
 
-            // testing that in fact we get 0 values from the getter
+            // testing that in fact we get 0 values from the getter function
             assert.equal(offer.tokenId, 0, "there is an offer already");
         })
     
@@ -121,17 +122,46 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
             assert(!offerUnactive.active);
         })
 
-        it("should buy a kitty, transfer ownership, and verify eth value transfered to owner", async () => {
-            const ownerBalBefore = web3.eth.getBalance(owner);
-            console.log(ownerBalBefore);
+        it("should buy a kitty, transfer ownership, and verify ETH value and ownership transfered", async () => {
+            // fetch the offer for cat ID = 1
+            const offerBefore = await marketplace.getOffer("1");
 
-            await marketplace.buyKitty(1, { from: bob, value: price });
+            // assert that the offer is currently active (active == true)
+            assert(offerBefore.active);
 
-            const ownerBalAfter = web3.eth.getBalance(owner);
-            console.log(ownerBalAfter);
+            // check the ETH balances prior to the buyKitty function
+            const ownerBalBefore = await balance.current(owner);
+            const buyerBalBefore = await balance.current(bob);
 
-            assert(ownerBalBefore + price == ownerBalAfter);
+            // bob account buys the kitty from owner account
+            const buyTx = await marketplace.buyKitty(1, { from: bob, value: price, gasPrice:10e09 });
+            const gas = buyTx.receipt.gasUsed*10e9;
 
+            // calculate the total spent (price + fees)
+            const spent = Number(price) + Number(gas);
+
+            // check the new ETH balances after the above transaction
+            const ownerBalAfter = await balance.current(owner);
+            const buyerBalAfter = await balance.current(bob);
+
+            // now fetch the offer again so we can check active status
+            const offerAfter = await marketplace.getOffer("1");
+
+            // assert that the offer is currently inactive (active == false)
+            assert(!offerAfter.active);
+
+            const newOwner = await kittycontract.ownerOf("1");
+
+            // make sure the owner's and buyer's ETH balances reflect the tx price
+            assert.equal(Number(ownerBalBefore), (Number(ownerBalAfter) - price));
+            // assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
+
+            // make sure the new owner is bob
+            assert.equal(newOwner, bob);
+        })
+
+        it("should revert for an offer with price 0 ETH", async () => {
+            expectRevert.unspecified(marketplace.setOffer(0, "5"));
         })
 
     })
