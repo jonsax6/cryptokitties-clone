@@ -154,7 +154,7 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
 
             // make sure the owner's and buyer's ETH balances reflect the tx price
             assert.equal(Number(ownerBalBefore), (Number(ownerBalAfter) - price));
-            // assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
+            assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
 
             // make sure the new owner is bob
             assert.equal(newOwner, bob);

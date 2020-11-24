@@ -120,19 +120,23 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
             assert(isApproved2);
         })
 
-        it("should revert for a cat with small number DNA", async () => {
-            await kittycontract.createKittyGen0(genesSmall);
+        it("should revert for a cat with small number DNA", async () => {            
+            await expectRevert(kittycontract.createKittyGen0(genesSmall), 
+            "genes must be minimum of 16 digits");
 
-            // collect all cat birth events and bind to 'events' object
-            const events = await kittycontract.getPastEvents("Birth", {
-                fromBlock:0,
-                toBlock:"latest"
-            })
+            // // collect all cat birth events and bind to 'events' object
+            // const events = await kittycontract.getPastEvents("Birth", {
+            //     fromBlock:0,
+            //     toBlock:"latest"
+            // })
 
-            const newCat = events.pop();
-            // console.log(newCat.genes);
+            // const newCat = events.pop();
+            // // console.log(newCat.genes);
+            // console.log(newCat);
 
-            assert.equal(newCat.genes, "123");
+            // const isFalse = (newCat.genes == "123");
+
+            // assert(!isFalse);
 
         })
     })

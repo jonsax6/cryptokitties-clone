@@ -24,6 +24,8 @@
     "dotenv": "^8.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
     "@openzeppelin/test-helpers": "^0.5.9"
   }
 }

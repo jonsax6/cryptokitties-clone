@@ -86,7 +86,11 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function createKittyGen0(uint256 _genes) public onlyOwner {
+        // cannot have more gen 0 cats than the creation limit
         require(gen0Counter < CREATION_LIMIT_GEN0);
+        
+        // make sure genes are 16 digits minimum
+        require(_genes >= 1000000000000000, "genes must be minimum of 16 digits");
 
         gen0Counter++;
 
