@@ -90,7 +90,7 @@ contract Kittycontract is IERC721, Ownable {
         require(gen0Counter < CREATION_LIMIT_GEN0);
         
         // make sure genes are 16 digits minimum
-        require(_genes >= 1000000000000000, "genes must be minimum of 16 digits");
+        require(_genes >= 1000000000000000, "genes must be a minimum of 16 digits");
 
         gen0Counter++;
 
