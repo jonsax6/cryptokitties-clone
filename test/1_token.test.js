@@ -34,11 +34,35 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
             assert.equal(symbol, "JCK");
         });
 
-        it("should create a new kitty and send to contract address", async function() {
+        it("should create a new kitty and send to contract owner address", async function() {
             await kittycontract.createKittyGen0(genes1);
-            const kitty = await kittycontract.getKitty(1);
 
-            assert.equal(kitty.genes, genes1); 
+            // collect all cat birth events and bind to 'events' object
+            const events = await kittycontract.getPastEvents("Birth", {
+                fromBlock:0,
+                toBlock:"latest"
+            })
+            
+            // variable binding for the newest or youngest cat that we just birthed
+            const cat = events.pop(); 
+
+            // variable bindings for the returned values of 'owner' and 'genes'
+            const catOwner = cat.returnValues.owner;
+            const catGenes = cat.returnValues.genes;
+            const catMomId = cat.returnValues.momId;
+            const catDadId = cat.returnValues.dadId;
+
+            // assert that the genes for the newest cat are the same as genes1
+            assert.equal(catGenes, genes1);
+
+            // assert momId is 0
+            assert.equal(catMomId, 0);
+
+            // assert dadId is 0
+            assert.equal(catDadId, 0);
+
+            // assert that the owner address is the contract owner address
+            assert.equal(catOwner, "0xAE8F6dCa61f3bB13C977eEd1138FA39F4FA59482")
         });
 
         it("should breed two cats that you own, emitting the Birth Event ", async function(){
