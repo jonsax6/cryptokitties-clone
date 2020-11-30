@@ -122,22 +122,12 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
 
         it("should revert for a cat with small number DNA", async () => {            
             await expectRevert(kittycontract.createKittyGen0(genesSmall), 
-            "genes must be minimum of 16 digits");
-
-            // // collect all cat birth events and bind to 'events' object
-            // const events = await kittycontract.getPastEvents("Birth", {
-            //     fromBlock:0,
-            //     toBlock:"latest"
-            // })
-
-            // const newCat = events.pop();
-            // // console.log(newCat.genes);
-            // console.log(newCat);
-
-            // const isFalse = (newCat.genes == "123");
-
-            // assert(!isFalse);
-
+            "genes must be a minimum of 16 digits");
         })
+        
+        it("should revert if cat IDs are the same", async () => {
+            await expectRevert(kittycontract.breed(1, 1), "Kitty IDs must not be the same");
+        })
+
     })
 })

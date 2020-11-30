@@ -56,6 +56,10 @@ contract Kittycontract is IERC721, Ownable {
     function breed(uint256 _dadId, uint256 _momId) public returns(uint256) {
         // check ownership
         require(_owns(msg.sender, _dadId) && _owns(msg.sender, _momId));
+
+        // check that the kitty IDs are not the same (different cats);
+        require(_dadId != _momId, "Kitty IDs must not be the same");
+
         // get the DNA and Generation from both parents
         (uint256 dadDna,,,,uint256 dadGen) = getKitty(_dadId);
         (uint256 momDna,,,,uint256 momGen) = getKitty(_momId);
