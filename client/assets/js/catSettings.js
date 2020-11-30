@@ -3,14 +3,14 @@ var colors = Object.values(allColors())
 
 var defaultDNA = {
     //Colors
-    headColor : 53,
-    mouthColor : 68,
-    eyesColor : 29,
-    earsColor : 85,
+    headColor : 69,
+    mouthColor : 53,
+    eyesColor : 74,
+    earsColor : 57,
     //Cattributes
-    markingsMidColor : 54,
-    markingsOuterColor : 52,
-    eyesShape : 2,
+    markingsMidColor : 72,
+    markingsOuterColor : 36,
+    eyesShape : 4,
     markingsShape : 6,
     animation :  1,
     lastNum :  1
