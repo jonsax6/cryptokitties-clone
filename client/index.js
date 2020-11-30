@@ -3,8 +3,14 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var marketplaceInstance;
 var user;
+// ropsten
 var contractAddress = "0xedAD897ed0406fE6b7CD4d431FA850Bd5122b259";
 var marketplaceAddress = "0xf67C3Fc23865010E09440E18B79163ea089B988F";
+
+// ganache
+// var contractAddress = "0xB3938F28b21F0f28B7d7c9b2Fd03DA5caac4dce1";
+// var marketplaceAddress = "0x9B2DF90F482eE8f121Ec2469355d17Be0d854f36";
+
 var tokenIds;
 var catObj;
 var saleId;
@@ -18,6 +24,7 @@ var parents = [];
 var loc = '';
 
 $(document).ready(async function(){
+    // set the kittycontract and marketplace instances and user to global vars,  
     const accounts = await window.ethereum.enable();
     instance = new web3.eth.Contract(abi.kittycontract, contractAddress, {from: accounts[0]});
     marketplaceInstance = new web3.eth.Contract(abi.marketplace, marketplaceAddress, {from: accounts[0]});
@@ -25,6 +32,7 @@ $(document).ready(async function(){
 
     console.log(instance);
 
+    
     instance.events.Birth()
     .on('data', function(event){
         console.log(event);
@@ -102,6 +110,10 @@ function hideAll(){
     $("#sell_cat_form").hide();
     $("#remove_offer_form").hide();
     $("#buy_cat_form").hide();
+    $("#offer_title").hide();
+    $("#offer_subtitle").hide();
+    $("#offer_remove_title").hide();
+    $("#offer_remove_subtitle").hide();
 }
 
 async function checkOwner(){
@@ -362,7 +374,7 @@ function selectCat(id) {
         // if there is no offer for this cat go to make offer page for cat
         if(loc == "pride" && catOnSale == undefined) {
             // show the cat details showcase box
-            $('#cat_details, #details_box').show();
+            $('#cat_details, #details_box, #offer_subtitle, #offer_title').show();
 
             // empty pride grid to avoid ID conflicts
             $('#kitty-adopt-grid').empty();
@@ -388,7 +400,7 @@ function selectCat(id) {
         // ONLY if we own the cat (in kitty pride):
         else if(tokenIds.includes(`${id}`)) {
             // show the remove offer elements
-            $('#remove_offer_form, #cat_details, #details_box').show();
+            $('#remove_offer_form, #cat_details, #details_box, #offer_remove_subtitle, #offer_remove_title').show();
 
             // empty adopt grid to avoid ID conflicts
             $('#kitty-adopt-grid').empty();

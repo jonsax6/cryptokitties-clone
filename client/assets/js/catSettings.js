@@ -120,8 +120,8 @@ $('#eyesShape').change(()=>{
   eyeVariation(shapeVal)
 })
 
-$('#markingsPattern').change(()=>{
-  var pattern = parseInt($('#markingsPattern').val())
+$('#markingsShape').change(()=>{
+  var pattern = parseInt($('#markingsShape').val())
   markingsVariation(pattern)
 })
 

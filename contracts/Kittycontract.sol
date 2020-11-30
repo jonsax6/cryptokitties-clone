@@ -294,24 +294,31 @@ contract Kittycontract is IERC721, Ownable {
                 geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'
-                if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){ // only numbers less than 80 (for the 'tens' digit) 
-                                                                                // AND less than 8 (for the 'ones' digit) are eligible.  
-                                                                                // (87 or 78 return false for example).
+
+                // only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
+                // shape) are eligible. (87 or 78 return false for example).  This ensures only numbers 1-7 for both markings
+                // shape and eyes shape will ever be eligible to be randomized
+                if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){    
                     geneArray[4] = rand100; // if above is true, then these two settings are random
                 } 
-                else if(rand10 > 4){ // if rand10 is 5 - 9 use momDna
+                // rand10 can only be 0-9, so if rand10 is in 5-9 range use the _momDna
+                else if(rand10 > 4){ 
                     geneArray[4] = uint8(_momDna % 100); 
                 } 
-                else { // if rand10 is 0 - 4 use _dadDna 
+                // rand10 can only be 0-9, so if rand10 is 0-4 use _dadDna
+                else {  
                     geneArray[4] = uint8(_dadDna % 100); 
                 } 
             }
-            else if(random & i != 0 && index != 2 && index != 4){ // the bitwise operator "&" compares the random 8bit to "1" at every 
-                                                                  //  slot and returns 1 (true) or 0 (false) for all 'index' vals except 2 or 4
-                geneArray[index] = uint8(_momDna % 100); // the % 100 => the last two digits of the dna number as the remainder
+            // the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
+            // for all 'index' vals except i = 2 or 4
+            else if(random & i != 0 && index != 2 && index != 4){ 
+                // the % 100 yields the last two digits of the _momDna number to use at this slot
+                geneArray[index] = uint8(_momDna % 100); 
             }
+            // same as above but uses the dadDna if (random & i != 0) returns "false" above except i = 2 or 4
             else if(index != 2 && index != 4){
-                geneArray[index] = uint8(_dadDna % 100); // same but uses the dadDna if (random & i != 0) returns "false" above
+                geneArray[index] = uint8(_dadDna % 100); 
             }
             _momDna = _momDna / 100; // dividing by 100 turns the last two digits of DNA numbers into decimals,
             _dadDna = _dadDna / 100; // since we are working with integers, they disappear

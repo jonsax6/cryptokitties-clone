@@ -1,103 +1,103 @@
 
 var colors = {00: "ae494f",
-01: "9a3031",
-02: "8cd42e",
-03: "a0417a",
-04: "91c656",
-05: "299f7a",
-06: "c65d1e",
-07: "b2bbd6",
-08: "2d4024",
-9: "4b5715",
-10: "ffcc80",
-11: "3f1174",
-12: "b22a90",
-13: "fff3e0",
-14: "4c858b",
-15: "18bebe",
-16: "b5044b",
-17: "d6b1d4",
-18: "fecb40",
-19: "748882",
-20: "4a3c95",
-21: "482916",
-22: "267bf0",
-23: "5af7e2",
-24: "adeacc",
-25: "cf2b03",
-26: "b3c459",
-27: "353f9",
-28: "5d4993",
-29: "ba8d15",
-30: "da2457",
-31: "ff17fe",
-32: "d6e81d",
-33: "daf2db",
-34: "19b510",
-35: "18e26f",
-36: "b7c36a",
-37: "8cb175",
-38: "bdce32",
-39: "f2e0ba",
-40: "a2f8a5",
-41: "64bf50",
-42: "f1a771",
-43: "4982a9",
-44: "f66c41",
-45: "2fe802",
-46: "bda142",
-47: "8342ff",
-48: "2b4ab4",
-49: "ad4595",
-50: "bae4f",
-51: "b76d01",
-52: "8e8207",
-53: "285b9f",
-54: "c4422a",
-55: "f1eaa7",
-56: "e3a0cc",
-57: "65c116",
-58: "656ccf",
-59: "7c25f4",
-60: "1e18d1",
-61: "688a7d",
-62: "1fe786",
-63: "425716",
-64: "4ac043",
-65: "547836",
-66: "24a216",
-67: "fd9bba",
-68: "24894d",
-69: "c54b03",
-70: "6fbdce",
-71: "cff1dd",
-72: "8805fb",
-73: "fe99d2",
-74: "c52f14",
-75: "e31c54",
-76: "d010eb",
-77: "b83436",
-78: "c294b6",
-79: "564a6c",
-80: "531bcf",
-81: "c04b8c",
-82: "3cd2ef",
-83: "82286c",
-84: "aa2639",
-85: "86be6c",
-86: "e62102",
-87: "5471fc",
-88: "5c089",
-89: "703c75",
-90: "9a8e8f",
-91: "8b9307",
-92: "fcbc82",
-93: "ea5978",
-94: "b8e370",
-95: "43474b",
-96: "262d2b",
-97: "ddd67e",
-98: "344867"}
+01: "9a3031",   // red
+02: "8cd42e",   // green
+03: "a0417a",   // violet
+04: "91c656",   // green
+05: "299f7a",   // green
+06: "c65d1e",   // orange
+07: "b2bbd6",   // blue
+08: "2d4024",   // green
+9: "ff0000",   // red
+10: "cc0000",   // red
+11: "ff3300",   // red
+12: "cc3300",   // red
+13: "cc0066",   // red
+14: "990033",   // red
+15: "993300",   // red
+16: "cc2900",   // red
+17: "ff4d4d",   // red
+18: "cc2900",   // red
+19: "ff471a",   // red
+20: "b30000",   // red
+21: "ff3333",   // red
+22: "e6005c",   // red
+23: "ff9900",   // orange
+24: "ff9933",   // orange
+25: "ff8000",   // orange
+26: "e67300",   // orange
+27: "ff5500",   // orange
+28: "ff944d",   // orange
+29: "cc5200",   // orange
+30: "e65c00",   // orange
+31: "ff9900",   // orange
+32: "e68a00",   // orange
+33: "ff8c1a",   // orange
+34: "e67300",   // orange
+35: "ff661a",   // orange
+36: "ffc61a",   // yellow
+37: "ffff00",   // yellow
+38: "ffcc00",   // yellow
+39: "ffd633",   // yellow
+40: "e6b800",   // yellow
+41: "f9ff12",   // yellow
+42: "faff30",   // yellow
+43: "fff830",   // yellow
+44: "e7df00",   // yellow
+45: "eaec16",   // yellow
+46: "ffef5b",   // yellow
+47: "ffe359",   // yellow
+48: "fff83a",   // yellow
+49: "8fff06",   // green
+50: "5fff02",   // green
+51: "c1ff3a",   // green
+52: "5fff8f",   // green
+53: "32a164",   // green
+54: "34c799",   // green
+55: "99cc66",   // green
+56: "8ed176",   // green
+57: "21d697",   // green
+58: "aadb47",   // green
+59: "bede40",   // green
+60: "74e39b",   // green
+61: "33e6a1",   // green
+62: "3fe5e8",   // blue
+63: "31d1ed",   // blue
+64: "0483f2",   // blue
+65: "0465f7",   // blue
+66: "043efc",   // blue
+67: "0303ff",   // blue
+68: "3503ff",   // blue
+69: "5303ff",   // blue
+70: "624aff",   // blue
+71: "5563ff",   // blue
+72: "5e96ff",   // blue
+73: "66a8ff",   // blue
+74: "6eccff",   // blue
+75: "fc33ff",   // indigo
+76: "ff00f2",   // indigo
+77: "ff01dd",   // indigo
+78: "ff00cc",   // indigo
+79: "ff00bf",   // indigo
+80: "ff00ae",   // indigo
+81: "f56eff",   // indigo
+82: "ff72fa",   // indigo
+83: "ff69f3",   // indigo
+84: "ff66d6",   // indigo
+85: "ff7dd8",   // indigo
+86: "ff57b9",   // indigo
+87: "ec6eff",   // violet
+88: "d53fff",   // violet
+89: "c977ff",   // violet
+90: "d454ff",   // violet
+91: "8b9307",   // violet
+92: "c851ff",   // violet
+93: "bd38ff",   // violet
+94: "ac27ff",   // violet
+95: "c533ff",   // violet
+96: "c002ff",   // violet
+97: "aa01ff",   // violet
+98: "af47ff"}   // violet
 
 function allColors(){
 

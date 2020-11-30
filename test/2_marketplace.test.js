@@ -219,8 +219,5 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
             assert(aliceCats);
         })
     })
-
-
-
 })
 

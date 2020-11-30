@@ -197,7 +197,7 @@
                             </div>
                             <div class="form-group text-light">
                                 <label for="formControlRange"><b>Markings Shape</b><span class="badge badge-dark ml-2" id="markingsName"></span></label>
-                                <input type="range" min="1" max="7" class="form-control-range" id="markingsPattern">
+                                <input type="range" min="1" max="7" class="form-control-range" id="markingsShape">
                             </div>
                             <div class="form-group text-light">
                                 <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
@@ -235,13 +235,26 @@
         </div>
         <div class="container mt-3 p-5" style="margin-top: 5vh;margin-bottom: 10vh;">
             <div align="center">
+            <!-- page text for kitty pride page -->
             <h1 id="pride_title" class="c-white">See All Your Kitties</h1>
-            <h1 id="breeding_title" class="c-white">Kitty Breeding</h1>
-            <h1 id="adopt_title" class="c-white">Adopt or Sell A Kitty</h1>
-
             <p id="pride_subtitle" class="c-white">Your Purrrfect Family</p>
+
+            <!-- page text for breeding page -->
+            <h1 id="breeding_title" class="c-white">Kitty Breeding</h1>
             <p id="breeding_subtitle" class="c-white">Breed Two of Your Favorite Cats!</p>
+
+            <!-- page text for adopt page (marketplace) -->
+            <h1 id="adopt_title" class="c-white">Adopt or Sell A Kitty</h1>
             <p id="adopt_subtitle" class="c-white">Welcome to the Marketplace!</p>
+
+            <!-- page text for create offer page -->
+            <h1 id="offer_title" class="c-white">Put Your Kitty on the Market</h1>
+            <p id="offer_subtitle" class="c-white">Name your price!</p>
+
+            <!-- page text for remove offer page -->
+            <h1 id="offer_remove_title" class="c-white">Take This Cat Off the Market</h1>
+            <p id="offer_remove_subtitle" class="c-white">This kitty is priceless!</p>
+
             </div>
             <div class="col-12">
                 <div class="modal fade" id="menu_modal">
@@ -319,7 +332,7 @@
                 <div class="row m-auto">
                     <div class="col-12 m-auto mt-5 text-center">
                         <button id="remove_offer_btn" class="btn btn-light start-btn m-2">
-                            <b class="text-light">Take This Cat Off the Market</b>
+                            <b class="text-light">Remove Your Offer</b>
                         </button>
                     </div>
                 </div>
