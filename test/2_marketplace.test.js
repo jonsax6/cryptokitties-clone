@@ -17,11 +17,15 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
     // Global variable declarations
     let kittycontract;
     let marketplace;
-    const genes1 = 5368298526545211;
-    const genes2 = 5289121556575841;
-    const genes3 = 7884733212593141;
-    const genes4 = 6942691265662311;
-    const genes5 = 2421358865879841;
+    const genes1 = "5368298526545211";
+    const genes2 = "5289121556575841";
+    const genes3 = "7884733212593141";
+    const genes4 = "6942691265662311";
+    const genes5 = "2421358865879841";
+    const genes6 = "4657296345892231";
+    const genes7 = "3438487942159421";
+    const genes8 = "9791601525815211";
+
     const price = web3.utils.toWei("0.1");
 
     before(async function() {
@@ -139,13 +143,10 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
 
             // calculate the total spent (price + fees)
             const spent = Number(price) + Number(gas);
-            console.log(spent);
 
             // check the new ETH balances after the above transaction
             const ownerBalAfter = await balance.current(owner);
             const buyerBalAfter = await balance.current(bob);
-            console.log(Number(buyerBalAfter));
-            console.log(Number(buyerBalBefore));
 
             // now fetch the offer again so we can check active status
             const offerAfter = await marketplace.getOffer("1");
@@ -157,7 +158,7 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
 
             // make sure the owner's and buyer's ETH balances reflect the tx price
             assert.equal(Number(ownerBalBefore), (Number(ownerBalAfter) - price));
-            assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
+            assert((Number(buyerBalBefore) - spent) >= Number(buyerBalAfter));
 
             // make sure the new owner is bob
             assert.equal(newOwner, bob);
@@ -167,6 +168,56 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
             expectRevert.unspecified(marketplace.setOffer(0, "5"));
         })
 
+        it("should set offers, buy them from different address, then breed two, then show ownership of all", async () => {
+            // gen0 cat ID 6
+            await kittycontract.createKittyGen0(genes6);
+            // gen0 cat ID 7
+            await kittycontract.createKittyGen0(genes7);
+            // gen0 cat ID 8
+            await kittycontract.createKittyGen0(genes8);
+            
+            // set marketplace address to approve for all
+            await kittycontract.setApprovalForAll(marketplace.address, true);
+
+            // set offers for all kitties 
+            await marketplace.setOffer(price, "6"); 
+            await marketplace.setOffer(price, "7"); 
+            await marketplace.setOffer(price, "8"); 
+
+            // alice buys these cats
+            await marketplace.buyKitty(6, { from: alice, value: price});
+            await marketplace.buyKitty(7, { from: alice, value: price});
+            await marketplace.buyKitty(8, { from: alice, value: price});
+
+            // now alice breeds two cats
+            await kittycontract.breed(6, 7, { from: alice});
+
+            const aliceCats = await kittycontract.getKittiesByUser(alice);
+
+            assert.equal(Number(aliceCats[0]), "6");
+            assert.equal(Number(aliceCats[1]), "7");
+            assert.equal(Number(aliceCats[2]), "8");
+            assert.equal(Number(aliceCats[3]), "9");
+        })
+
+        it("should verify alice owns 4 cats", async () => {
+            // fetches the number of cats alice owns
+            const aliceBal = await kittycontract.balanceOf(alice);
+
+            // verify alice owns the 4 cats from above
+            assert.equal(aliceBal, 4);
+        })
+
+        it("should set approval for Alice cats, then isApprovedForAll should confirm approval", async () => {
+            // set marketplace approval for alice cats
+            await kittycontract.setApprovalForAll(marketplace.address, true, { from: alice });
+
+            // variable for isApprovedForAll boolean
+            const aliceCats = await kittycontract.isApprovedForAll(alice, marketplace.address);
+
+            // verify alice cats boolean is true
+            assert(aliceCats);
+        })
     })
 
 
