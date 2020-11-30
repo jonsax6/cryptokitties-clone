@@ -139,10 +139,13 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
 
             // calculate the total spent (price + fees)
             const spent = Number(price) + Number(gas);
+            console.log(spent);
 
             // check the new ETH balances after the above transaction
             const ownerBalAfter = await balance.current(owner);
             const buyerBalAfter = await balance.current(bob);
+            console.log(Number(buyerBalAfter));
+            console.log(Number(buyerBalBefore));
 
             // now fetch the offer again so we can check active status
             const offerAfter = await marketplace.getOffer("1");
@@ -154,7 +157,7 @@ contract("Marketplace", ([owner, alice, bob, charlie]) => {
 
             // make sure the owner's and buyer's ETH balances reflect the tx price
             assert.equal(Number(ownerBalBefore), (Number(ownerBalAfter) - price));
-            // assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
+            assert.equal(Number(buyerBalAfter), (Number(buyerBalBefore) - spent));
 
             // make sure the new owner is bob
             assert.equal(newOwner, bob);
