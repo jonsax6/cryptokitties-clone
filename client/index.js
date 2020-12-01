@@ -4,12 +4,12 @@ var instance;
 var marketplaceInstance;
 var user;
 // ropsten
-var contractAddress = "0xedAD897ed0406fE6b7CD4d431FA850Bd5122b259";
-var marketplaceAddress = "0xf67C3Fc23865010E09440E18B79163ea089B988F";
+// var contractAddress = "0xedAD897ed0406fE6b7CD4d431FA850Bd5122b259";
+// var marketplaceAddress = "0xf67C3Fc23865010E09440E18B79163ea089B988F";
 
 // ganache
-// var contractAddress = "0xB3938F28b21F0f28B7d7c9b2Fd03DA5caac4dce1";
-// var marketplaceAddress = "0x9B2DF90F482eE8f121Ec2469355d17Be0d854f36";
+var contractAddress = "0xB3938F28b21F0f28B7d7c9b2Fd03DA5caac4dce1";
+var marketplaceAddress = "0x9B2DF90F482eE8f121Ec2469355d17Be0d854f36";
 
 var tokenIds;
 var catObj;

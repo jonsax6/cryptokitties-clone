@@ -290,7 +290,49 @@ contract Kittycontract is IERC721, Ownable {
         uint256 index = 7;
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
-            if(index == 2){ // at index 2 we need a totally random number here (eye color)
+            // color mixing algo
+                // red 9-24
+                // orange 25-39
+                // yellow 40-54
+                // green 55-69
+                // blue 70-84
+                // purple 85-98
+            if(index == 1) {
+                uint256 momBelly = _momDna % 100000000000000;
+                uint256 dadBelly = _dadDna % 100000000000000;
+                
+                // if red & blue, child is purple
+                if((momBelly > 9 && momBelly < 25 && dadBelly > 69 && dadBelly < 85) || 
+                (dadBelly > 9 && dadBelly < 25 && momBelly > 69 && momBelly < 85)) {
+                    geneArray[1] = 92;
+                } 
+                // if red & yellow, child is orange
+                else if((momBelly > 9 && momBelly < 22 && dadBelly > 39 && dadBelly < 55) || 
+                (dadBelly > 9 && dadBelly < 22 && momBelly > 39 && momBelly < 55)) {
+                    geneArray[1] = 30;
+                }
+                // if yellow & blue, child is green
+                else if((momBelly > 39 && momBelly < 55 && dadBelly > 69 && dadBelly < 85) || 
+                (dadBelly > 39 && dadBelly < 55 && momBelly > 69 && momBelly < 85)) {
+                    geneArray[1] = 62;
+                }  
+                // if orange & purple, child is red
+                else if((momBelly > 24 && momBelly < 40 && dadBelly > 84 && dadBelly < 99) || 
+                (dadBelly > 24 && dadBelly < 40 && momBelly > 84 && momBelly < 99)) {
+                    geneArray[1] = 17;
+                }  
+                // if orange & green, child is yellow
+                else if((momBelly > 24 && momBelly < 40 && dadBelly > 54 && dadBelly < 70) || 
+                (dadBelly > 24 && dadBelly < 40 && momBelly > 54 && momBelly < 70)) {
+                    geneArray[1] = 47;
+                }  
+                // if purple & green, child is blue
+                else if((momBelly > 24 && momBelly < 40 && dadBelly > 54 && dadBelly < 70) || 
+                (dadBelly > 24 && dadBelly < 40 && momBelly > 54 && momBelly < 70)) {
+                    geneArray[1] = 77;
+                }  
+            }
+            else if(index == 2){ // at index 2 we need a totally random number here (eye color)
                 geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'
@@ -320,8 +362,10 @@ contract Kittycontract is IERC721, Ownable {
             else if(index != 2 && index != 4){
                 geneArray[index] = uint8(_dadDna % 100); 
             }
-            _momDna = _momDna / 100; // dividing by 100 turns the last two digits of DNA numbers into decimals,
-            _dadDna = _dadDna / 100; // since we are working with integers, they disappear
+            // dividing by 100 turns the last two digits of DNA numbers into decimals,
+            // since we are working with integers, they will disappear
+            _momDna = _momDna / 100; 
+            _dadDna = _dadDna / 100; 
             index = index - 1; // now move to index 6 (from 7) and so on...
         }
         uint256 newGene; // newGene declaration
