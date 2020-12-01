@@ -8,8 +8,8 @@ var user;
 // var marketplaceAddress = "0xf67C3Fc23865010E09440E18B79163ea089B988F";
 
 // ganache
-var contractAddress = "0xB3938F28b21F0f28B7d7c9b2Fd03DA5caac4dce1";
-var marketplaceAddress = "0x9B2DF90F482eE8f121Ec2469355d17Be0d854f36";
+var contractAddress = "0xC11Fc8FF16F533b89fd73A98Ba14f6ed47366F55";
+var marketplaceAddress = "0x6fB84cCF9a4b39B93Ecd240616A813F255CF408f";
 
 var tokenIds;
 var catObj;

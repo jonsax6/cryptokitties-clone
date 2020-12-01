@@ -16,7 +16,7 @@ var colors = {00: "ae494f",
 14: "990033",   // red
 15: "993300",   // red
 16: "cc2900",   // red
-17: "ff4d4d",   // red
+17: "f53e38",   // red
 18: "cc2900",   // red
 19: "ff471a",   // red
 20: "b30000",   // red
@@ -29,12 +29,12 @@ var colors = {00: "ae494f",
 27: "ff5500",   // orange
 28: "ff944d",   // orange
 29: "cc5200",   // orange
-30: "e65c00",   // orange
+30: "d45a1c",   // orange
 31: "ff9900",   // orange
 32: "e68a00",   // orange
 33: "ff8c1a",   // orange
 34: "e67300",   // orange
-35: "ff661a",   // orange-
+35: "ff661a",   // orange
 36: "d95f3a",   // orange
 37: "db5034",   // orange
 38: "e06025",   // orange
@@ -46,8 +46,8 @@ var colors = {00: "ae494f",
 44: "e7df00",   // yellow
 45: "eaec16",   // yellow
 46: "ffef5b",   // yellow
-47: "ffe359",   // yellow
-48: "fff83a",   // yellow_
+47: "f0e804",   // yellow
+48: "fff83a",   // yellow
 49: "e6cb1c",   // yellow
 50: "e8c53b",   // yellow
 51: "eddf48",   // yellow
@@ -60,8 +60,8 @@ var colors = {00: "ae494f",
 58: "02e06d",   // green
 59: "35e621",   // green
 60: "62eb28",   // green
-61: "5bd61e",   // green_
-62: "5eb33a",   // green
+61: "5bd61e",   // green
+62: "26cf23",   // green
 63: "69b801",   // green
 64: "03a145",   // green
 65: "40a600",   // green
@@ -73,10 +73,10 @@ var colors = {00: "ae494f",
 71: "5563ff",   // blue
 72: "5e96ff",   // blue
 73: "66a8ff",   // blue
-74: "6eccff",   // blue_
+74: "6eccff",   // blue
 75: "0314ff",   // blue
 76: "729cff",   // blue
-77: "7fb4ff",   // blue
+77: "516eff",   // blue
 78: "6ea1ff",   // blue
 79: "5d85d1",   // blue
 80: "2e82c2",   // blue
@@ -91,7 +91,7 @@ var colors = {00: "ae494f",
 89: "c977ff",   // purple
 90: "d454ff",   // purple
 91: "8b9307",   // purple
-92: "c851ff",   // purple
+92: "bb51d9",   // purple
 93: "bd38ff",   // purple
 94: "ac27ff",   // purple
 95: "c533ff",   // purple

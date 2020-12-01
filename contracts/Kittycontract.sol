@@ -288,9 +288,12 @@ contract Kittycontract is IERC721, Ownable {
         uint8 rand10 = uint8(now % 10);
         uint256 i; // i declaration for the binary 'slot' below
         uint256 index = 7;
+        uint8 momMouth = uint8((_momDna/1000000000000) % 100);
+        uint8 dadMouth = uint8((_dadDna/1000000000000) % 100);
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
-            // color mixing algo
+            // color mixing algorithm for mouth, belly and tail
+            // in colors.js file the color ranges are:
                 // red 9-24
                 // orange 25-39
                 // yellow 40-54
@@ -298,39 +301,43 @@ contract Kittycontract is IERC721, Ownable {
                 // blue 70-84
                 // purple 85-98
             if(index == 1) {
-                uint256 momBelly = _momDna % 100000000000000;
-                uint256 dadBelly = _dadDna % 100000000000000;
-                
-                // if red & blue, child is purple
-                if((momBelly > 9 && momBelly < 25 && dadBelly > 69 && dadBelly < 85) || 
-                (dadBelly > 9 && dadBelly < 25 && momBelly > 69 && momBelly < 85)) {
+                // if parent is in red range & other parent in blue range, child color will be purple
+                if((momMouth > 9 && momMouth < 25 && dadMouth > 69 && dadMouth < 85) || 
+                (dadMouth > 9 && dadMouth < 25 && momMouth > 69 && momMouth < 85)) {
                     geneArray[1] = 92;
                 } 
                 // if red & yellow, child is orange
-                else if((momBelly > 9 && momBelly < 22 && dadBelly > 39 && dadBelly < 55) || 
-                (dadBelly > 9 && dadBelly < 22 && momBelly > 39 && momBelly < 55)) {
+                else if((momMouth > 9 && momMouth < 25 && dadMouth > 39 && dadMouth < 55) || 
+                (dadMouth > 9 && dadMouth < 25 && momMouth > 39 && momMouth < 55)) {
                     geneArray[1] = 30;
                 }
                 // if yellow & blue, child is green
-                else if((momBelly > 39 && momBelly < 55 && dadBelly > 69 && dadBelly < 85) || 
-                (dadBelly > 39 && dadBelly < 55 && momBelly > 69 && momBelly < 85)) {
+                else if((momMouth > 39 && momMouth < 55 && dadMouth > 69 && dadMouth < 85) || 
+                (dadMouth > 39 && dadMouth < 55 && momMouth > 69 && momMouth < 85)) {
                     geneArray[1] = 62;
                 }  
                 // if orange & purple, child is red
-                else if((momBelly > 24 && momBelly < 40 && dadBelly > 84 && dadBelly < 99) || 
-                (dadBelly > 24 && dadBelly < 40 && momBelly > 84 && momBelly < 99)) {
+                else if((momMouth > 24 && momMouth < 40 && dadMouth > 84 && dadMouth < 99) || 
+                (dadMouth > 24 && dadMouth < 40 && momMouth > 84 && momMouth < 99)) {
                     geneArray[1] = 17;
                 }  
                 // if orange & green, child is yellow
-                else if((momBelly > 24 && momBelly < 40 && dadBelly > 54 && dadBelly < 70) || 
-                (dadBelly > 24 && dadBelly < 40 && momBelly > 54 && momBelly < 70)) {
+                else if((momMouth > 24 && momMouth < 40 && dadMouth > 54 && dadMouth < 70) || 
+                (dadMouth > 24 && dadMouth < 40 && momMouth > 54 && momMouth < 70)) {
                     geneArray[1] = 47;
                 }  
                 // if purple & green, child is blue
-                else if((momBelly > 24 && momBelly < 40 && dadBelly > 54 && dadBelly < 70) || 
-                (dadBelly > 24 && dadBelly < 40 && momBelly > 54 && momBelly < 70)) {
+                else if((momMouth > 84 && momMouth < 99 && dadMouth > 54 && dadMouth < 70) || 
+                (dadMouth > 84 && dadMouth < 99 && momMouth > 54 && momMouth < 70)) {
                     geneArray[1] = 77;
-                }  
+                }
+                else if(random & i != 0) {
+                    // the % 100 yields the last two digits of the _momDna number to use at this slot
+                    geneArray[index] = uint8(_momDna % 100); 
+                }
+                else {
+                    geneArray[index] = uint8(_dadDna % 100);
+                }
             }
             else if(index == 2){ // at index 2 we need a totally random number here (eye color)
                 geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
