@@ -280,6 +280,67 @@ contract Kittycontract is IERC721, Ownable {
         return(_spender == _from || _approvedFor(_spender, _tokenId) || isApprovedForAll(_from, _spender));
     }
 
+    function colorBlender(
+        uint256 dDna, 
+        uint256 mDna, 
+        uint256[8] memory genArr, 
+        uint256 indx,
+        uint256 i, 
+        uint256 attr,
+        uint8 rndm
+        ) internal {
+
+        uint8 dColor = uint8((dDna/attr) % 100);
+        uint8 mColor = uint8((mDna/attr) % 100);
+
+        // color mixing algorithm
+        // in colors.js file the color ranges are:
+            // red 9-24
+            // orange 25-39
+            // yellow 40-54
+            // green 55-69
+            // blue 70-84
+            // purple 85-98
+
+        // if parent is in red range & other parent in blue range, child color will be purple
+        if((mColor > 9 && mColor < 25 && dColor > 69 && dColor < 85) || 
+        (dColor > 9 && dColor < 25 && mColor > 69 && mColor < 85)) {
+            genArr[indx] = 92;
+        } 
+        // if red & yellow, child is orange
+        else if((mColor > 9 && mColor < 25 && dColor > 39 && dColor < 55) || 
+        (dColor > 9 && dColor < 25 && mColor > 39 && mColor < 55)) {
+            genArr[indx] = 30;
+        }
+        // if yellow & blue, child is green
+        else if((mColor > 39 && mColor < 55 && dColor > 69 && dColor < 85) || 
+        (dColor > 39 && dColor < 55 && mColor > 69 && mColor < 85)) {
+            genArr[indx] = 62;
+        }  
+        // if orange & purple, child is red
+        else if((mColor > 24 && mColor < 40 && dColor > 84 && dColor < 99) || 
+        (dColor > 24 && dColor < 40 && mColor > 84 && mColor < 99)) {
+            genArr[indx] = 17;
+        }  
+        // if orange & green, child is yellow
+        else if((mColor > 24 && mColor < 40 && dColor > 54 && dColor < 70) || 
+        (dColor > 24 && dColor < 40 && mColor > 54 && mColor < 70)) {
+            genArr[indx] = 47;
+        }  
+        // if purple & green, child is blue
+        else if((mColor > 84 && mColor < 99 && dColor > 54 && dColor < 70) || 
+        (dColor > 84 && dColor < 99 && mColor > 54 && mColor < 70)) {
+            genArr[indx] = 77;
+        }
+        else if(rndm & i != 0) {
+            // the % 100 yields the last two digits of the _momDna number to use at this slot
+            genArr[indx] = uint8(mDna % 100); 
+        }
+        else {
+            genArr[indx] = uint8(dDna % 100);
+        }
+    }
+
     function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
         uint256[8] memory geneArray;
 
@@ -290,6 +351,8 @@ contract Kittycontract is IERC721, Ownable {
         uint256 index = 7;
         uint8 momMouth = uint8((_momDna/1000000000000) % 100);
         uint8 dadMouth = uint8((_dadDna/1000000000000) % 100);
+        // uint256 mouth = 1000000000000;
+
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
             // color mixing algorithm for mouth, belly and tail
@@ -301,6 +364,7 @@ contract Kittycontract is IERC721, Ownable {
                 // blue 70-84
                 // purple 85-98
             if(index == 1) {
+                // colorBlender( _dadDna, _momDna, geneArray,  index, i,  mouth, random);
                 // if parent is in red range & other parent in blue range, child color will be purple
                 if((momMouth > 9 && momMouth < 25 && dadMouth > 69 && dadMouth < 85) || 
                 (dadMouth > 9 && dadMouth < 25 && momMouth > 69 && momMouth < 85)) {
