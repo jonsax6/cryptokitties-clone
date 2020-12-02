@@ -351,6 +351,8 @@ contract Kittycontract is IERC721, Ownable {
         uint256 index = 7;
         uint8 momMouth = uint8((_momDna/1000000000000) % 100);
         uint8 dadMouth = uint8((_dadDna/1000000000000) % 100);
+        uint8 momEyes = uint8((_momDna/10000000000) % 100);
+        uint8 dadEyes = uint8((_dadDna/10000000000) % 100);
         // uint256 mouth = 1000000000000;
 
 
@@ -433,8 +435,75 @@ contract Kittycontract is IERC721, Ownable {
                     geneArray[index] = uint8(_dadDna % 100);
                 }
             }
-            else if(index == 2){ // at index 2 we need a totally random number here (eye color)
-                geneArray[2] = uint8((now % 88) + 10); // random number between 10 and 98 for eye color
+            else if(index == 2){
+                // colorBlender( _dadDna, _momDna, geneArray,  index, i,  mouth, random);
+                // if parent is in red range & other parent in blue range, child color will be purple
+                if((momEyes > 9 && momEyes < 25 && dadEyes > 69 && dadEyes < 85) || 
+                (dadEyes > 9 && dadEyes < 25 && momEyes > 69 && momEyes < 85)) {
+                    geneArray[2] = 92;
+                } 
+                // if red & yellow, child is orange
+                else if((momEyes > 9 && momEyes < 25 && dadEyes > 39 && dadEyes < 55) || 
+                (dadEyes > 9 && dadEyes < 25 && momEyes > 39 && momEyes < 55)) {
+                    geneArray[2] = 30;
+                }
+                // if yellow & blue, child is green
+                else if((momEyes > 39 && momEyes < 55 && dadEyes > 69 && dadEyes < 85) || 
+                (dadEyes > 39 && dadEyes < 55 && momEyes > 69 && momEyes < 85)) {
+                    geneArray[2] = 62;
+                }  
+                // if orange & purple, child is red
+                else if((momEyes > 24 && momEyes < 40 && dadEyes > 84 && dadEyes < 99) || 
+                (dadEyes > 24 && dadEyes < 40 && momEyes > 84 && momEyes < 99)) {
+                    geneArray[2] = 17;
+                }  
+                // if orange & green, child is yellow
+                else if((momEyes > 24 && momEyes < 40 && dadEyes > 54 && dadEyes < 70) || 
+                (dadEyes > 24 && dadEyes < 40 && momEyes > 54 && momEyes < 70)) {
+                    geneArray[2] = 47;
+                }  
+                // if purple & green, child is blue
+                else if((momEyes > 84 && momEyes < 99 && dadEyes > 54 && dadEyes < 70) || 
+                (dadEyes > 84 && dadEyes < 99 && momEyes > 54 && momEyes < 70)) {
+                    geneArray[2] = 77;
+                }
+                // if orange & yellow, child is orange-yellow
+                else if((momEyes > 24 && momEyes < 40 && dadEyes > 39 && dadEyes < 55) || 
+                (dadEyes > 24 && dadEyes < 40 && momEyes > 39 && momEyes < 55)) {
+                    geneArray[2] = 39;
+                }
+                // if green & yellow, child is green-yellow
+                else if((momEyes > 54 && momEyes < 70 && dadEyes > 39 && dadEyes < 55) || 
+                (dadEyes > 54 && dadEyes < 70 && momEyes > 39 && momEyes < 55)) {
+                    geneArray[2] = 54;
+                }
+                // if green & blue, child is green-blue
+                else if((momEyes > 54 && momEyes < 70 && dadEyes > 69 && dadEyes < 85) || 
+                (dadEyes > 54 && dadEyes < 70 && momEyes > 69 && momEyes < 85)) {
+                    geneArray[2] = 69;
+                }
+                // if blue & purple, child is blue-purple
+                else if((momEyes > 84 && momEyes < 99 && dadEyes > 69 && dadEyes < 85) || 
+                (dadEyes > 84 && dadEyes < 99 && momEyes > 69 && momEyes < 85)) {
+                    geneArray[2] = 86;
+                }
+                // if red & purple, child is pink
+                else if((momEyes > 84 && momEyes < 99 && dadEyes > 9 && dadEyes < 25) || 
+                (dadEyes > 84 && dadEyes < 99 && momEyes > 9 && momEyes < 25)) {
+                    geneArray[2] = 98;
+                }
+                // if red & purple, child is pink
+                else if((momEyes > 24 && momEyes < 40 && dadEyes > 9 && dadEyes < 25) || 
+                (dadEyes > 24 && dadEyes < 40 && momEyes > 9 && momEyes < 25)) {
+                    geneArray[2] = 25;
+                }
+                else if(random & i != 0) {
+                    // the % 100 yields the last two digits of the _momDna number to use at this slot
+                    geneArray[index] = uint8(_momDna % 100); 
+                }
+                else {
+                    geneArray[index] = uint8(_dadDna % 100);
+                }
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'
 
