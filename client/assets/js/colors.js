@@ -24,7 +24,7 @@ var colors = {00: "ae494f",
 22: "e6005c",   // red
 23: "ff1e00",   // red
 24: "d61900",   // red
-25: "ff8000",   // orange
+25: "ff4000",   // orange
 26: "e67300",   // orange
 27: "ff5500",   // orange
 28: "ff944d",   // orange
@@ -38,7 +38,7 @@ var colors = {00: "ae494f",
 36: "d95f3a",   // orange
 37: "db5034",   // orange
 38: "e06025",   // orange
-39: "e36c4b",   // orange
+39: "ffae00",   // orange
 40: "e6b800",   // yellow
 41: "f9ff12",   // yellow
 42: "faff30",   // yellow
@@ -53,7 +53,7 @@ var colors = {00: "ae494f",
 51: "eddf48",   // yellow
 52: "f0c412",   // yellow
 53: "f2d86e",   // yellow
-54: "f7cf7e",   // yellow
+54: "d0ff00",   // yellow
 55: "35cf02",   // green
 56: "48d402",   // green
 57: "0cd902",   // green
@@ -68,7 +68,7 @@ var colors = {00: "ae494f",
 66: "68ab35",   // green
 67: "79b03a",   // green
 68: "79b03a",   // green
-69: "7aba63",   // green
+69: "03ffc4",   // green
 70: "624aff",   // blue
 71: "5563ff",   // blue
 72: "5e96ff",   // blue
@@ -83,7 +83,7 @@ var colors = {00: "ae494f",
 81: "2272cc",   // blue
 82: "4271cf",   // blue
 83: "3e5ed4",   // blue
-84: "4652d6",   // blue
+84: "7002ff",   // blue
 85: "7902db",   // purple
 86: "b065de",   // purple
 87: "ec6eff",   // purple
@@ -97,7 +97,7 @@ var colors = {00: "ae494f",
 95: "c533ff",   // purple
 96: "c002ff",   // purple
 97: "aa01ff",   // purple
-98: "af47ff"}   // purple
+98: "ff008c"}   // purple
 
 function allColors(){
 

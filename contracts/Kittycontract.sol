@@ -395,6 +395,36 @@ contract Kittycontract is IERC721, Ownable {
                 (dadMouth > 84 && dadMouth < 99 && momMouth > 54 && momMouth < 70)) {
                     geneArray[1] = 77;
                 }
+                // if orange & yellow, child is orange-yellow
+                else if((momMouth > 24 && momMouth < 40 && dadMouth > 39 && dadMouth < 55) || 
+                (dadMouth > 24 && dadMouth < 40 && momMouth > 39 && momMouth < 55)) {
+                    geneArray[1] = 39;
+                }
+                // if green & yellow, child is green-yellow
+                else if((momMouth > 54 && momMouth < 70 && dadMouth > 39 && dadMouth < 55) || 
+                (dadMouth > 54 && dadMouth < 70 && momMouth > 39 && momMouth < 55)) {
+                    geneArray[1] = 54;
+                }
+                // if green & blue, child is green-blue
+                else if((momMouth > 54 && momMouth < 70 && dadMouth > 69 && dadMouth < 85) || 
+                (dadMouth > 54 && dadMouth < 70 && momMouth > 69 && momMouth < 85)) {
+                    geneArray[1] = 69;
+                }
+                // if blue & purple, child is blue-purple
+                else if((momMouth > 84 && momMouth < 99 && dadMouth > 69 && dadMouth < 85) || 
+                (dadMouth > 84 && dadMouth < 99 && momMouth > 69 && momMouth < 85)) {
+                    geneArray[1] = 86;
+                }
+                // if red & purple, child is pink
+                else if((momMouth > 84 && momMouth < 99 && dadMouth > 9 && dadMouth < 25) || 
+                (dadMouth > 84 && dadMouth < 99 && momMouth > 9 && momMouth < 25)) {
+                    geneArray[1] = 98;
+                }
+                // if red & purple, child is pink
+                else if((momMouth > 24 && momMouth < 40 && dadMouth > 9 && dadMouth < 25) || 
+                (dadMouth > 24 && dadMouth < 40 && momMouth > 9 && momMouth < 25)) {
+                    geneArray[1] = 25;
+                }
                 else if(random & i != 0) {
                     // the % 100 yields the last two digits of the _momDna number to use at this slot
                     geneArray[index] = uint8(_momDna % 100); 
