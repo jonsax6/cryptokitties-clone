@@ -280,81 +280,116 @@ contract Kittycontract is IERC721, Ownable {
         return(_spender == _from || _approvedFor(_spender, _tokenId) || isApprovedForAll(_from, _spender));
     }
 
+    /** @param dDna dad DNA  
+    * @param mDna mom DNA
+    * @param i the iteration inside the for loop
+    * @param attr the divisor for the DNA, targets desired attributes of the DNA sequence
+    * @param rndm the random number parameter declared in the outer function */
     function colorBlender(
         uint256 dDna, 
         uint256 mDna, 
-        uint256[8] memory genArr, 
-        uint256 indx,
         uint256 i, 
         uint256 attr,
-        uint8 rndm
-        ) internal {
+        uint256 rndm
+        ) internal returns (uint256){
 
-        uint8 dColor = uint8((dDna/attr) % 100);
-        uint8 mColor = uint8((mDna/attr) % 100);
+        uint256 dColor = (dDna/attr) % 100;
+        uint256 mColor = (mDna/attr) % 100;
 
-        // color mixing algorithm
-        // in colors.js file the color ranges are:
-            // red 9-24
-            // orange 25-39
-            // yellow 40-54
-            // green 55-69
-            // blue 70-84
-            // purple 85-98
+        /// @notice color blending algorithm
+        /** @dev in colors.js file the color ranges are:
+        * red 9-24
+        * orange 25-39
+        * yellow 40-54
+        * green 55-69
+        * blue 70-84
+        * purple 85-98 */
 
-        // if parent is in red range & other parent in blue range, child color will be purple
+        /// @notice if parent is in red range & other parent in blue range, child color will be purple
         if((mColor > 9 && mColor < 25 && dColor > 69 && dColor < 85) || 
         (dColor > 9 && dColor < 25 && mColor > 69 && mColor < 85)) {
-            genArr[indx] = 92;
+            return 92;
         } 
-        // if red & yellow, child is orange
+        /// @notice if red & yellow, child is orange
         else if((mColor > 9 && mColor < 25 && dColor > 39 && dColor < 55) || 
         (dColor > 9 && dColor < 25 && mColor > 39 && mColor < 55)) {
-            genArr[indx] = 30;
+            return 30;
         }
-        // if yellow & blue, child is green
+        /// @notice if yellow & blue, child is green
         else if((mColor > 39 && mColor < 55 && dColor > 69 && dColor < 85) || 
         (dColor > 39 && dColor < 55 && mColor > 69 && mColor < 85)) {
-            genArr[indx] = 62;
+            return 62;
         }  
-        // if orange & purple, child is red
+        /// @notice if orange & purple, child is red
         else if((mColor > 24 && mColor < 40 && dColor > 84 && dColor < 99) || 
         (dColor > 24 && dColor < 40 && mColor > 84 && mColor < 99)) {
-            genArr[indx] = 17;
+            return 17;
         }  
-        // if orange & green, child is yellow
+        /// @notice if orange & green, child is yellow
         else if((mColor > 24 && mColor < 40 && dColor > 54 && dColor < 70) || 
         (dColor > 24 && dColor < 40 && mColor > 54 && mColor < 70)) {
-            genArr[indx] = 47;
+            return 47;
         }  
-        // if purple & green, child is blue
+        /// @notice if purple & green, child is blue
         else if((mColor > 84 && mColor < 99 && dColor > 54 && dColor < 70) || 
         (dColor > 84 && dColor < 99 && mColor > 54 && mColor < 70)) {
-            genArr[indx] = 77;
+            return 77;
+        }
+        /// @notice if orange & yellow, child is orange-yellow
+        else if((mColor > 24 && mColor < 40 && dColor > 39 && dColor < 55) || 
+        (dColor > 24 && dColor < 40 && mColor > 39 && mColor < 55)) {
+            return 39;
+        }
+        /// @notice if green & yellow, child is green-yellow
+        else if((mColor > 54 && mColor < 70 && dColor > 39 && dColor < 55) || 
+        (dColor > 54 && dColor < 70 && mColor > 39 && mColor < 55)) {
+            return 54;
+        }
+        /// @notice if green & blue, child is green-blue
+        else if((mColor > 54 && mColor < 70 && dColor > 69 && dColor < 85) || 
+        (dColor > 54 && dColor < 70 && mColor > 69 && mColor < 85)) {
+            return 69;
+        }
+        /// @notice if blue & purple, child is blue-purple
+        else if((mColor > 84 && mColor < 99 && dColor > 69 && dColor < 85) || 
+        (dColor > 84 && dColor < 99 && mColor > 69 && mColor < 85)) {
+            return 86;
+        }
+        /// @notice if red & purple, child is pink
+        else if((mColor > 84 && mColor < 99 && dColor > 9 && dColor < 25) || 
+        (dColor > 84 && dColor < 99 && mColor > 9 && mColor < 25)) {
+            return 98;
+        }
+        // if red & purple, child is pink
+        else if((mColor > 24 && mColor < 40 && dColor > 9 && dColor < 25) || 
+        (dColor > 24 && dColor < 40 && mColor > 9 && mColor < 25)) {
+            return 25;
         }
         else if(rndm & i != 0) {
-            // the % 100 yields the last two digits of the _momDna number to use at this slot
-            genArr[indx] = uint8(mDna % 100); 
+            /** @notice the % 100 yields the last two digits of the _momDna or _dadDna 
+            * to use at this slot */
+            return (mDna % 100); 
         }
         else {
-            genArr[indx] = uint8(dDna % 100);
+            return (dDna % 100);
         }
     }
 
     function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
         uint256[8] memory geneArray;
 
-        uint8 random = uint8(now % 255); // pseudo-random 8 bit integer 00000000 - 11111111
-        uint8 rand100 = uint8(now % 100);
-        uint8 rand10 = uint8(now % 10);
+        uint256 random = now % 255; // pseudo-random 8 bit integer 00000000 - 11111111
+        uint256 rand100 = now % 100;
+        uint256 rand10 = now % 10;
         uint256 i; // i declaration for the binary 'slot' below
         uint256 index = 7;
-        uint8 momMouth = uint8((_momDna/1000000000000) % 100);
-        uint8 dadMouth = uint8((_dadDna/1000000000000) % 100);
-        uint8 momEyes = uint8((_momDna/10000000000) % 100);
-        uint8 dadEyes = uint8((_dadDna/10000000000) % 100);
-        // uint256 mouth = 1000000000000;
+        uint256 momMouth = (_momDna/1e12) % 100;
+        uint256 dadMouth = (_dadDna/1e12) % 100;
+        uint256 momEyes = (_momDna/1e10) % 100;
+        uint256 dadEyes = (_dadDna/1e10) % 100;
 
+        // uint256 mouth = 1e12;
+        // uint256 eyes = 1e10;
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
             // color mixing algorithm for mouth, belly and tail
@@ -366,8 +401,8 @@ contract Kittycontract is IERC721, Ownable {
                 // blue 70-84
                 // purple 85-98
             if(index == 1) {
-                // colorBlender( _dadDna, _momDna, geneArray,  index, i,  mouth, random);
-                // if parent is in red range & other parent in blue range, child color will be purple
+                // geneArray[1] = colorBlender( _dadDna, _momDna, i,  mouth, random);
+                /// @notice if parent is in red range & other parent in blue range, child color will be purple
                 if((momMouth > 9 && momMouth < 25 && dadMouth > 69 && dadMouth < 85) || 
                 (dadMouth > 9 && dadMouth < 25 && momMouth > 69 && momMouth < 85)) {
                     geneArray[1] = 92;
@@ -429,80 +464,80 @@ contract Kittycontract is IERC721, Ownable {
                 }
                 else if(random & i != 0) {
                     // the % 100 yields the last two digits of the _momDna number to use at this slot
-                    geneArray[index] = uint8(_momDna % 100); 
+                    geneArray[index] = _momDna % 100; 
                 }
                 else {
-                    geneArray[index] = uint8(_dadDna % 100);
-                }
+                    geneArray[index] = _dadDna % 100;
+                // }
             }
             else if(index == 2){
-                // colorBlender( _dadDna, _momDna, geneArray,  index, i,  mouth, random);
-                // if parent is in red range & other parent in blue range, child color will be purple
+                // geneArray[2] = colorBlender( _dadDna, _momDna, i,  eyes, random);
+                /// @notice if parent is in red range & other parent in blue range, child color will be purple
                 if((momEyes > 9 && momEyes < 25 && dadEyes > 69 && dadEyes < 85) || 
                 (dadEyes > 9 && dadEyes < 25 && momEyes > 69 && momEyes < 85)) {
                     geneArray[2] = 92;
                 } 
-                // if red & yellow, child is orange
+                /// @notice if red & yellow, child is orange
                 else if((momEyes > 9 && momEyes < 25 && dadEyes > 39 && dadEyes < 55) || 
                 (dadEyes > 9 && dadEyes < 25 && momEyes > 39 && momEyes < 55)) {
                     geneArray[2] = 30;
                 }
-                // if yellow & blue, child is green
+                /// @notice if yellow & blue, child is green
                 else if((momEyes > 39 && momEyes < 55 && dadEyes > 69 && dadEyes < 85) || 
                 (dadEyes > 39 && dadEyes < 55 && momEyes > 69 && momEyes < 85)) {
                     geneArray[2] = 62;
                 }  
-                // if orange & purple, child is red
+                /// @notice if orange & purple, child is red
                 else if((momEyes > 24 && momEyes < 40 && dadEyes > 84 && dadEyes < 99) || 
                 (dadEyes > 24 && dadEyes < 40 && momEyes > 84 && momEyes < 99)) {
                     geneArray[2] = 17;
                 }  
-                // if orange & green, child is yellow
+                /// @notice if orange & green, child is yellow
                 else if((momEyes > 24 && momEyes < 40 && dadEyes > 54 && dadEyes < 70) || 
                 (dadEyes > 24 && dadEyes < 40 && momEyes > 54 && momEyes < 70)) {
                     geneArray[2] = 47;
                 }  
-                // if purple & green, child is blue
+                /// @notice if purple & green, child is blue
                 else if((momEyes > 84 && momEyes < 99 && dadEyes > 54 && dadEyes < 70) || 
                 (dadEyes > 84 && dadEyes < 99 && momEyes > 54 && momEyes < 70)) {
                     geneArray[2] = 77;
                 }
-                // if orange & yellow, child is orange-yellow
+                /// @notice if orange & yellow, child is orange-yellow
                 else if((momEyes > 24 && momEyes < 40 && dadEyes > 39 && dadEyes < 55) || 
                 (dadEyes > 24 && dadEyes < 40 && momEyes > 39 && momEyes < 55)) {
                     geneArray[2] = 39;
                 }
-                // if green & yellow, child is green-yellow
+                /// @notice if green & yellow, child is green-yellow
                 else if((momEyes > 54 && momEyes < 70 && dadEyes > 39 && dadEyes < 55) || 
                 (dadEyes > 54 && dadEyes < 70 && momEyes > 39 && momEyes < 55)) {
                     geneArray[2] = 54;
                 }
-                // if green & blue, child is green-blue
+                /// @notice if green & blue, child is green-blue
                 else if((momEyes > 54 && momEyes < 70 && dadEyes > 69 && dadEyes < 85) || 
                 (dadEyes > 54 && dadEyes < 70 && momEyes > 69 && momEyes < 85)) {
                     geneArray[2] = 69;
                 }
-                // if blue & purple, child is blue-purple
+                /// @notice if blue & purple, child is blue-purple
                 else if((momEyes > 84 && momEyes < 99 && dadEyes > 69 && dadEyes < 85) || 
                 (dadEyes > 84 && dadEyes < 99 && momEyes > 69 && momEyes < 85)) {
                     geneArray[2] = 86;
                 }
-                // if red & purple, child is pink
+                /// @notice if red & purple, child is pink
                 else if((momEyes > 84 && momEyes < 99 && dadEyes > 9 && dadEyes < 25) || 
                 (dadEyes > 84 && dadEyes < 99 && momEyes > 9 && momEyes < 25)) {
                     geneArray[2] = 98;
                 }
-                // if red & purple, child is pink
+                /// @notice if red & purple, child is pink
                 else if((momEyes > 24 && momEyes < 40 && dadEyes > 9 && dadEyes < 25) || 
                 (dadEyes > 24 && dadEyes < 40 && momEyes > 9 && momEyes < 25)) {
                     geneArray[2] = 25;
                 }
                 else if(random & i != 0) {
-                    // the % 100 yields the last two digits of the _momDna number to use at this slot
-                    geneArray[index] = uint8(_momDna % 100); 
+                    /// @notice the % 100 yields the last two digits of the _momDna number to use at this slot
+                    geneArray[index] = _momDna % 100; 
                 }
                 else {
-                    geneArray[index] = uint8(_dadDna % 100);
+                    geneArray[index] = _dadDna % 100;
                 }
             }
             else if(index == 4){ // this is 'eye shape' and 'markings shape'

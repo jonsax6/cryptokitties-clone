@@ -23,17 +23,17 @@ interface IERC721 {
      */
     function balanceOf(address owner) external view returns (uint256 balance);
 
-    /*
+    /**
      * @dev Returns the total number of tokens in circulation.
      */
     function totalSupply() external view returns (uint256 total);
 
-    /*
+    /**
      * @dev Returns the name of the token.
      */
     function name() external view returns (string memory tokenName);
 
-    /*
+    /**
      * @dev Returns the symbol of the token.
      */
     function symbol() external view returns (string memory tokenSymbol);
