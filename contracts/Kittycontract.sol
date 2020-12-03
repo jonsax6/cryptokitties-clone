@@ -295,7 +295,8 @@ contract Kittycontract is IERC721, Ownable {
 
         uint256 dColor = (dDna/attr) % 100;
         uint256 mColor = (mDna/attr) % 100;
-
+        uint256 colorCode;
+        
         /// @notice color blending algorithm
         /** @dev in colors.js file the color ranges are:
         * red 9-24
@@ -308,71 +309,72 @@ contract Kittycontract is IERC721, Ownable {
         /// @notice if parent is in red range & other parent in blue range, child color will be purple
         if((mColor > 9 && mColor < 25 && dColor > 69 && dColor < 85) || 
         (dColor > 9 && dColor < 25 && mColor > 69 && mColor < 85)) {
-            return 92;
+            colorCode = 92;
         } 
         /// @notice if red & yellow, child is orange
         else if((mColor > 9 && mColor < 25 && dColor > 39 && dColor < 55) || 
         (dColor > 9 && dColor < 25 && mColor > 39 && mColor < 55)) {
-            return 30;
+            colorCode = 30;
         }
         /// @notice if yellow & blue, child is green
         else if((mColor > 39 && mColor < 55 && dColor > 69 && dColor < 85) || 
         (dColor > 39 && dColor < 55 && mColor > 69 && mColor < 85)) {
-            return 62;
+            colorCode = 62;
         }  
         /// @notice if orange & purple, child is red
         else if((mColor > 24 && mColor < 40 && dColor > 84 && dColor < 99) || 
         (dColor > 24 && dColor < 40 && mColor > 84 && mColor < 99)) {
-            return 17;
+            colorCode = 17;
         }  
         /// @notice if orange & green, child is yellow
         else if((mColor > 24 && mColor < 40 && dColor > 54 && dColor < 70) || 
         (dColor > 24 && dColor < 40 && mColor > 54 && mColor < 70)) {
-            return 47;
+            colorCode = 47;
         }  
         /// @notice if purple & green, child is blue
         else if((mColor > 84 && mColor < 99 && dColor > 54 && dColor < 70) || 
         (dColor > 84 && dColor < 99 && mColor > 54 && mColor < 70)) {
-            return 77;
+            colorCode = 77;
         }
         /// @notice if orange & yellow, child is orange-yellow
         else if((mColor > 24 && mColor < 40 && dColor > 39 && dColor < 55) || 
         (dColor > 24 && dColor < 40 && mColor > 39 && mColor < 55)) {
-            return 39;
+            colorCode = 39;
         }
         /// @notice if green & yellow, child is green-yellow
         else if((mColor > 54 && mColor < 70 && dColor > 39 && dColor < 55) || 
         (dColor > 54 && dColor < 70 && mColor > 39 && mColor < 55)) {
-            return 54;
+            colorCode = 54;
         }
         /// @notice if green & blue, child is green-blue
         else if((mColor > 54 && mColor < 70 && dColor > 69 && dColor < 85) || 
         (dColor > 54 && dColor < 70 && mColor > 69 && mColor < 85)) {
-            return 69;
+            colorCode = 69;
         }
         /// @notice if blue & purple, child is blue-purple
         else if((mColor > 84 && mColor < 99 && dColor > 69 && dColor < 85) || 
         (dColor > 84 && dColor < 99 && mColor > 69 && mColor < 85)) {
-            return 86;
+            colorCode = 86;
         }
         /// @notice if red & purple, child is pink
         else if((mColor > 84 && mColor < 99 && dColor > 9 && dColor < 25) || 
         (dColor > 84 && dColor < 99 && mColor > 9 && mColor < 25)) {
-            return 98;
+            colorCode = 98;
         }
         // if red & purple, child is pink
         else if((mColor > 24 && mColor < 40 && dColor > 9 && dColor < 25) || 
         (dColor > 24 && dColor < 40 && mColor > 9 && mColor < 25)) {
-            return 25;
+            colorCode = 25;
         }
         else if(rndm & i != 0) {
             /** @notice the % 100 yields the last two digits of the _momDna or _dadDna 
             * to use at this slot */
-            return (mDna % 100); 
+            colorCode = (mDna % 100); 
         }
         else {
-            return (dDna % 100);
+            colorCode = (dDna % 100);
         }
+        return colorCode;
     }
 
     function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
@@ -468,7 +470,7 @@ contract Kittycontract is IERC721, Ownable {
                 }
                 else {
                     geneArray[index] = _dadDna % 100;
-                // }
+                }
             }
             else if(index == 2){
                 // geneArray[2] = colorBlender( _dadDna, _momDna, i,  eyes, random);
