@@ -7,8 +7,8 @@ import "./Ownable.sol";
 contract Kittycontract is IERC721, Ownable {
 
     uint256 public constant CREATION_LIMIT_GEN0 = 100;
-    string public constant _name = "JC_Kitties";
-    string public constant _symbol = "JCK";
+    string public constant _name = "Crypto Copy Kitties";
+    string public constant _symbol = "CCYK";
     
     bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
  
@@ -283,7 +283,7 @@ contract Kittycontract is IERC721, Ownable {
     /** @param dDna dad DNA  
     * @param mDna mom DNA
     * @param i the iteration inside the for loop
-    * @param attr the divisor for the DNA, targets desired attributes of the DNA sequence
+    * @param attr the divisor for the DNA, targets desired attributes of the DNA sequence for the modulo 100
     * @param rndm the random number parameter declared in the outer function */
     function colorBlender(
         uint256 dDna, 
@@ -394,14 +394,14 @@ contract Kittycontract is IERC721, Ownable {
         // uint256 eyes = 1e10;
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
-            // color mixing algorithm for mouth, belly and tail
-            // in colors.js file the color ranges are:
-                // red 9-24
-                // orange 25-39
-                // yellow 40-54
-                // green 55-69
-                // blue 70-84
-                // purple 85-98
+            /** color mixing algorithm for mouth, belly and tail
+            * in colors.js file the color ranges are:
+                * red 9-24
+                * orange 25-39
+                * yellow 40-54
+                * green 55-69
+                * blue 70-84
+                * purple 85-98 */
             if(index == 1) {
                 // geneArray[1] = colorBlender( _dadDna, _momDna, i,  mouth, random);
                 /// @notice if parent is in red range & other parent in blue range, child color will be purple
@@ -542,11 +542,11 @@ contract Kittycontract is IERC721, Ownable {
                     geneArray[index] = _dadDna % 100;
                 }
             }
-            else if(index == 4){ // this is 'eye shape' and 'markings shape'
-
-                // only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
-                // shape) are eligible. (87 or 78 return false for example).  This ensures only numbers 1-7 for both markings
-                // shape and eyes shape will ever be eligible to be randomized
+            // this is 'eye shape' and 'markings shape'
+            else if(index == 4){ 
+                /** only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
+                * shape) are eligible. (87 or 78 return false for example).  This ensures only numbers 1-7 for both markings
+                * shape and eyes shape will ever be eligible to be randomized */
                 if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){    
                     geneArray[4] = rand100; // if above is true, then these two settings are random
                 } 
@@ -559,8 +559,8 @@ contract Kittycontract is IERC721, Ownable {
                     geneArray[4] = uint8(_dadDna % 100); 
                 } 
             }
-            // the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
-            // for all 'index' vals except i = 2 or 4
+            /** the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
+            * for all 'index' vals except i = 2 or 4 */
             else if(random & i != 0 && index != 2 && index != 4){ 
                 // the % 100 yields the last two digits of the _momDna number to use at this slot
                 geneArray[index] = uint8(_momDna % 100); 
@@ -569,21 +569,23 @@ contract Kittycontract is IERC721, Ownable {
             else if(index != 2 && index != 4){
                 geneArray[index] = uint8(_dadDna % 100); 
             }
-            // dividing by 100 turns the last two digits of DNA numbers into decimals,
-            // since we are working with integers, they will disappear
+            /** dividing by 100 turns the last two digits of DNA numbers into decimals, since we are working with integers, 
+            * they will disappear */
             _momDna = _momDna / 100; 
             _dadDna = _dadDna / 100; 
             index = index - 1; // now move to index 6 (from 7) and so on...
         }
         uint256 newGene; // newGene declaration
-
-        for(i = 0; i < 8; i++){ // loop through index 0 - 7 of the geneArray[]
-            newGene = newGene + geneArray[i]; // build the newGene number two digits at a time
-            if(i != 7){ // after index 6, we don't want to increase newGene by 100, we do addition, but not * 100.
-                newGene = newGene * 100;    // newGene (##) becomes (##00), so next loop the two new index digits 
-                                            // get added at 1 and 10 slots (## + the new digit take the place of "00").
-            } 
-
+        // loop through index 0 - 7 of the geneArray[]
+        for(i = 0; i < 8; i++){ 
+            // build the newGene number two digits at a time
+            newGene = newGene + geneArray[i]; 
+            // after index 6, we don't want to increase newGene by 100, we do only addition (above), but not * 100 (below).
+            if(i != 7){ 
+                /** newGene (##) becomes (##00), so next loop the two new index digits get added at 1 and 10 slots 
+                * (## + the new digit take the place of "00"). */
+                newGene = newGene * 100;
+            }
         }
         return newGene;
     }
