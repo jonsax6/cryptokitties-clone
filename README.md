@@ -7,15 +7,16 @@
 * JC Kitties are Simple cute and colorful NFT cats.
 * Purchase cats in the "Adopt" marketplace, and then breed them to create your own kittens.
 * Participate in the new Ethereum NFT economy!
+* The JC Kitties contract is currently deployed on the **Ropsten** testnet.
+* The Contract Address is [0x07fc6aa1983b4be07873323e60f00e82b70ed621](https://ropsten.etherscan.io/address/0x07fc6aa1983b4be07873323e60f00e82b70ed621)
 
 ## Overview
 
 ### Requirements
 
 * MetaMask browser extenstion is installed and enabled in your web browser.
+* The Ropsten testnet is selected in the "Networks" field in your MetaMask extension.
 * User must own Ethereum tokens to participate/own/buy JC Kitties.
-* The JC Kitties contract is currently deployed on the **Ropsten** testnet.
-* The Contract Address is [0x07fc6aa1983b4be07873323e60f00e82b70ed621](https://ropsten.etherscan.io/address/0x07fc6aa1983b4be07873323e60f00e82b70ed621)
 
 ### Installation of metamask
 
