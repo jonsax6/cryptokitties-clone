@@ -2,12 +2,20 @@
 
 **Collect and breed your favorite feline friends!**  Add to your collection of non fungible tokens in the Ethereum ecosystem.
 
-* An implementation of the [ERC721](https://docs.openzeppelin.com/contracts/erc721) standard.
-* Simple cute and colorful NFT cats.
+* JC Kitties are an implementation of the [ERC721](https://docs.openzeppelin.com/contracts/erc721) standard.
+* Non Fungible Tokens (NFTs) are cryptographically unique digital assets that are tradeable and transferable. 
+* JC Kitties are Simple cute and colorful NFT cats.
 * Purchase cats in the "Adopt" marketplace, and then breed them to create your own kittens.
-* Participate in the new Ethereum economy!
+* Participate in the new Ethereum NFT economy!
 
 ## Overview
+
+### Requirements
+
+* MetaMask browser extenstion is installed and enabled in your web browser.
+* User must own Ethereum tokens to participate/own/buy JC Kitties.
+* The JC Kitties contract is currently deployed on the Ropsten testnet.
+* The Contract Address is [0x07fc6aa1983b4be07873323e60f00e82b70ed621](https://ropsten.etherscan.io/address/0x07fc6aa1983b4be07873323e60f00e82b70ed621)
 
 ### Installation of metamask
 
