@@ -28,7 +28,8 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     mapping(uint256 => Offer) tokenIdToOffer;
 
-    // Set the current KittyContract address and initialize the instance of Kittycontract
+    /** @notice Set the current KittyContract address and initialize the instance of Kittycontract 
+    * @param _kittyContractAddress the kittycontract address */
     function setKittyContract(address _kittyContractAddress) public onlyOwner {
         _kittycontract = Kittycontract(_kittyContractAddress);
     }
@@ -37,7 +38,8 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
          setKittyContract(_kittyContractAddress);
     }
 
-    // Get the details about an offer for _tokenId. Throws an error if there is no active offer for _tokenId.
+    /** @notice Get the details about an offer for _tokenId. Throws an error if there is no active offer for _tokenId. 
+    * @param _tokenId the token ID for cat we are putting on sale */
     function getOffer(uint256 _tokenId) public view returns ( 
         address seller, 
         uint256 price, 
@@ -55,20 +57,20 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         );
     }
 
-    // Get all tokenId's that are currently for sale. Returns an empty array if none exist.
+    /// @notice Get all tokenId's that are currently for sale. Returns an empty array if none exist.
     function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
-        // check if there are any offers, if not return empty array
+        /// @notice check if there are any offers, if not return empty array
         if(activeOffers == 0){ 
             return new uint256[](0);
         }
         else{
-            // sets the returned array to fixed length, which is length of 'activeOffers'.
+            /// @notice sets the returned array to fixed length, which is length of 'activeOffers'.
             uint256[] memory offerList = new uint256[](activeOffers); 
-            // loops through each index
+            /// @notice loops through each index
             uint256 index = 0;
             for(uint256 i = 0; i < offers.length; i++){ 
                 if(offers[i].active == true){
-                    // assigns the token id at each index to the listOfOffers array at that same index.
+                    /// @notice assigns the token id at each index to the listOfOffers array at that same index.
                     offerList[index] = offers[i].tokenId; 
                     index++;
                 }
@@ -78,15 +80,17 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     }
   
-    // Creates a new offer for _tokenId for the price _price.
+    /** @notice Creates a new offer for _tokenId for the price _price. 
+    * @param _price the ethereum price in wei
+    * @param _tokenId the token ID to set offer for */
     function setOffer(uint256 _price, uint256 _tokenId) external{
-        // only owner can create offer
+        /// @notice only owner can create offer
         require(_kittycontract.ownerOf(_tokenId) == msg.sender, "only owner can sell tokenId"); 
-        // There can only be one active offer for a token at a time
+        /// @notice There can only be one active offer for a token at a time
         require(tokenIdToOffer[_tokenId].active == false, "offer already exists"); 
-        // Marketplace contract (this) needs to be an approved operator when the offer is created
+        /// @notice Marketplace contract (this) needs to be an approved operator when the offer is created
         require(_kittycontract.isApprovedForAll(msg.sender, address(this)), "contract is not approved"); 
-        // Offer price must be greater than 0
+        /// @notice Offer price must be greater than 0
         require(_price > 0, "offer price must be greater than 0");
         
         Offer memory _offer = Offer({
@@ -107,31 +111,33 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
+    /** @notice removes cat of tokenId from the Adopt Kitties marketplace
+    * @param _tokenId the token ID for the cat we remove from marketplace */
     function removeOffer(uint256 _tokenId) external{
-        // finds the offer for _tokenId
+        /// @notice finds the offer for _tokenId
         Offer memory _offer = tokenIdToOffer[_tokenId];
         
-        // Only the seller of _tokenId can remove an offer.
+        /// @notice Only the seller of _tokenId can remove an offer.
         require(_offer.seller == msg.sender, "only seller can remove offer");
 
-        // change the offer active status from offers array with index tokenIdToOffer[_tokenId].index
+        /// @notice change the offer active status from offers array with index tokenIdToOffer[_tokenId].index
         offers[_offer.index].active = false;
         
-        // now delete it from the mapping
+        /// @notice now delete it from the mapping
         delete tokenIdToOffer[_tokenId];
 
-        // subtract 1 from activeOffers tracker.
+        /// @notice subtract 1 from activeOffers tracker.
         activeOffers--;
 
         emit MarketTransaction("Remove offer", msg.sender, _tokenId);
     }
 
     function buyKitty(uint256 _tokenId) public payable{
-        // local variable 'offer' points to the specific Offer
+        /// @notice local variable 'offer' points to the specific Offer
         Offer memory _offer = tokenIdToOffer[_tokenId]; 
-        // The msg.value needs to equal the price of _tokenId
+        /// @notice The msg.value needs to equal the price of _tokenId
         require(msg.value == _offer.price, "payment amount must be the same as the price");
-        // There must be an active _offer for _tokenId
+        /// @notice There must be an active _offer for _tokenId
         require(_offer.active == true, "no offer is active"); 
         
         delete tokenIdToOffer[_tokenId];
