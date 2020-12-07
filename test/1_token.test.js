@@ -62,7 +62,7 @@ contract("Kittycontract", ([owner, alice, bob, charlie]) => {
             assert.equal(catDadId, 0);
 
             // assert that the owner address is the contract owner address
-            assert.equal(catOwner, "0xAE8F6dCa61f3bB13C977eEd1138FA39F4FA59482")
+            assert.equal(catOwner, owner);
         });
 
         it("should breed two cats that you own, emitting the Birth Event ", async function(){

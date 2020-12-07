@@ -423,10 +423,10 @@ function selectCat(id) {
             $('#buy_cat_form, #cat_details, #details_box').show();
             $('#kitty-adopt-grid').empty();
             $('#adopt_title, #adopt_subtitle, #pride_title, #pride_subtitle, #kitty-adopt-grid, #launch_breeder_btn, #adopt_buttons, #remove_offer_form').hide();
-            
             // set global variable saleId to the current id, this allows us to "remember" it 
             // when the buy this cat button is clicked in the following page
             saleId = id;
+            console.log(saleId);
 
             // render the kitty into buy this cat page showcase
             catParentsShowcase(loc, id, catsForSaleObjArray);

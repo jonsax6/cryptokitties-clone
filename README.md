@@ -35,7 +35,7 @@ Go to [MetaMask.io](http://metamask.io/) and select from Android or iOS for mobi
 
 * Navigate to [jdckitties.netlify.app](https://jdckitties.netlify.app/)
 * To purchase a kitty for your own personal "Kitty Pride", click on the "Adopt Kitties" link.
+* MetaMask will ask you to confirm that JC Kitties can manage your JC Kitties NFTs, this will give you access to the marketplace.
 * Scroll through the cats for sale and click on a cat you would like to purchase.
-
-0xAE8F6dCa61f3bB13C977eEd1138FA39F4FA59482
-0x84d0d3728230B69d052727bd6d90c39c65081e41
+* Double-check the "Price" inside the cats metadata field, make sure this amount is okay for you to spend (in ETH).
+* Click on the "Buy This Cat" button, and then confirm your price and gas fees in MetaMask.
