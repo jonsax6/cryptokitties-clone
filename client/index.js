@@ -3,7 +3,7 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var marketplaceInstance;
 var user;
-ropsten
+// ropsten
 var contractAddress = "0x07fC6aA1983B4BE07873323e60F00e82B70eD621";
 var marketplaceAddress = "0xD50326098647e5b26a0316765f97C0022A1dF9B4";
 
