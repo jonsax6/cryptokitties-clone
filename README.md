@@ -1,6 +1,6 @@
 # <img src="https://i.imgur.com/agaTYA5.png" alt="JC Kitties" height="40px">
 
-**Collect and breed your favorite feline friends!** Add to your collection of non fungible tokens in the Ethereum ecosystem.
+**Collect and breed your favorite feline friends!**  Add to your collection of non fungible tokens in the Ethereum ecosystem.
 
 * An implementation of the [ERC721](https://docs.openzeppelin.com/contracts/erc721) standard.
 * Simple cute and colorful NFT cats.
@@ -13,7 +13,7 @@
 
 Go to [MetaMask.io](http://metamask.io/) and select from Android or iOS for mobile application and select Chrome for desktop. You can also go directly to the Chrome store, Google Play store, or Apple App Store (soon).  For more information, you can view a quick tutorial on how to use the [MetaMask](https://youtu.be/yWfZnjkhhhg) browser extension. 
 
-## MetaMask Basics
+### MetaMask Basics
 
 * [Basic background of blockchain and Ethereum](https://metamask.zendesk.com/hc/en-us/articles/360015489611-Basic-background-of-blockchain-and-Ethereum).
 * [MetaMask Basics](https://metamask.zendesk.com/hc/en-us/articles/360015489211-MetaMask-Basics)
@@ -31,8 +31,11 @@ Go to [MetaMask.io](http://metamask.io/) and select from Android or iOS for mobi
 * [Using MetaMask On Multiple Computers](https://metamask.zendesk.com/hc/en-us/articles/360015289772-Using-MetaMask-On-Multiple-Computers)
 * [How to install MetaMask on Microsoft Edge Beta](https://metamask.zendesk.com/hc/en-us/articles/360032523912-How-to-install-MetaMask-on-Microsoft-Edge-Beta)
 
-## JC Kitties Instructions
+### JC Kitties Instructions
 
 * Navigate to [jdckitties.netlify.app](https://jdckitties.netlify.app/)
 * To purchase a kitty for your own personal "Kitty Pride", click on the "Adopt Kitties" link.
 * Scroll through the cats for sale and click on a cat you would like to purchase.
+
+0xAE8F6dCa61f3bB13C977eEd1138FA39F4FA59482
+0x84d0d3728230B69d052727bd6d90c39c65081e41
