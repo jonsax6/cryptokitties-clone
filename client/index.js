@@ -3,13 +3,13 @@ var web3 = new Web3(Web3.givenProvider);
 var instance;
 var marketplaceInstance;
 var user;
-// ropsten
-// var contractAddress = "0x07fC6aA1983B4BE07873323e60F00e82B70eD621";
-// var marketplaceAddress = "0xD50326098647e5b26a0316765f97C0022A1dF9B4";
+ropsten
+var contractAddress = "0x07fC6aA1983B4BE07873323e60F00e82B70eD621";
+var marketplaceAddress = "0xD50326098647e5b26a0316765f97C0022A1dF9B4";
 
 // ganache
-var contractAddress = "0xAe7174938276604F0bb68352E1068A25b8c90b1b";
-var marketplaceAddress = "0x278cf51d1eB2e1Cd93C964FE2ACF06D502bD53a9";
+// var contractAddress = "0xAe7174938276604F0bb68352E1068A25b8c90b1b";
+// var marketplaceAddress = "0x278cf51d1eB2e1Cd93C964FE2ACF06D502bD53a9";
 
 var tokenIds;
 var catObj;
