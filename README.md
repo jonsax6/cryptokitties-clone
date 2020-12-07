@@ -35,7 +35,19 @@ Go to [MetaMask.io](http://metamask.io/) and select from Android or iOS for mobi
 
 * Navigate to [jdckitties.netlify.app](https://jdckitties.netlify.app/)
 * To purchase a kitty for your own personal "Kitty Pride", click on the "Adopt Kitties" link.
-* MetaMask will ask you to confirm that JC Kitties can manage your JC Kitties NFTs, this will give you access to the marketplace.
-* Scroll through the cats for sale and click on a cat you would like to purchase.
+* MetaMask will ask you to confirm that JC Kitties can manage your JC Kitties NFTs, giving you access to the "Adopt Kitties" marketplace.
+* Scroll through the cats for sale in the "Adopt" section, and click on a cat you would like to purchase.
 * Double-check the "Price" inside the cats metadata field, make sure this amount is okay for you to spend (in ETH).
 * Click on the "Buy This Cat" button, and then confirm your price and gas fees in MetaMask.
+* Click on "Confirm" in MetaMask to complete your purchase.
+* Wait for the blockchain to confirm your transaction. 
+* After confirmation, your cat should appear in your "Kitty Pride" page.
+* If you own two (or more) Kitties, you can breed them together to create a child kittens of your own.
+* The DNA of the mother and father cats will be blended together to form the child's DNA.
+* To Sell a cat, navigate to the "Kitty Pride" page.
+* Click on the cat you wish to sell.
+* Set your price in ETH and click the "Sell This Cat" button.
+* MetaMask will ask you to confirm the gas fees for this transaction, check your gas amount and click "Confirm".
+* To remove a cat from the marketplace, click on a cat that you have posted for sale.
+* Click on the "Remove Your Offer" button. 
+* Confirm gas fees in MetaMask by clicking on "Confirm" in MetaMask.
