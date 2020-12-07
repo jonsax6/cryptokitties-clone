@@ -7,7 +7,7 @@
 * JC Kitties are Simple cute and colorful NFT cats.
 * Purchase cats in the "Adopt" marketplace, and then breed them to create your own kittens.
 * Participate in the new Ethereum NFT economy!
-* The JC Kitties contract is currently deployed on the **Ropsten** testnet.
+* The Crypto Copy Kitties contract (CCYK) is currently deployed on the **Ropsten** testnet.
 * The Contract Address is [0xcC297540525FeB6C15959093131C44DE2A1604f6](https://ropsten.etherscan.io/address/0xcc297540525feb6c15959093131c44de2a1604f6)
 
 ## Overview
