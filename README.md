@@ -14,7 +14,7 @@
 
 * MetaMask browser extenstion is installed and enabled in your web browser.
 * User must own Ethereum tokens to participate/own/buy JC Kitties.
-* The JC Kitties contract is currently deployed on the Ropsten testnet.
+* The JC Kitties contract is currently deployed on the **Ropsten** testnet.
 * The Contract Address is [0x07fc6aa1983b4be07873323e60f00e82b70ed621](https://ropsten.etherscan.io/address/0x07fc6aa1983b4be07873323e60f00e82b70ed621)
 
 ### Installation of metamask
