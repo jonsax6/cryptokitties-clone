@@ -1,10 +1,10 @@
-# <img src="https://i.imgur.com/sMTVc95.png" alt="JC Kitties" height="40px">
+# <img src="https://i.imgur.com/sMTVc95.png" alt="Crypto Copy Kitties" height="40px">
 
 **Collect and breed your favorite feline friends!**  Add to your collection of non fungible tokens in the Ethereum ecosystem.
 
-* JC Kitties are an implementation of the [ERC721](https://docs.openzeppelin.com/contracts/erc721) standard.
+* Crypto Copy Kitties are an implementation of the [ERC721](https://docs.openzeppelin.com/contracts/erc721) standard.
 * Non Fungible Tokens (NFTs) are cryptographically unique digital assets that are tradeable and transferable. 
-* JC Kitties are Simple cute and colorful NFT cats.
+* Crypto Copy Kitties are Simple cute and colorful NFT cats.
 * Purchase cats in the "Adopt" marketplace, and then breed them to create your own kittens.
 * Participate in the new Ethereum NFT economy!
 * The Crypto Copy Kitties contract (CCYK) is currently deployed on the **Ropsten** testnet.
@@ -40,11 +40,11 @@ Go to [MetaMask.io](http://metamask.io/) and select from Android or iOS for mobi
 * [Using MetaMask On Multiple Computers](https://metamask.zendesk.com/hc/en-us/articles/360015289772-Using-MetaMask-On-Multiple-Computers)
 * [How to install MetaMask on Microsoft Edge Beta](https://metamask.zendesk.com/hc/en-us/articles/360032523912-How-to-install-MetaMask-on-Microsoft-Edge-Beta)
 
-### JC Kitties Instructions
+### Crypto Copy Kitties Instructions
 
-* Navigate to [jdckitties.netlify.app](https://jdckitties.netlify.app/)
+* Navigate to [cryptocopykitties.netlify.app](https://cryptocopykitties.netlify.app/)
 * To purchase a kitty for your own personal "Kitty Pride", click on the "Adopt Kitties" link.
-* MetaMask will ask you to confirm that JC Kitties can manage your JC Kitties NFTs, giving you access to the "Adopt Kitties" marketplace.
+* MetaMask will ask you to confirm that Crypto Copy Kitties can manage your Crypto Copy Kitties NFTs, giving you access to the "Adopt Kitties" marketplace.
 * Scroll through the cats for sale in the "Adopt" section, and click on a cat you would like to purchase.
 * Double-check the "Price" inside the cats metadata field, make sure this amount is okay for you to spend (in ETH).
 * Click on the "Buy This Cat" button, and then confirm your price and gas fees in MetaMask.
