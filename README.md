@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/6XmYzkG.png" alt="JC Kitties" height="40px">
+# <img src="https://i.imgur.com/sMTVc95.png" alt="JC Kitties" height="40px">
 
 **Collect and breed your favorite feline friends!**  Add to your collection of non fungible tokens in the Ethereum ecosystem.
 
