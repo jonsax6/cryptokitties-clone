@@ -17,7 +17,7 @@
 * MetaMask browser extenstion is installed and enabled in your web browser.
 * The Ropsten testnet is selected in the "Networks" field in your MetaMask extension.
 * User must own Ropsten testnet Ethereum tokens to participate/own/buy Crypto Copy Kitties.
-* Ropsten ETH may be obtained from [this faucet](https://faucet.ropsten.be/).
+* Ropsten ETH may be obtained from [Ropsten Ethereum Faucet](https://faucet.ropsten.be/) and also from the [dimensions network](https://faucet.dimensions.network/).
 
 ### Installation of metamask
 
