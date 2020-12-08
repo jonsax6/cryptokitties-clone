@@ -16,7 +16,7 @@
 
 * MetaMask browser extenstion is installed and enabled in your web browser.
 * The Ropsten testnet is selected in the "Networks" field in your MetaMask extension.
-* User must own Ethereum tokens to participate/own/buy Crypto Copy Kitties.
+* User must own Ropsten testnet Ethereum tokens to participate/own/buy Crypto Copy Kitties.
 
 ### Installation of metamask
 
