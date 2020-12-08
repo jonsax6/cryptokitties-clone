@@ -20,13 +20,13 @@ contract Kittycontract is IERC721, Ownable {
         uint256 genes
     );
 
-    // @dev Emitted when `tokenId` token is transfered from `from` to `to`.
+    /// @dev Emitted when `tokenId` token is transfered from `from` to `to`.
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
-    // @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
+    /// @dev Emitted when `owner` enables `approved` to manage the `tokenId` token.
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
     
-    // @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
+    /// @dev Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets.
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
 
     struct Kitty {
@@ -54,18 +54,18 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function breed(uint256 _dadId, uint256 _momId) public returns(uint256) {
-        // check ownership
+        /// @notice check ownership
         require(_owns(msg.sender, _dadId) && _owns(msg.sender, _momId));
 
-        // check that the kitty IDs are not the same (different cats);
+        /// @notice check that the kitty IDs are not the same (different cats);
         require(_dadId != _momId, "Kitty IDs must not be the same");
 
-        // get the DNA and Generation from both parents
+        /// @notice get the DNA and Generation from both parents
         (uint256 dadDna,,,,uint256 dadGen) = getKitty(_dadId);
         (uint256 momDna,,,,uint256 momGen) = getKitty(_momId);
 
-        // control flow, makes kid generation the oldest parent +1, 
-        // or if they are the same then dadGen +1 
+        /** @notice control flow, makes kid generation the oldest parent +1, 
+        or if they are the same then dadGen +1 */ 
         uint256 kidGen = 0;
         if(dadGen > momGen){
             kidGen = dadGen + 1;
@@ -75,10 +75,10 @@ contract Kittycontract is IERC721, Ownable {
             kidGen = dadGen + 1;
         }
 
-        // using the _mixDna function to create the newDna
+        /// @notice using the _mixDna function to create the newDna
         uint256 newDna = _mixDna(dadDna, momDna);
 
-        // now use the new kitty params to make a new cat on the blockchain and send to msg.sender
+        /// @notice now use the new kitty params to make a new cat on the blockchain and send to msg.sender
         _createKitty(_momId, _dadId, kidGen, newDna, msg.sender);
     }
 
@@ -90,15 +90,15 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function createKittyGen0(uint256 _genes) public onlyOwner {
-        // cannot have more gen 0 cats than the creation limit
+        /// @notice cannot have more gen 0 cats than the creation limit
         require(gen0Counter < CREATION_LIMIT_GEN0);
         
-        // make sure genes are 16 digits minimum
+        /// @notice make sure genes are 16 digits minimum
         require(_genes >= 1000000000000000, "genes must be a minimum of 16 digits");
 
         gen0Counter++;
 
-        // Gen0 cats are owned by the contract owner
+        /// @notice Gen0 cats are owned by the contract owner
         _createKitty(0, 0, 0, _genes, msg.sender);
     }
 
@@ -168,7 +168,7 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function getApproved(uint256 tokenId) external view returns (address) {
-        require(tokenId < kitties.length); // verifies the tokenId is somewhere in the array
+        require(tokenId < kitties.length); /// @notice verifies the tokenId is somewhere in the array
         return kittyIndexToApproved[tokenId]; 
     }
 
@@ -213,7 +213,7 @@ contract Kittycontract is IERC721, Ownable {
             ownershipTokenCount[_from]--;
             delete kittyIndexToApproved[_tokenId];
         }
-        // Emit transfer event
+        /// @notice Emit transfer event
         emit Transfer(_from, _to, _tokenId);
     }
 
@@ -259,8 +259,8 @@ contract Kittycontract is IERC721, Ownable {
         bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
         return returnData == MAGIC_ERC721_RECEIVED;
 
-        // call onERC721Received in the _to contract
-        // check return value
+        /// @notice call onERC721Received in the _to contract
+        /// @notice check return value
     }
 
     function _isContract(address _to) view internal returns (bool) {
@@ -272,11 +272,11 @@ contract Kittycontract is IERC721, Ownable {
     }
 
     function _isApprovedOrOwner(address _spender, address _from, address _to, uint256 _tokenId) internal view returns (bool) {
-        require(_tokenId < kitties.length);  // token must exist
-        require(_to != address(0)); // to address not zero address
-        require(_owns(_from, _tokenId)); // from owns the token
+        require(_tokenId < kitties.length);  /// @notice token must exist
+        require(_to != address(0)); /// @notice to address not zero address
+        require(_owns(_from, _tokenId)); /// @notice from owns the token
 
-        // spender is from OR spender is approved for tokenId OR spender is operator for from
+        /// @notice spender is from OR spender is approved for tokenId OR spender is operator for from
         return(_spender == _from || _approvedFor(_spender, _tokenId) || isApprovedForAll(_from, _spender));
     }
 
@@ -369,10 +369,10 @@ contract Kittycontract is IERC721, Ownable {
         else if(rndm & i != 0) {
             /** @notice the % 100 yields the last two digits of the _momDna or _dadDna 
             * to use at this slot */
-            colorCode = (mDna % 100); 
+            colorCode = (mDna/attr % 100); 
         }
         else {
-            colorCode = (dDna % 100);
+            colorCode = (dDna/attr % 100);
         }
         return colorCode;
     }
@@ -380,21 +380,19 @@ contract Kittycontract is IERC721, Ownable {
     function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
         uint256[8] memory geneArray;
 
+        uint256 mom_Dna = _momDna;
+        uint256 dad_Dna = _dadDna;
         uint256 random = now % 255; // pseudo-random 8 bit integer 00000000 - 11111111
         uint256 rand100 = now % 100;
         uint256 rand10 = now % 10;
         uint256 i; // i declaration for the binary 'slot' below
         uint256 index = 7;
-        uint256 momMouth = (_momDna/1e12) % 100;
-        uint256 dadMouth = (_dadDna/1e12) % 100;
-        uint256 momEyes = (_momDna/1e10) % 100;
-        uint256 dadEyes = (_dadDna/1e10) % 100;
 
-        // uint256 mouth = 1e12;
-        // uint256 eyes = 1e10;
+        uint256 mouth = 1e12;
+        uint256 eyes = 1e10;
 
         for(i = 1; i <= 128; i = i*2){ // each time through the loop the "1" moves over to the next binary slot 
-            /** color mixing algorithm for mouth, belly and tail
+            /** @dev color mixing algorithm for mouth, belly and tail
             * in colors.js file the color ranges are:
                 * red 9-24
                 * orange 25-39
@@ -403,180 +401,46 @@ contract Kittycontract is IERC721, Ownable {
                 * blue 70-84
                 * purple 85-98 */
             if(index == 1) {
-                // geneArray[1] = colorBlender( _dadDna, _momDna, i,  mouth, random);
-                /// @notice if parent is in red range & other parent in blue range, child color will be purple
-                if((momMouth > 9 && momMouth < 25 && dadMouth > 69 && dadMouth < 85) || 
-                (dadMouth > 9 && dadMouth < 25 && momMouth > 69 && momMouth < 85)) {
-                    geneArray[1] = 92;
-                } 
-                // if red & yellow, child is orange
-                else if((momMouth > 9 && momMouth < 25 && dadMouth > 39 && dadMouth < 55) || 
-                (dadMouth > 9 && dadMouth < 25 && momMouth > 39 && momMouth < 55)) {
-                    geneArray[1] = 30;
-                }
-                // if yellow & blue, child is green
-                else if((momMouth > 39 && momMouth < 55 && dadMouth > 69 && dadMouth < 85) || 
-                (dadMouth > 39 && dadMouth < 55 && momMouth > 69 && momMouth < 85)) {
-                    geneArray[1] = 62;
-                }  
-                // if orange & purple, child is red
-                else if((momMouth > 24 && momMouth < 40 && dadMouth > 84 && dadMouth < 99) || 
-                (dadMouth > 24 && dadMouth < 40 && momMouth > 84 && momMouth < 99)) {
-                    geneArray[1] = 17;
-                }  
-                // if orange & green, child is yellow
-                else if((momMouth > 24 && momMouth < 40 && dadMouth > 54 && dadMouth < 70) || 
-                (dadMouth > 24 && dadMouth < 40 && momMouth > 54 && momMouth < 70)) {
-                    geneArray[1] = 47;
-                }  
-                // if purple & green, child is blue
-                else if((momMouth > 84 && momMouth < 99 && dadMouth > 54 && dadMouth < 70) || 
-                (dadMouth > 84 && dadMouth < 99 && momMouth > 54 && momMouth < 70)) {
-                    geneArray[1] = 77;
-                }
-                // if orange & yellow, child is orange-yellow
-                else if((momMouth > 24 && momMouth < 40 && dadMouth > 39 && dadMouth < 55) || 
-                (dadMouth > 24 && dadMouth < 40 && momMouth > 39 && momMouth < 55)) {
-                    geneArray[1] = 39;
-                }
-                // if green & yellow, child is green-yellow
-                else if((momMouth > 54 && momMouth < 70 && dadMouth > 39 && dadMouth < 55) || 
-                (dadMouth > 54 && dadMouth < 70 && momMouth > 39 && momMouth < 55)) {
-                    geneArray[1] = 54;
-                }
-                // if green & blue, child is green-blue
-                else if((momMouth > 54 && momMouth < 70 && dadMouth > 69 && dadMouth < 85) || 
-                (dadMouth > 54 && dadMouth < 70 && momMouth > 69 && momMouth < 85)) {
-                    geneArray[1] = 69;
-                }
-                // if blue & purple, child is blue-purple
-                else if((momMouth > 84 && momMouth < 99 && dadMouth > 69 && dadMouth < 85) || 
-                (dadMouth > 84 && dadMouth < 99 && momMouth > 69 && momMouth < 85)) {
-                    geneArray[1] = 86;
-                }
-                // if red & purple, child is pink
-                else if((momMouth > 84 && momMouth < 99 && dadMouth > 9 && dadMouth < 25) || 
-                (dadMouth > 84 && dadMouth < 99 && momMouth > 9 && momMouth < 25)) {
-                    geneArray[1] = 98;
-                }
-                // if red & purple, child is pink
-                else if((momMouth > 24 && momMouth < 40 && dadMouth > 9 && dadMouth < 25) || 
-                (dadMouth > 24 && dadMouth < 40 && momMouth > 9 && momMouth < 25)) {
-                    geneArray[1] = 25;
-                }
-                else if(random & i != 0) {
-                    // the % 100 yields the last two digits of the _momDna number to use at this slot
-                    geneArray[index] = _momDna % 100; 
-                }
-                else {
-                    geneArray[index] = _dadDna % 100;
-                }
+                geneArray[1] = colorBlender( dad_Dna, mom_Dna, i,  mouth, random);
             }
             else if(index == 2){
-                // geneArray[2] = colorBlender( _dadDna, _momDna, i,  eyes, random);
-                /// @notice if parent is in red range & other parent in blue range, child color will be purple
-                if((momEyes > 9 && momEyes < 25 && dadEyes > 69 && dadEyes < 85) || 
-                (dadEyes > 9 && dadEyes < 25 && momEyes > 69 && momEyes < 85)) {
-                    geneArray[2] = 92;
-                } 
-                /// @notice if red & yellow, child is orange
-                else if((momEyes > 9 && momEyes < 25 && dadEyes > 39 && dadEyes < 55) || 
-                (dadEyes > 9 && dadEyes < 25 && momEyes > 39 && momEyes < 55)) {
-                    geneArray[2] = 30;
-                }
-                /// @notice if yellow & blue, child is green
-                else if((momEyes > 39 && momEyes < 55 && dadEyes > 69 && dadEyes < 85) || 
-                (dadEyes > 39 && dadEyes < 55 && momEyes > 69 && momEyes < 85)) {
-                    geneArray[2] = 62;
-                }  
-                /// @notice if orange & purple, child is red
-                else if((momEyes > 24 && momEyes < 40 && dadEyes > 84 && dadEyes < 99) || 
-                (dadEyes > 24 && dadEyes < 40 && momEyes > 84 && momEyes < 99)) {
-                    geneArray[2] = 17;
-                }  
-                /// @notice if orange & green, child is yellow
-                else if((momEyes > 24 && momEyes < 40 && dadEyes > 54 && dadEyes < 70) || 
-                (dadEyes > 24 && dadEyes < 40 && momEyes > 54 && momEyes < 70)) {
-                    geneArray[2] = 47;
-                }  
-                /// @notice if purple & green, child is blue
-                else if((momEyes > 84 && momEyes < 99 && dadEyes > 54 && dadEyes < 70) || 
-                (dadEyes > 84 && dadEyes < 99 && momEyes > 54 && momEyes < 70)) {
-                    geneArray[2] = 77;
-                }
-                /// @notice if orange & yellow, child is orange-yellow
-                else if((momEyes > 24 && momEyes < 40 && dadEyes > 39 && dadEyes < 55) || 
-                (dadEyes > 24 && dadEyes < 40 && momEyes > 39 && momEyes < 55)) {
-                    geneArray[2] = 39;
-                }
-                /// @notice if green & yellow, child is green-yellow
-                else if((momEyes > 54 && momEyes < 70 && dadEyes > 39 && dadEyes < 55) || 
-                (dadEyes > 54 && dadEyes < 70 && momEyes > 39 && momEyes < 55)) {
-                    geneArray[2] = 54;
-                }
-                /// @notice if green & blue, child is green-blue
-                else if((momEyes > 54 && momEyes < 70 && dadEyes > 69 && dadEyes < 85) || 
-                (dadEyes > 54 && dadEyes < 70 && momEyes > 69 && momEyes < 85)) {
-                    geneArray[2] = 69;
-                }
-                /// @notice if blue & purple, child is blue-purple
-                else if((momEyes > 84 && momEyes < 99 && dadEyes > 69 && dadEyes < 85) || 
-                (dadEyes > 84 && dadEyes < 99 && momEyes > 69 && momEyes < 85)) {
-                    geneArray[2] = 86;
-                }
-                /// @notice if red & purple, child is pink
-                else if((momEyes > 84 && momEyes < 99 && dadEyes > 9 && dadEyes < 25) || 
-                (dadEyes > 84 && dadEyes < 99 && momEyes > 9 && momEyes < 25)) {
-                    geneArray[2] = 98;
-                }
-                /// @notice if red & purple, child is pink
-                else if((momEyes > 24 && momEyes < 40 && dadEyes > 9 && dadEyes < 25) || 
-                (dadEyes > 24 && dadEyes < 40 && momEyes > 9 && momEyes < 25)) {
-                    geneArray[2] = 25;
-                }
-                else if(random & i != 0) {
-                    /// @notice the % 100 yields the last two digits of the _momDna number to use at this slot
-                    geneArray[index] = _momDna % 100; 
-                }
-                else {
-                    geneArray[index] = _dadDna % 100;
-                }
+                geneArray[2] = colorBlender( dad_Dna, mom_Dna, i,  eyes, random);
             }
-            // this is 'eye shape' and 'markings shape'
+            /// @notice this is 'eye shape' and 'markings shape'
             else if(index == 4){ 
-                /** only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
+                /** @notice only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
                 * shape) are eligible. (87 or 78 return false for example).  This ensures only numbers 1-7 for both markings
                 * shape and eyes shape will ever be eligible to be randomized */
                 if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){    
                     geneArray[4] = rand100; // if above is true, then these two settings are random
                 } 
-                // rand10 can only be 0-9, so if rand10 is in 5-9 range use the _momDna
+                /// @notice rand10 can only be 0-9, so if rand10 is in 5-9 range use the _momDna
                 else if(rand10 > 4){ 
                     geneArray[4] = uint8(_momDna % 100); 
                 } 
-                // rand10 can only be 0-9, so if rand10 is 0-4 use _dadDna
+                /// @notice rand10 can only be 0-9, so if rand10 is 0-4 use _dadDna
                 else {  
                     geneArray[4] = uint8(_dadDna % 100); 
                 } 
             }
-            /** the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
+            /** @notice the bitwise operator "&" compares the random 8bit to "1" at every slot and returns 1 (true) or 0 (false)
             * for all 'index' vals except i = 2 or 4 */
-            else if(random & i != 0 && index != 2 && index != 4){ 
+            else if(random & i != 0 && index != 1 && index != 2 && index != 4){ 
                 // the % 100 yields the last two digits of the _momDna number to use at this slot
                 geneArray[index] = uint8(_momDna % 100); 
             }
-            // same as above but uses the dadDna if (random & i != 0) returns "false" above except i = 2 or 4
-            else if(index != 2 && index != 4){
+            /// @notice same as above but uses the dadDna if (random & i != 0) returns "false" above except i = 2 or 4
+            else if(index != 1 && index != 2 && index != 4){
                 geneArray[index] = uint8(_dadDna % 100); 
             }
-            /** dividing by 100 turns the last two digits of DNA numbers into decimals, since we are working with integers, 
+            /** @notice dividing by 100 turns the last two digits of DNA numbers into decimals, since we are working with integers, 
             * they will disappear */
             _momDna = _momDna / 100; 
             _dadDna = _dadDna / 100; 
             index = index - 1; // now move to index 6 (from 7) and so on...
         }
         uint256 newGene; // newGene declaration
-        // loop through index 0 - 7 of the geneArray[]
+        /// @notice loop through index 0 - 7 of the geneArray[]
         for(i = 0; i < 8; i++){ 
             // build the newGene number two digits at a time
             newGene = newGene + geneArray[i]; 
