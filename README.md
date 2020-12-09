@@ -8,7 +8,8 @@
 * Purchase cats in the "Adopt" marketplace, and then breed them to create your own kittens.
 * Participate in the new Ethereum NFT economy!
 * The Crypto Copy Kitties contract (CCYK) is currently deployed on the **Ropsten** testnet.
-* The Contract Address is [0x039dD21A290eCa0f42ab0b28e73F05C25C242880](https://ropsten.etherscan.io/address/0x039dD21A290eCa0f42ab0b28e73F05C25C242880)
+* The Main Contract Address is [0x039dD21A290eCa0f42ab0b28e73F05C25C242880](https://ropsten.etherscan.io/address/0x039dD21A290eCa0f42ab0b28e73F05C25C242880).
+* The Marketplace Contract Address is [0x777Ad6549e2a1fd15142cF1794e02Baa161be659](https://ropsten.etherscan.io/address/0x777Ad6549e2a1fd15142cF1794e02Baa161be659).
 
 ## Overview
 
