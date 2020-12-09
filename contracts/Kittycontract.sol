@@ -361,7 +361,7 @@ contract Kittycontract is IERC721, Ownable {
         (dColor > 84 && dColor < 99 && mColor > 9 && mColor < 25)) {
             colorCode = 98;
         }
-        // if red & purple, child is pink
+        /// @notice if red & orange, child is red-orange
         else if((mColor > 24 && mColor < 40 && dColor > 9 && dColor < 25) || 
         (dColor > 24 && dColor < 40 && mColor > 9 && mColor < 25)) {
             colorCode = 25;
