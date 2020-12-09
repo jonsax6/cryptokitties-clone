@@ -4,12 +4,12 @@ var instance;
 var marketplaceInstance;
 var user;
 // ropsten
-// var contractAddress = "0x039dD21A290eCa0f42ab0b28e73F05C25C242880";
-// var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
+var contractAddress = "0x039dD21A290eCa0f42ab0b28e73F05C25C242880";
+var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
 
 // ganache
-var contractAddress = "0x831dD8aB54E5edc627079BF2a0f82Ece7c54a7A9";
-var marketplaceAddress = "0xF8768e0599b3745c507CE6ec1c009835A44468B5";
+// var contractAddress = "0x831dD8aB54E5edc627079BF2a0f82Ece7c54a7A9";
+// var marketplaceAddress = "0xF8768e0599b3745c507CE6ec1c009835A44468B5";
 
 var tokenIds;
 var catObj;
@@ -114,6 +114,10 @@ function hideAll(){
     $("#offer_subtitle").hide();
     $("#offer_remove_title").hide();
     $("#offer_remove_subtitle").hide();
+    $("#breeding_instructions").hide();
+    $('#breeding_instructions_modal').hide();
+    $('#inst_modal_mother').hide();
+    $('#inst_modal_father').hide();
 }
 
 async function checkOwner(){
@@ -332,10 +336,10 @@ async function createKitty(){
     await fetchCats(user);
 }
 
-// called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
-// which are saved into the parents array.  The parents array, which stores the selected cats, gets emptied every time 
-// nav_pride gets clicked or a cat is bred.
-function selectCat(id) {
+/** called when catbox divs are clicked on.  Selections can be made infinitely, but will overwrite the previous ones 
+ * which are saved into the parents array.  The parents array, which stores the selected cats, gets emptied every time 
+ * nav_pride gets clicked or a cat is bred. */
+async function selectCat(id) {
     // if we've clicked on the female icon in the breed cat page this will be true
     if(loc == "female_showcase"){
         // populate the appropriate showcase box according to page location (loc) 
@@ -473,7 +477,6 @@ function selectCat(id) {
     $('#nav_adopt').click(async()=>{
         loc = "adopt";
         hideAll();
-        await initMarketplace();
         await getInventory();
         checkOwner();
         parents = [];
@@ -517,9 +520,9 @@ function selectCat(id) {
         $('.kitty_dna_block').show();
     })
 
-    // the "Get Them A Room!" button.  Captures mom and dad ID selections from parents array
-    // calls breetCats(dadCat, momCat) which sends cat IDs to Kittycontract breed function.
-    // clears page, then reloads kitty matrix with the new cats at the bottom of the page. 
+    /** the "Get Them A Room!" button.  Captures mom and dad ID selections from parents array
+     * calls breetCats(dadCat, momCat) which sends cat IDs to Kittycontract breed function.
+     * clears page, then reloads kitty matrix with the new cats at the bottom of the page. */ 
     $('#breedCats').click(()=>{
         hideAll();
         checkOwner();
@@ -541,6 +544,9 @@ function selectCat(id) {
         appendGrid(catObj, "menu");
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();
+        $('#breeding_instructions_modal').show();
+        $('#inst_modal_mother').show();
+        $('#inst_modal_father').hide();
         // this control flow removes the chosen catIds from the appended Grid inside the modal only if they are defined
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
@@ -561,6 +567,12 @@ function selectCat(id) {
         appendGrid(catObj, "menu");
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();
+        $('#breeding_instructions_modal').show();
+        $('#inst_modal_mother').hide();
+        $('#inst_modal_father').show();
+
+        /** check to see if either mom or dad selection has been made already.  
+        * Undefined means no selection yet. */
         if(parents[0] !== "undefined"){
             $(`#box${parents[0]}`).hide();
         } if(parents[1] !== "undefined"){
@@ -571,12 +583,16 @@ function selectCat(id) {
     $('#launch_breeder_btn').click(()=>{
         hideAll();
         checkOwner();
-        $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle, #launch_menu_1, #launch_menu_2').show();
+        $('#pride_page, #breeding_form, #breeding_title, #breeding_subtitle, #launch_menu_1, #launch_menu_2, #breeding_instructions').show();
         $('#kitty-pride-grid').empty();
     })
 
-    $('#create_offer_btn').click(async function() {
+    $('#create_offer_btn').click(async() => {
         // get price from eth price form field
+
+        // get approval for all
+        await initMarketplace();
+
         let price = $('#eth_price').val();
 
         // conerts the price to Wei.
@@ -595,14 +611,14 @@ function selectCat(id) {
         await makeOffer(price, saleId);
     })
 
-    $('#remove_offer_btn').click(function() {
+    $('#remove_offer_btn').click(()=> {
         checkOwner();
 
         // calls the removeOffer() function in Kittycontract for kitty ID saleId
         deleteOffer(saleId); 
     })
 
-    $('#buy_cat_btn').click(()=>{
+    $('#buy_cat_btn').click(()=> {
         // finds the ID of the cat in the catsForSaleObjArray with ID saleId
         let catToBuy = catsForSaleObjArray.filter(cat => cat.catId == saleId)[0];
 

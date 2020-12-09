@@ -85,7 +85,7 @@ var colors = {00: "ae494f",
 83: "3e5ed4",   // blue
 84: "7002ff",   // blue
 85: "7902db",   // purple
-86: "b065de",   // purple
+86: "6c52e0",   // purple
 87: "ec6eff",   // purple
 88: "d53fff",   // purple
 89: "c977ff",   // purple
