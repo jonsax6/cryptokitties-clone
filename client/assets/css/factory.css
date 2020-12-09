@@ -24,6 +24,12 @@
     border-color: #607d8b;
 }
 
+.breed_cats_instructions {
+    background-color: #68899b;
+    border-radius: 35px;
+    padding: 40px;
+}
+
 .modal-content {
     background: #607d8b;
 }
