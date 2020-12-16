@@ -5,6 +5,7 @@
   "main": "truffle-config.js",
   "scripts": {
     "ropsten": "truffle migrate --reset --network ropsten",
+    "kovan": "truffle migrate --reset --network kovan",
     "local": "truffle migrate --reset"
   },
   "repository": {
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/jonsax6/cryptokitties-clone#readme",
   "dependencies": {
+    "@chainlink/contracts": "0.0.11",
     "@openzeppelin/contracts": "^3.2.0",
     "@truffle/hdwallet-provider": "^1.2.0",
     "dotenv": "^8.2.0"

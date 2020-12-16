@@ -4,8 +4,12 @@ var instance;
 var marketplaceInstance;
 var user;
 // ropsten
-var contractAddress = "0x039dD21A290eCa0f42ab0b28e73F05C25C242880";
-var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
+// var contractAddress = "0x039dD21A290eCa0f42ab0b28e73F05C25C242880";
+// var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
+
+// kovan
+var contractAddress = "0x760395caeeB7347BAe3ac1B6ddaA0fde6e21a5c0";
+var marketplaceAddress = "0x868c19f002A4a01a15FA5571B19ff72966a5e4bb";
 
 // ganache
 // var contractAddress = "0x831dD8aB54E5edc627079BF2a0f82Ece7c54a7A9";
