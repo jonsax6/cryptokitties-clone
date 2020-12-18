@@ -1,4 +1,4 @@
-pragma solidity ^0.5.12;
+pragma solidity ^0.6.6;
 
 import "./Kittycontract.sol";
 import "./Ownable.sol";
@@ -30,7 +30,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     /** @notice Set the current KittyContract address and initialize the instance of Kittycontract 
     * @param _kittyContractAddress the kittycontract address */
-    function setKittyContract(address _kittyContractAddress) public onlyOwner {
+    function setKittyContract(address _kittyContractAddress) public override onlyOwner {
         _kittycontract = Kittycontract(_kittyContractAddress);
     }
 
@@ -40,7 +40,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     /** @notice Get the details about an offer for _tokenId. Throws an error if there is no active offer for _tokenId. 
     * @param _tokenId the token ID for cat we are putting on sale */
-    function getOffer(uint256 _tokenId) public view returns ( 
+    function getOffer(uint256 _tokenId) public view override returns ( 
         address seller, 
         uint256 price, 
         uint256 index, 
@@ -58,7 +58,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
     }
 
     /// @notice Get all tokenId's that are currently for sale. Returns an empty array if none exist.
-    function getAllTokenOnSale() public view returns(uint256[] memory listOfOffers){
+    function getAllTokenOnSale() public view override returns(uint256[] memory listOfOffers){
         /// @notice check if there are any offers, if not return empty array
         if(activeOffers == 0){ 
             return new uint256[](0);
@@ -83,7 +83,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
     /** @notice Creates a new offer for _tokenId for the price _price. 
     * @param _price the ethereum price in wei
     * @param _tokenId the token ID to set offer for */
-    function setOffer(uint256 _price, uint256 _tokenId) external{
+    function setOffer(uint256 _price, uint256 _tokenId) external override {
         /// @notice only owner can create offer
         require(_kittycontract.ownerOf(_tokenId) == msg.sender, "only owner can sell tokenId"); 
         /// @notice There can only be one active offer for a token at a time
@@ -113,7 +113,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
 
     /** @notice removes cat of tokenId from the Adopt Kitties marketplace
     * @param _tokenId the token ID for the cat we remove from marketplace */
-    function removeOffer(uint256 _tokenId) external{
+    function removeOffer(uint256 _tokenId) external override {
         /// @notice finds the offer for _tokenId
         Offer memory _offer = tokenIdToOffer[_tokenId];
         
@@ -132,7 +132,7 @@ contract KittyMarketPlace is Ownable, IKittyMarketPlace {
         emit MarketTransaction("Remove offer", msg.sender, _tokenId);
     }
 
-    function buyKitty(uint256 _tokenId) public payable{
+    function buyKitty(uint256 _tokenId) public payable override{
         /// @notice local variable 'offer' points to the specific Offer
         Offer memory _offer = tokenIdToOffer[_tokenId]; 
         /// @notice The msg.value needs to equal the price of _tokenId

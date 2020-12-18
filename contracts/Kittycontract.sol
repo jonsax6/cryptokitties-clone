@@ -116,8 +116,9 @@ contract Kittycontract is IERC721, Ownable {
             dadId: uint32(_dadId),
             generation: uint16(_generation)
         });
-
-        uint256 newKittenId = kitties.push(_kitty) -1;
+        
+        kitties.push(_kitty);
+        uint256 newKittenId = kitties.length -1;
 
         emit Birth(_owner, newKittenId, _momId, _dadId, _genes);
 
@@ -155,48 +156,48 @@ contract Kittycontract is IERC721, Ownable {
         return userTokenIds;
     } 
 
-    function approve(address approved, uint256 tokenId) external {
+    function approve(address approved, uint256 tokenId) external override {
         require(_owns(msg.sender, tokenId));
         kittyIndexToApproved[tokenId] = approved;  
         emit Approval(msg.sender, approved, tokenId);  
     }
 
-    function setApprovalForAll(address operator, bool approved) external {
+    function setApprovalForAll(address operator, bool approved) external override {
         require(operator != msg.sender);
         _operatorApprovals[msg.sender][operator] = approved;
         emit ApprovalForAll(msg.sender, operator, approved); 
     }
 
-    function getApproved(uint256 tokenId) external view returns (address) {
+    function getApproved(uint256 tokenId) external view override returns (address) {
         require(tokenId < kitties.length); /// @notice verifies the tokenId is somewhere in the array
         return kittyIndexToApproved[tokenId]; 
     }
 
-    function isApprovedForAll(address owner, address operator) public view returns (bool) {
+    function isApprovedForAll(address owner, address operator) public view override returns (bool) {
         return _operatorApprovals[owner][operator];
     }
 
-    function balanceOf(address owner) external view returns (uint256 balance) {
+    function balanceOf(address owner) external view override returns (uint256 balance) {
         return ownershipTokenCount[owner];
     }
 
-    function totalSupply() public view returns (uint256 total) {
+    function totalSupply() public view override returns (uint256 total) {
         return kitties.length;    
     }
 
-    function name() external view returns (string memory) {
+    function name() external view override returns (string memory) {
         return _name;
     }
 
-    function symbol() external view returns (string memory tokenSymbol) {
+    function symbol() external view override returns (string memory tokenSymbol) {
         return _symbol;
     }
 
-    function ownerOf(uint256 _tokenId) external view returns (address) {
+    function ownerOf(uint256 _tokenId) external view override returns (address) {
         return kittyIndexToOwner[_tokenId];
     }
 
-    function transfer(address _to, uint256 _tokenId) external {
+    function transfer(address _to, uint256 _tokenId) external override {
         require(_to != address(0));
         require(_to != address(this));
         require(_owns(msg.sender, _tokenId));
@@ -217,7 +218,7 @@ contract Kittycontract is IERC721, Ownable {
         emit Transfer(_from, _to, _tokenId);
     }
 
-    function transferFrom(address _from, address _to, uint256 _tokenId) public {
+    function transferFrom(address _from, address _to, uint256 _tokenId) public override {
         require(_to != address(0));
         require(msg.sender == _from || _approvedFor(msg.sender, _tokenId) || isApprovedForAll(_from, msg.sender));
         require(_owns(_from, _tokenId));
@@ -226,11 +227,11 @@ contract Kittycontract is IERC721, Ownable {
         _transfer(_from, _to, _tokenId);
     }
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public {
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
         safeTransferFrom(_from, _to, _tokenId, "");
     }
 
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public {
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public override {
         require(_isApprovedOrOwner(msg.sender,_from, _to, _tokenId));
         _safeTransfer(_from, _to, _tokenId, data);
     }
