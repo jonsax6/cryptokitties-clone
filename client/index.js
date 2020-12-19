@@ -8,12 +8,12 @@ var user;
 // var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
 
 // kovan
-var contractAddress = "0x760395caeeB7347BAe3ac1B6ddaA0fde6e21a5c0";
-var marketplaceAddress = "0x868c19f002A4a01a15FA5571B19ff72966a5e4bb";
+// var contractAddress = "0x760395caeeB7347BAe3ac1B6ddaA0fde6e21a5c0";
+// var marketplaceAddress = "0x868c19f002A4a01a15FA5571B19ff72966a5e4bb";
 
 // ganache
-// var contractAddress = "0x831dD8aB54E5edc627079BF2a0f82Ece7c54a7A9";
-// var marketplaceAddress = "0xF8768e0599b3745c507CE6ec1c009835A44468B5";
+var contractAddress = "0x530b7c6cBc89c83b21Dcf6701cD7c7F5Af63242c";
+var marketplaceAddress = "0xaA9c2F96F26749E27bDC8D86b553b9eF2fd15c12";
 
 var tokenIds;
 var catObj;

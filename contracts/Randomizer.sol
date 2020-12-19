@@ -2,12 +2,15 @@ pragma solidity 0.6.6;
 
 import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
-contract RandomNumberConsumer is VRFConsumerBase {
+contract Randomizer is VRFConsumerBase {
     
     bytes32 internal keyHash;
     uint256 internal fee;
     
     uint256 public randomResult;
+
+    /// @notice mapping for the requestId to random number returned from fulfillRandomness
+    mapping(bytes32 => uint256) public randomNumber;
     
     /**
      * Constructor inherits VRFConsumerBase
@@ -40,6 +43,7 @@ contract RandomNumberConsumer is VRFConsumerBase {
      */
     function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
         randomResult = randomness;
+        randomNumber[requestId] = randomness;
     }
     
     /**

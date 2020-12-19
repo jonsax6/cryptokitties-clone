@@ -3,8 +3,9 @@ pragma solidity ^0.6.6;
 import "./IERC721.sol";
 import "./IERC721Receiver.sol";
 import "./Ownable.sol";
+import "./Randomizer.sol";
 
-contract Kittycontract is IERC721, Ownable {
+contract Kittycontract is IERC721, Randomizer, Ownable {
 
     uint256 public constant CREATION_LIMIT_GEN0 = 100;
     string public constant _name = "Crypto Copy Kitties";
@@ -18,6 +19,12 @@ contract Kittycontract is IERC721, Ownable {
         uint256 momId,
         uint256 dadId,
         uint256 genes
+    );
+
+    event KittyCreateStart(
+        address user,
+        uint256 catId,
+        bytes32 requestId
     );
 
     /// @dev Emitted when `tokenId` token is transfered from `from` to `to`.
@@ -37,10 +44,22 @@ contract Kittycontract is IERC721, Ownable {
         uint16 generation;
     }
 
+    struct KittyRandomRequest {
+        uint256 catId;
+        address user;
+        bytes32 requestId;
+    }
+
+    /// @notice array of Kitty random request data KittyRandomRequest structs
+    KittyRandomRequest[] kittyRandomRequests;
+
     Kitty[] kitties;
 
     uint256 private _totalSupply;
 
+    /// @notice this double-mapping maps the requestID to the user address and associated catId.
+    mapping(uint256 => mapping(address => bytes32)) public CatIdToRequestId;
+    
     mapping(uint256 => address) public kittyIndexToOwner;
     mapping(address => uint256) ownershipTokenCount;
     
@@ -53,7 +72,7 @@ contract Kittycontract is IERC721, Ownable {
         _createKitty(0,0,0, uint256(-1), address(0));
     }
 
-    function breed(uint256 _dadId, uint256 _momId) public returns(uint256) {
+    function breed(uint256 _dadId, uint256 _momId, uint256 _seed) public returns(uint256) {
         /// @notice check ownership
         require(_owns(msg.sender, _dadId) && _owns(msg.sender, _momId));
 
@@ -75,8 +94,11 @@ contract Kittycontract is IERC721, Ownable {
             kidGen = dadGen + 1;
         }
 
+        /// @notice call random request
+        randomRequest(_momId, msg.sender, _seed);
+
         /// @notice using the _mixDna function to create the newDna
-        uint256 newDna = _mixDna(dadDna, momDna);
+        uint256 newDna = _mixDna(dadDna, momDna, _momId);
 
         /// @notice now use the new kitty params to make a new cat on the blockchain and send to msg.sender
         _createKitty(_momId, _dadId, kidGen, newDna, msg.sender);
@@ -378,15 +400,52 @@ contract Kittycontract is IERC721, Ownable {
         return colorCode;
     }
 
-    function _mixDna(uint256 _dadDna, uint256 _momDna) internal returns (uint256) {
+    function randomRequest(uint256 _catId, address _user, uint256 _seed) internal returns (bytes32) {
+        /// @notice call getRandomNumber
+        bytes32 _requestId = getRandomNumber(_seed);
+
+        randomNumber[_requestId] = randomResult;
+
+        /// @notice map the catId to user to requestId, mapping to CatIdToRequestId double mapping
+        CatIdToRequestId[_catId][_user] = _requestId;
+
+        /// @notice create a new KittyRandomRequest struct object
+        KittyRandomRequest memory _kittyRandomRequest = KittyRandomRequest({
+            catId: _catId,
+            user: _user,
+            requestId: _requestId
+        });
+
+        /// @notice now save the new KittyRandomRequest to the kittyRandomRequests struct array
+        kittyRandomRequests.push(_kittyRandomRequest);
+
+        emit KittyCreateStart(_user, _catId, _requestId);
+
+        return _requestId;
+    }
+
+    function _mixDna(uint256 _dadDna, uint256 _momDna, uint256 _momId) internal returns (uint256) {
         uint256[8] memory geneArray;
 
+        // fetch the requestId from CatIdToRequestId mapping
+        bytes32 _requestId = CatIdToRequestId[_momId][msg.sender];
+
+        // fetch the raw random number from the randomResult mapping
+        uint256 rawRandomNum = randomNumber[_requestId];
+
+        /** @notice capture the full mom/dad DNA number so we can use it later, 
+         * the for loop below will truncate _momDna and _dadDna after each loop by two digits. */ 
         uint256 mom_Dna = _momDna;
         uint256 dad_Dna = _dadDna;
-        uint256 random = now % 255; // pseudo-random 8 bit integer 00000000 - 11111111
-        uint256 rand100 = now % 100;
-        uint256 rand10 = now % 10;
-        uint256 i; // i declaration for the binary 'slot' below
+
+        /// @notice using the rawRandumNum, we create different size numbers using modulo (%).
+        /// @notice 8 bit integer 00000000 - 11111111
+        uint256 random = rawRandomNum % 255; 
+
+        /// @notice i declaration for the 8 bit binary 'slot' below
+        uint256 i; 
+
+        /// @notice corresponds to the two digit DNA attribute we are targeting below
         uint256 index = 7;
 
         uint256 mouth = 1e12;
@@ -412,11 +471,11 @@ contract Kittycontract is IERC721, Ownable {
                 /** @notice only numbers less than 80 (for the 'tens' digit, eye shape) AND less than 8 (for the 'ones' digit, markings
                 * shape) are eligible. (87 or 78 return false for example).  This ensures only numbers 1-7 for both markings
                 * shape and eyes shape will ever be eligible to be randomized */
-                if((rand10 < 8 && rand10 > 0) && (rand100 >= 10 && rand100 < 80)){    
-                    geneArray[4] = rand100; // if above is true, then these two settings are random
+                if(((rawRandomNum % 10) < 8 && (rawRandomNum % 10) > 0) && ((rawRandomNum % 100) >= 10 && (rawRandomNum % 100) < 80)){    
+                    geneArray[4] = (rawRandomNum % 100); // if above is true, then these two settings are random
                 } 
                 /// @notice rand10 can only be 0-9, so if rand10 is in 5-9 range use the _momDna
-                else if(rand10 > 4){ 
+                else if((rawRandomNum % 10) > 4){ 
                     geneArray[4] = uint8(_momDna % 100); 
                 } 
                 /// @notice rand10 can only be 0-9, so if rand10 is 0-4 use _dadDna
