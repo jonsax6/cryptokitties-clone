@@ -44,14 +44,14 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         uint16 generation;
     }
 
-    // struct KittyRandomRequest {
-    //     uint256 catId;
-    //     address user;
-    //     bytes32 requestId;
-    // }
+    struct KittyRandomRequest {
+        uint256 catId;
+        address user;
+        bytes32 requestId;
+    }
 
     /// @notice array of Kitty random request data KittyRandomRequest structs
-    // KittyRandomRequest[] kittyRandomRequests;
+    KittyRandomRequest[] kittyRandomRequests;
 
     Kitty[] kitties;
 
@@ -419,14 +419,14 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         CatIdToRequestId[_catId][_user] = _requestId;
 
         /// @notice create a new KittyRandomRequest struct object
-        // KittyRandomRequest memory _kittyRandomRequest = KittyRandomRequest({
-        //     catId: _catId,
-        //     user: _user,
-        //     requestId: _requestId
-        // });
+        KittyRandomRequest memory _kittyRandomRequest = KittyRandomRequest({
+            catId: _catId,
+            user: _user,
+            requestId: _requestId
+        });
 
         /// @notice now save the new KittyRandomRequest to the kittyRandomRequests struct array
-        // kittyRandomRequests.push(_kittyRandomRequest);
+        kittyRandomRequests.push(_kittyRandomRequest);
 
         emit KittyCreationStarted(_user, _catId, _requestId);
 
