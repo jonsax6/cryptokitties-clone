@@ -405,9 +405,6 @@ async function appendGrid(CatObjectArray, grid){
         let dadId = cat.dadId;
         let price = cat.price;
 
-        console.log("price", price);
-        console.log("genes", genes);
-
         // get generation from cat object array
         let generation = cat.generation;
         // populate the html with the kitty w/id: id 

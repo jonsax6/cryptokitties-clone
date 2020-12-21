@@ -8,8 +8,8 @@ var user;
 // var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
 
 // kovan
-var contractAddress = "0x760395caeeB7347BAe3ac1B6ddaA0fde6e21a5c0";
-var marketplaceAddress = "0x868c19f002A4a01a15FA5571B19ff72966a5e4bb";
+var contractAddress = "0x155dE19002aC6f7b9643931EaBBFa09Dfcef49d0";
+var marketplaceAddress = "0x4B63c8A4FbC32620e7BC492bEdc2A11359f62793";
 
 // ganache
 // var contractAddress = "0x530b7c6cBc89c83b21Dcf6701cD7c7F5Af63242c";
@@ -176,7 +176,7 @@ async function buyCat(id, price) {
 }
 
 // combines two cats DNA to make a child cat. This all happens ETH contract-side and is saved to the blockchain.
-function breedCats(_dadId, _momId, grid){
+function breedCats(_dadId, _momId, _seed, grid){
     instance.methods
     .breed(_dadId, _momId, _seed)
     .send()
@@ -530,11 +530,12 @@ async function selectCat(id) {
     $('#breedCats').click(()=>{
         hideAll();
         checkOwner();
+        var seed = 10000*Math.random();
         // assign respective ID's to momId and dadId from the parents array, created from cat choices
         momId = parents[0];
         dadId = parents[1];
         // breeds the two cats, and sends to blockchain.  After tx receipt, rerenders the kitty pride page.
-        breedCats(momId, dadId, "pride");
+        breedCats(momId, dadId, seed, "pride");
     })
 
     $('#launch_menu_1').click(()=>{
