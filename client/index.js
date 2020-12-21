@@ -8,8 +8,8 @@ var user;
 // var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
 
 // kovan
-var contractAddress = "0xEf354899b4bE73c45b9F237ba0493617a46bA0cb";
-var marketplaceAddress = "0x7Ff625474C19C40CD946B9dF29190044436a0688";
+var contractAddress = "0x76DB58353e9E4eFb2EF7583DF260570539EEaA12";
+var marketplaceAddress = "0x4693f9d53177F0a3F88c26751e346Fc9F380DDe7";
 
 // ganache
 // var contractAddress = "0x530b7c6cBc89c83b21Dcf6701cD7c7F5Af63242c";
@@ -545,7 +545,6 @@ async function selectCat(id) {
         $('#kitty-pride-grid, #kitty-menu-grid').empty();
         $('#kitty-menu-grid').show();
         // now put the kitty grid into DOM @menu_modal, populate grid inside menu modal
-        console.log(catObj);
         appendGrid(catObj, "menu");
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();
@@ -568,7 +567,6 @@ async function selectCat(id) {
         $('#kitty-menu-grid').show();
         // now put the kitty grid into DOM @menu_modal
         // populate grid inside menu modal
-        console.log(catObj);
         appendGrid(catObj, "menu");
         $('.kitty_price_block').hide();
         $('.kitty_dna_block').show();

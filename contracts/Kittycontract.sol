@@ -21,7 +21,7 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         uint256 genes
     );
 
-    event KittyCreateStart(
+    event KittyCreationStarted(
         address user,
         uint256 catId,
         bytes32 requestId
@@ -44,14 +44,14 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         uint16 generation;
     }
 
-    struct KittyRandomRequest {
-        uint256 catId;
-        address user;
-        bytes32 requestId;
-    }
+    // struct KittyRandomRequest {
+    //     uint256 catId;
+    //     address user;
+    //     bytes32 requestId;
+    // }
 
     /// @notice array of Kitty random request data KittyRandomRequest structs
-    KittyRandomRequest[] kittyRandomRequests;
+    // KittyRandomRequest[] kittyRandomRequests;
 
     Kitty[] kitties;
 
@@ -413,22 +413,22 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         /// @notice call getRandomNumber
         bytes32 _requestId = getRandomNumber(userSeed);
 
-        randomNumber[_requestId] = randomResult;
+        // randomNumber[_requestId] = randomResult;
 
         /// @notice map the catId to user to requestId, mapping to CatIdToRequestId double mapping
         CatIdToRequestId[_catId][_user] = _requestId;
 
         /// @notice create a new KittyRandomRequest struct object
-        KittyRandomRequest memory _kittyRandomRequest = KittyRandomRequest({
-            catId: _catId,
-            user: _user,
-            requestId: _requestId
-        });
+        // KittyRandomRequest memory _kittyRandomRequest = KittyRandomRequest({
+        //     catId: _catId,
+        //     user: _user,
+        //     requestId: _requestId
+        // });
 
         /// @notice now save the new KittyRandomRequest to the kittyRandomRequests struct array
-        kittyRandomRequests.push(_kittyRandomRequest);
+        // kittyRandomRequests.push(_kittyRandomRequest);
 
-        emit KittyCreateStart(_user, _catId, _requestId);
+        emit KittyCreationStarted(_user, _catId, _requestId);
 
         return _requestId;
     }
