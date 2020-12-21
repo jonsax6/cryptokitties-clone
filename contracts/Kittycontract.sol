@@ -101,9 +101,9 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         uint256 newDna = _mixDna(dadDna, momDna, _momId);
         
         /// @notice delete the mappings for request ID
-        bytes32 _requestId = CatIdToRequestId[_momId][msg.sender];
-        delete randomNumber[_requestId];
-        delete CatIdToRequestId[_momId][msg.sender];
+        // bytes32 _requestId = CatIdToRequestId[_momId][msg.sender];
+        // delete randomNumber[_requestId];
+        // delete CatIdToRequestId[_momId][msg.sender];
 
         /// @notice now use the new kitty params to make a new cat on the blockchain and send to msg.sender
         _createKitty(_momId, _dadId, kidGen, newDna, msg.sender);
@@ -413,7 +413,7 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
         /// @notice call getRandomNumber
         bytes32 _requestId = getRandomNumber(userSeed);
 
-        // randomNumber[_requestId] = randomResult;
+        randomNumber[_requestId] = randomResult;
 
         /// @notice map the catId to user to requestId, mapping to CatIdToRequestId double mapping
         CatIdToRequestId[_catId][_user] = _requestId;
