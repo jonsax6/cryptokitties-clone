@@ -99,6 +99,11 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
 
         /// @notice using the _mixDna function to create the newDna
         uint256 newDna = _mixDna(dadDna, momDna, _momId);
+        
+        /// @notice delete the mappings for request ID
+        bytes32 _requestId = CatIdToRequestId[_momId][msg.sender];
+        delete randomNumber[_requestId];
+        delete CatIdToRequestId[_momId][msg.sender];
 
         /// @notice now use the new kitty params to make a new cat on the blockchain and send to msg.sender
         _createKitty(_momId, _dadId, kidGen, newDna, msg.sender);
@@ -401,8 +406,12 @@ contract Kittycontract is IERC721, Randomizer, Ownable {
     }
 
     function randomRequest(uint256 _catId, address _user, uint256 _seed) internal returns (bytes32) {
+        /** @notice combine front-end supplied _seed number with msg.sender and block timestamp,
+         * to hash a random seed number for chainlink VRF */
+        uint256 userSeed = uint256(keccak256(abi.encodePacked(msg.sender, block.timestamp, _seed)));
+        
         /// @notice call getRandomNumber
-        bytes32 _requestId = getRandomNumber(_seed);
+        bytes32 _requestId = getRandomNumber(userSeed);
 
         randomNumber[_requestId] = randomResult;
 
