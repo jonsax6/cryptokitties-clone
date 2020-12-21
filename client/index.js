@@ -8,8 +8,8 @@ var user;
 // var marketplaceAddress = "0x777Ad6549e2a1fd15142cF1794e02Baa161be659";
 
 // kovan
-var contractAddress = "0x155dE19002aC6f7b9643931EaBBFa09Dfcef49d0";
-var marketplaceAddress = "0x4B63c8A4FbC32620e7BC492bEdc2A11359f62793";
+var contractAddress = "0xF6fbA94b2E10f0Fa74f2cA15eD7B8F6F3Cef9e3a";
+var marketplaceAddress = "0x57d0e5610bfc23cF0962Cf3A889153e9C812037C";
 
 // ganache
 // var contractAddress = "0x530b7c6cBc89c83b21Dcf6701cD7c7F5Af63242c";
@@ -530,7 +530,7 @@ async function selectCat(id) {
     $('#breedCats').click(()=>{
         hideAll();
         checkOwner();
-        var seed = 10000*Math.random();
+        var seed = Math.trunc(10000*Math.random());
         // assign respective ID's to momId and dadId from the parents array, created from cat choices
         momId = parents[0];
         dadId = parents[1];
